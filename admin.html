@@ -3,691 +3,711 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>涓嵂鏉愭函婧?- 鏁版嵁绠＄悊鍚庡彴</title>
+<title>鏈崏婧簮 - 鏁版嵁绠＄悊鍚庡彴</title>
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs2@0.0.2/qrcode.min.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --sidebar-w:260px;
-  --brown:#3E2723;--brown-l:#5D4037;--brown-ll:#8D6E63;
-  --gold:#C8A45C;--gold-l:#F5E6CC;
-  --jade:#2E7D55;--jade-l:#E8F5E9;
-  --red:#C62828;--red-l:#FFEBEE;
-  --bg:#F5F0EB;--card-bg:#FFFBF7;
-  --border:#E8DDD0;--text:#3E2723;--text-l:#8D6E63;
-  --radius:10px;--radius-s:6px;
-  --shadow:0 2px 12px rgba(62,39,35,0.06);
-  --font:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+  --bg:#f5f0eb;--surface:#fff;--text:#2c1810;--text2:#6b5b4f;
+  --primary:#C8A45C;--primary-hover:#A68A4E;--primary-light:#F5E6CC;
+  --green:#2E7D55;--green-light:#E8F5E9;
+  --red:#c62828;--red-light:#FFEBEE;
+  --border:#e0d5c7;--radius:8px;--shadow:0 2px 8px rgba(0,0,0,.06);
 }
-html{font-size:14px}
-body{font-family:var(--font);background:var(--bg);color:var(--text);display:flex;min-height:100vh}
-a{color:var(--jade);text-decoration:none}
+body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+.app{display:flex;min-height:100vh}
 
 /* Sidebar */
-.sidebar{
-  width:var(--sidebar-w);min-width:var(--sidebar-w);
-  background:linear-gradient(180deg,#2C1810 0%,#3E2723 100%);
-  color:#EDE0D4;display:flex;flex-direction:column;
-  position:fixed;top:0;left:0;bottom:0;z-index:10;
+.sidebar{width:280px;background:#2c1810;color:#fff;display:flex;flex-direction:column;flex-shrink:0}
+.sidebar-header{padding:20px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sidebar-header h2{font-size:1.2rem;margin-bottom:4px}
+.sidebar-header small{font-size:.75rem;opacity:.6}
+.sidebar-tools{padding:12px 16px;display:flex;gap:8px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sidebar-tools button{flex:1;padding:6px 10px;border:none;border-radius:6px;font-size:.78rem;font-weight:600;cursor:pointer;transition:all .2s}
+.btn-add{background:var(--primary);color:#fff}
+.btn-add:hover{background:var(--primary-hover)}
+.btn-config{background:rgba(255,255,255,.1);color:#fff}
+.btn-config:hover{background:rgba(255,255,255,.2)}
+.herb-list{flex:1;overflow-y:auto;padding:8px}
+.herb-list-item{
+  display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:6px;
+  cursor:pointer;transition:all .2s;margin-bottom:2px;font-size:.88rem;
 }
-.sidebar-header{
-  padding:20px 18px 16px;
-  border-bottom:1px solid rgba(255,255,255,0.08);
-}
-.sidebar-header h2{font-size:1.1rem;font-weight:700;color:var(--gold-l);display:flex;align-items:center;gap:8px}
-.sidebar-header h2 span{font-size:1.3rem}
-.sidebar-header p{font-size:0.75rem;color:rgba(255,255,255,0.45);margin-top:4px}
-.herb-list{flex:1;overflow-y:auto;padding:8px 0}
-.herb-item{
-  display:flex;align-items:center;gap:10px;
-  padding:10px 18px;cursor:pointer;
-  transition:all 0.2s;border-left:3px solid transparent;
-  font-size:0.9rem;color:rgba(255,255,255,0.7);
-}
-.herb-item:hover{background:rgba(255,255,255,0.06);color:#fff}
-.herb-item.active{background:rgba(200,164,92,0.15);border-left-color:var(--gold);color:#fff}
-.herb-item-id{font-size:0.7rem;color:rgba(255,255,255,0.3);min-width:20px}
-.herb-item-emoji{font-size:1.2rem}
-.herb-item-name{flex:1}
-.herb-item-origin{font-size:0.7rem;color:rgba(255,255,255,0.35)}
-.sidebar-footer{padding:14px 18px;border-top:1px solid rgba(255,255,255,0.08)}
-.btn-add{
-  width:100%;padding:10px;background:var(--gold);color:#3E2723;
-  border:none;border-radius:var(--radius-s);cursor:pointer;
-  font-size:0.9rem;font-weight:600;font-family:var(--font);
-  display:flex;align-items:center;justify-content:center;gap:6px;
-  transition:all 0.2s;
-}
-.btn-add:hover{background:#D4B46C}
-.btn-del-herb{
-  background:none;border:none;color:rgba(255,255,255,0.2);cursor:pointer;
-  font-size:0.9rem;padding:2px 4px;border-radius:3px;transition:all 0.2s;
-}
-.btn-del-herb:hover{color:#FF6B6B;background:rgba(255,0,0,0.1)}
+.herb-list-item:hover{background:rgba(255,255,255,.08)}
+.herb-list-item.active{background:var(--primary);color:#fff}
+.herb-list-item .emoji{font-size:1.2rem;width:28px;text-align:center}
+.herb-list-item .info{flex:1;min-width:0}
+.herb-list-item .name{font-weight:600;font-size:.85rem}
+.herb-list-item .origin{font-size:.72rem;opacity:.6;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.herb-list-item .del-btn{opacity:0;background:none;border:none;color:#ff6b6b;cursor:pointer;font-size:1rem;padding:2px 6px;border-radius:4px;transition:all .2s}
+.herb-list-item:hover .del-btn{opacity:1}
+.herb-list-item .del-btn:hover{background:rgba(255,0,0,.15)}
 
 /* Main */
-.main{flex:1;margin-left:var(--sidebar-w);padding:24px 32px 80px}
-.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
-.topbar h1{font-size:1.4rem;font-weight:700;color:var(--brown)}
-.topbar-actions{display:flex;gap:10px}
-.btn{
-  padding:8px 18px;border:none;border-radius:var(--radius-s);
-  font-size:0.85rem;font-weight:600;cursor:pointer;font-family:var(--font);
-  transition:all 0.2s;display:flex;align-items:center;gap:6px;
-}
-.btn-primary{background:var(--jade);color:#fff}
-.btn-primary:hover{background:#256B47}
-.btn-gold{background:var(--gold);color:var(--brown)}
-.btn-gold:hover{background:#D4B46C}
-.btn-outline{background:transparent;border:1px solid var(--border);color:var(--text)}
-.btn-outline:hover{background:var(--bg)}
-.btn-danger{background:var(--red);color:#fff}
-.btn-danger:hover{background:#B71C1C}
-.btn:disabled{opacity:0.5;cursor:not-allowed}
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.topbar{background:var(--surface);padding:12px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:16px}
+.topbar h3{font-size:1.05rem;color:var(--text)}
+.topbar-actions{display:flex;gap:8px}
+.btn{padding:8px 18px;border:none;border-radius:6px;font-size:.85rem;font-weight:600;cursor:pointer;transition:all .2s}
+.btn-save{background:var(--primary);color:#fff}
+.btn-save:hover{background:var(--primary-hover)}
+.btn-deploy{background:var(--green);color:#fff}
+.btn-deploy:hover{background:#1B5E20}
+.btn-preview{background:var(--text2);color:#fff}
+.btn-preview:hover{background:var(--text)}
+.content{flex:1;overflow-y:auto;padding:24px}
 
-/* Empty state */
-.empty-state{
-  text-align:center;padding:80px 20px;color:var(--text-l);
+/* Tabs in editor */
+.edit-tabs{display:flex;gap:4px;margin-bottom:20px;border-bottom:2px solid var(--border);padding-bottom:0;flex-wrap:wrap}
+.edit-tab{
+  padding:8px 16px;border:none;background:none;font-size:.85rem;font-weight:600;
+  color:var(--text2);cursor:pointer;border-radius:6px 6px 0 0;transition:all .2s;
+  white-space:nowrap;
 }
-.empty-state h3{font-size:1.3rem;margin-bottom:8px;color:var(--brown-l)}
-.empty-state p{font-size:0.9rem}
+.edit-tab:hover{color:var(--text);background:var(--primary-light)}
+.edit-tab.active{color:var(--primary);background:var(--primary-light)}
 
-/* Card */
-.card{
-  background:var(--card-bg);border-radius:var(--radius);
-  border:1px solid var(--border);box-shadow:var(--shadow);
-  margin-bottom:20px;overflow:hidden;
-}
-.card-header{
-  padding:14px 20px;border-bottom:1px solid var(--border);
-  font-weight:700;font-size:0.95rem;color:var(--brown-l);
-  display:flex;align-items:center;gap:8px;
-}
-.card-body{padding:20px}
-.card-header .icon{font-size:1.1rem}
-
-/* Tabs */
-.tabs{display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:0}
-.tab{
-  padding:12px 20px;background:none;border:none;cursor:pointer;
-  font-size:0.85rem;font-weight:600;color:var(--text-l);
-  font-family:var(--font);border-bottom:2px solid transparent;
-  margin-bottom:-2px;transition:all 0.2s;
-}
-.tab:hover{color:var(--brown)}
-.tab.active{color:var(--jade);border-bottom-color:var(--jade)}
-
-/* Form */
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.form-group{display:flex;flex-direction:column;gap:4px}
-.form-group.full{grid-column:1/-1}
-.form-group label{
-  font-size:0.78rem;font-weight:600;color:var(--text-l);
-  text-transform:uppercase;letter-spacing:0.5px;
-}
+/* Form styles */
+.form-section{display:none}
+.form-section.active{display:block}
+.form-group{margin-bottom:16px}
+.form-group label{display:block;font-size:.82rem;font-weight:600;color:var(--text2);margin-bottom:4px}
 .form-group input,.form-group textarea,.form-group select{
-  padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius-s);
-  font-size:0.9rem;font-family:var(--font);color:var(--text);
-  background:#fff;transition:border-color 0.2s;
+  width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;
+  font-size:.88rem;font-family:inherit;background:var(--surface);transition:border-color .2s;
 }
 .form-group input:focus,.form-group textarea:focus,.form-group select:focus{
-  outline:none;border-color:var(--jade);box-shadow:0 0 0 3px rgba(46,125,85,0.08);
+  outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-light);
 }
-.form-group textarea{resize:vertical;min-height:60px}
+.form-group textarea{min-height:60px;resize:vertical}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
 
-/* Traceability items */
-.trace-item{
-  display:grid;grid-template-columns:1fr 1fr 1fr 2fr 1fr auto;
-  gap:8px;padding:12px;margin-bottom:8px;
-  background:var(--bg);border-radius:var(--radius-s);border:1px solid var(--border);
-  align-items:center;font-size:0.85rem;
-}
-.trace-item input,.trace-item select{
-  padding:6px 8px;border:1px solid var(--border);border-radius:4px;
-  font-size:0.82rem;font-family:var(--font);background:#fff;
-}
-.trace-item .trace-desc{grid-column:4}
-.trace-item .trace-actions{display:flex;gap:4px}
-.btn-icon{
-  width:28px;height:28px;border:none;border-radius:4px;
-  cursor:pointer;font-size:0.85rem;display:flex;align-items:center;justify-content:center;
-  transition:all 0.15s;
-}
-.btn-icon.danger{background:var(--red-l);color:var(--red)}
-.btn-icon.danger:hover{background:var(--red);color:#fff}
-.btn-icon.up{background:var(--bg);color:var(--text-l)}
-.btn-icon.up:hover{background:var(--border);color:var(--text)}
-.btn-sm{
-  padding:6px 14px;border:none;border-radius:4px;
-  font-size:0.8rem;font-weight:600;cursor:pointer;font-family:var(--font);
-  background:var(--jade-l);color:var(--jade);margin-top:8px;
-  transition:all 0.2s;
-}
-.btn-sm:hover{background:var(--jade);color:#fff}
+/* Image preview */
+.img-previews{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px}
+.img-preview-card{position:relative;aspect-ratio:1;border-radius:6px;overflow:hidden;border:1px solid var(--border)}
+.img-preview-card img{width:100%;height:100%;object-fit:cover}
+.img-preview-card .idx{position:absolute;top:4px;left:4px;background:rgba(0,0,0,.6);color:#fff;font-size:.65rem;padding:2px 6px;border-radius:3px}
 
-/* Quality info KV */
-.q-item{
-  display:grid;grid-template-columns:1fr 2fr auto;gap:8px;
-  padding:8px;margin-bottom:6px;
-  background:var(--bg);border-radius:var(--radius-s);border:1px solid var(--border);
-  align-items:center;font-size:0.85rem;
-}
-.q-item input{padding:6px 8px;border:1px solid var(--border);border-radius:4px;font-size:0.82rem;font-family:var(--font);background:#fff}
+/* Dynamic lists */
+.dynamic-list{margin-top:8px}
+.dynamic-item{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:12px;margin-bottom:8px}
+.dynamic-item .btn-remove{background:var(--red);color:#fff;border:none;padding:4px 10px;border-radius:4px;font-size:.75rem;cursor:pointer;margin-top:8px}
+.dynamic-item .btn-remove:hover{background:#b71c1c}
+.btn-add-item{background:var(--green-light);color:var(--green);border:1px dashed var(--green);padding:8px 16px;border-radius:6px;font-size:.82rem;cursor:pointer;width:100%;margin-top:6px;font-weight:600}
+.btn-add-item:hover{background:var(--green);color:#fff}
 
-/* Images */
-.img-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.img-item{
-  border:2px dashed var(--border);border-radius:var(--radius-s);
-  padding:8px;display:flex;flex-direction:column;gap:6px;
-  background:var(--bg);
-}
-.img-item img{width:100%;height:80px;object-fit:cover;border-radius:4px;background:#e0e0e0}
-.img-item input{width:100%;padding:6px 8px;border:1px solid var(--border);border-radius:4px;font-size:0.75rem;font-family:var(--font)}
+/* Key-value editor */
+.kv-row{display:grid;grid-template-columns:1fr 2fr auto;gap:8px;align-items:start;margin-bottom:8px}
+.kv-row input{padding:6px 10px;border:1px solid var(--border);border-radius:4px;font-size:.82rem}
+.kv-row .btn-kv-del{background:var(--red);color:#fff;border:none;padding:4px 8px;border-radius:4px;cursor:pointer;font-size:.75rem}
 
-/* Toast */
-.toast{
-  position:fixed;top:20px;right:20px;z-index:999;
-  padding:12px 20px;border-radius:var(--radius-s);color:#fff;
-  font-size:0.85rem;font-weight:600;font-family:var(--font);
-  animation:slideIn 0.3s ease;box-shadow:0 4px 16px rgba(0,0,0,0.2);
-}
-.toast.success{background:var(--jade)}
-.toast.error{background:var(--red)}
-.toast.info{background:#1565C0}
-@keyframes slideIn{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
+/* Traceability editor */
+.tr-item{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:10px;position:relative}
+.tr-item .tr-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.tr-item .tr-order{font-weight:700;color:var(--primary);font-size:.9rem}
+.tr-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+
+/* Sales editor */
+.sales-item{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:10px}
+.sales-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+
+/* QR Section in admin */
+.qr-admin{display:flex;align-items:center;gap:20px;padding:16px;background:var(--surface);border-radius:8px;border:1px solid var(--border);margin-bottom:20px}
+.qr-admin-info{flex:1}
+.qr-admin-info h4{font-size:.95rem;margin-bottom:4px}
+.qr-admin-info p{font-size:.78rem;color:var(--text2)}
+.qr-admin-right{display:flex;align-items:center;gap:12px}
+#adminQR canvas,#adminQR img{width:100px!important;height:100px!important}
 
 /* Status bar */
-.status-bar{
-  position:fixed;bottom:0;left:var(--sidebar-w);right:0;
-  background:#2C1810;color:rgba(255,255,255,0.7);
-  padding:10px 24px;font-size:0.78rem;
-  display:flex;align-items:center;justify-content:space-between;
-}
-.status-bar span{display:flex;align-items:center;gap:6px}
-.status-dot{width:8px;height:8px;border-radius:50%;background:#4CAF50}
-.status-dot.unsaved{background:#FF9800}
+.status-bar{background:var(--surface);padding:10px 24px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;font-size:.8rem;color:var(--text2)}
+.status-indicator{display:flex;align-items:center;gap:6px}
+.status-dot{width:8px;height:8px;border-radius:50%;background:var(--green)}
+.status-dot.modified{background:#f0a030;animation:blink 1s infinite}
+@keyframes blink{50%{opacity:.4}}
 
-/* Responsive */
-@media(max-width:768px){
-  .sidebar{width:200px;min-width:200px}
-  .main{margin-left:200px;padding:16px}
-  .form-grid{grid-template-columns:1fr}
-  .trace-item{grid-template-columns:1fr;gap:4px}
-  .trace-item .trace-desc{grid-column:1}
+/* Empty state */
+.empty-state{text-align:center;padding:80px 20px;color:var(--text2)}
+.empty-state .icon{font-size:3rem;margin-bottom:12px}
+.empty-state h3{font-size:1.1rem;margin-bottom:6px;color:var(--text)}
+
+/* Site config form */
+.site-config-section{margin-bottom:20px}
+.site-config-section h4{font-size:.95rem;color:var(--text);margin-bottom:10px;padding-bottom:6px;border-bottom:2px solid var(--primary-light)}
+.config-features{margin-top:8px}
+
+@media (max-width:768px){
+  .app{flex-direction:column}
+  .sidebar{width:100%;max-height:200px}
+  .form-row,.form-row-3,.sales-grid{grid-template-columns:1fr}
+  .qr-admin{flex-direction:column;text-align:center}
+  .edit-tabs{overflow-x:auto;flex-wrap:nowrap}
+  .edit-tab{flex-shrink:0}
 }
 </style>
 </head>
 <body>
 
-<!-- Sidebar -->
-<aside class="sidebar">
-  <div class="sidebar-header">
-    <h2><span>&#127807;</span> 鑽潗鏁版嵁绠＄悊</h2>
-    <p id="herbCount">鍏?0 绉嶈嵂鏉?/p>
+<div class="app">
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h2>馃尶 绠＄悊鍚庡彴</h2>
+      <small>鏈崏婧簮鏁版嵁绠＄悊</small>
+    </div>
+    <div class="sidebar-tools">
+      <button class="btn-add" onclick="addHerb()">+ 鏂板鑽潗</button>
+      <button class="btn-config" onclick="showSiteConfig()">鈿?缃戠珯閰嶇疆</button>
+    </div>
+    <div class="herb-list" id="herbList">
+      <div style="padding:20px;text-align:center;opacity:.5">鍔犺浇涓?..</div>
+    </div>
   </div>
-  <div class="herb-list" id="herbList"></div>
-  <div class="sidebar-footer">
-    <button class="btn-add" onclick="addHerb()">+ 鏂板鑽潗</button>
+
+  <!-- Main -->
+  <div class="main">
+    <div class="topbar">
+      <h3 id="editorTitle">璇烽€夋嫨鑽潗鎴栧姛鑳?/h3>
+      <div class="topbar-actions" id="topbarActions">
+        <button class="btn btn-preview" onclick="previewSite()">馃憗 棰勮缃戠珯</button>
+        <button class="btn btn-save" onclick="saveLocal()">馃捑 淇濆瓨鏈湴</button>
+        <button class="btn btn-deploy" onclick="deployToGitHub()">馃殌 閮ㄧ讲鍒扮嚎涓?/button>
+      </div>
+    </div>
+    <div class="content" id="mainContent">
+      <div class="empty-state">
+        <div class="icon">馃搵</div>
+        <h3>璇蜂粠宸︿晶閫夋嫨瑕佺紪杈戠殑鍐呭</h3>
+        <p>閫変腑鑽潗鍚庡彲浠ョ紪杈戣鑽潗鐨勬墍鏈変俊鎭紱鐐瑰嚮銆岀綉绔欓厤缃€嶅彲浠ヤ慨鏀圭珯鐐瑰叏灞€璁剧疆</p>
+      </div>
+    </div>
+    <div class="status-bar">
+      <div class="status-indicator">
+        <div class="status-dot" id="statusDot"></div>
+        <span id="statusText">鏁版嵁宸插姞杞?/span>
+      </div>
+      <span id="statusInfo"></span>
+    </div>
   </div>
-</aside>
-
-<!-- Main -->
-<main class="main" id="mainContent">
-  <div class="empty-state"><h3>閫夋嫨宸︿晶鑽潗寮€濮嬬紪杈?/h3><p>鎴栫偣鍑?鏂板鑽潗"娣诲姞鏂板搧绉?/p></div>
-</main>
-
-<!-- Status bar -->
-<div class="status-bar">
-  <span><span class="status-dot" id="statusDot"></span> <span id="statusText">灏辩华</span></span>
-  <span style="display:flex;gap:10px">
-    <button class="btn btn-outline btn-sm" style="font-size:0.75rem" onclick="saveLocal()">淇濆瓨鏈湴</button>
-    <button class="btn btn-primary btn-sm" style="font-size:0.75rem" id="btnDeploy" onclick="deploy()">閮ㄧ讲鍒?GitHub</button>
-  </span>
 </div>
 
 <script>
 // ===== GLOBAL STATE =====
-let herbs = [];
-let currentId = null;
-let isDirty = false;
+let DATA = { siteConfig: {}, herbs: [] };
+let currentHerbId = null;
+let isSiteConfig = false;
+let isModified = false;
+let currentEditTab = 0;
 const GITHUB_USER = 'houshiyu1995';
 const GITHUB_REPO = 'herb-traceability';
 let GITHUB_TOKEN = localStorage.getItem('gh_token') || '';
+const BASE_URL = 'https://houshiyu1995.github.io/herb-traceability/';
 
 // ===== INIT =====
-async function init(){
-  try{
-    const res = await fetch('data.json');
-    herbs = await res.json();
-    renderSidebar();
-    updateStatus('灏辩华', false);
-  }catch(e){
-    // Try localStorage backup
-    const saved = localStorage.getItem('herb-data-backup');
-    if(saved){
-      herbs = JSON.parse(saved);
-      renderSidebar();
-      updateStatus('浠庢湰鍦扮紦瀛樺姞杞?, true);
-      showToast('宸蹭粠鏈湴缂撳瓨鎭㈠鏁版嵁', 'info');
-    }else{
-      herbs = [];
-      renderSidebar();
-      updateStatus('鏃犳暟鎹?, false);
-    }
-  }
+async function init() {
+  const res = await fetch('data.json');
+  DATA = await res.json();
+  renderHerbList();
+  updateStatus('鏁版嵁鍔犺浇瀹屾垚', false);
 }
 
-// ===== SIDEBAR =====
-function renderSidebar(){
+function renderHerbList() {
   const list = document.getElementById('herbList');
-  document.getElementById('herbCount').textContent = '鍏?' + herbs.length + ' 绉嶈嵂鏉?;
-  list.innerHTML = herbs.map((h,i) => `
-    <div class="herb-item ${currentId === h.id ? 'active' : ''}" onclick="selectHerb(${h.id})">
-      <span class="herb-item-id">#${i+1}</span>
-      <span class="herb-item-emoji">${h.emoji||'馃尶'}</span>
-      <span class="herb-item-name">${h.name}</span>
-      <span class="herb-item-origin">${h.origin.split('鐪?)[0]||h.origin.slice(0,6)}</span>
-      <button class="btn-del-herb" onclick="event.stopPropagation();deleteHerb(${h.id})" title="鍒犻櫎">脳</button>
+  if (DATA.herbs.length === 0) {
+    list.innerHTML = '<div style="padding:20px;text-align:center;opacity:.5">鏆傛棤鑽潗鏁版嵁</div>';
+    return;
+  }
+  list.innerHTML = DATA.herbs.map(h => `
+    <div class="herb-list-item ${currentHerbId === h.id && !isSiteConfig ? 'active' : ''}" onclick="selectHerb('${h.id}')">
+      <span class="emoji">${h.emoji||'馃尶'}</span>
+      <div class="info">
+        <div class="name">${h.name}</div>
+        <div class="origin">${h.origin}</div>
+      </div>
+      <button class="del-btn" onclick="event.stopPropagation();deleteHerb('${h.id}')" title="鍒犻櫎">鉁?/button>
     </div>
   `).join('');
 }
 
-function selectHerb(id){
-  currentId = id;
-  renderSidebar();
-  renderEditor();
+// ===== SELECT HERB =====
+function selectHerb(id) {
+  currentHerbId = id;
+  isSiteConfig = false;
+  currentEditTab = 0;
+  const h = DATA.herbs.find(x => x.id === id);
+  if (!h) return;
+  document.getElementById('editorTitle').textContent = `鉁忥笍 缂栬緫锛?{h.name}锛?{h.batch}锛塦;
+  renderHerbList();
+  renderHerbEditor(h);
 }
 
-function getCurrentHerb(){
-  return herbs.find(h => h.id === currentId);
+function getCurrentHerb() {
+  return DATA.herbs.find(h => h.id === currentHerbId);
 }
 
-function addHerb(){
-  const maxId = herbs.length > 0 ? Math.max(...herbs.map(h=>h.id)) : 0;
+// ===== ADD / DELETE HERB =====
+function addHerb() {
+  const id = prompt('璇疯緭鍏ヨ嵂鏉愯嫳鏂嘔D锛堝锛歝huanxiong锛岀敤浜嶶RL锛夛細');
+  if (!id) return;
+  if (DATA.herbs.find(h => h.id === id)) { alert('璇D宸插瓨鍦紒'); return; }
+  const name = prompt('璇疯緭鍏ヨ嵂鏉愬悕绉帮紙濡傦細宸濊妿锛夛細') || '鏂拌嵂鏉?;
   const newHerb = {
-    id: maxId + 1,
-    name: '鏂拌嵂鏉?,
-    latin: '',
-    category: '琛ユ皵鑽?,
-    origin: '',
-    batch: '',
-    year: new Date().getFullYear().toString(),
-    colors: ['#8B7355', '#6B5340'],
-    emoji: '馃尶',
+    id, name, latin: '', category: '', origin: '', batch: '', year: new Date().getFullYear().toString(),
+    colors: ['#8D6E63','#6D4C41'], emoji: '馃尶',
     imgs: ['','','',''],
-    productInfo: {'鍝佸悕':'','瑙勬牸':'','鎵瑰彿':'','浜у湴':'','鐢熶骇鏃ユ湡':'','鏈夋晥鏈熻嚦':'','鍑€鍚噺':'','璐棌鏉′欢':'','鎵ц鏍囧噯':'銆婁腑鍥借嵂鍏搞€?025骞寸増'},
-    productionInfo: {'绉嶆鏂瑰紡':'','绉嶆骞撮檺':'','绉嶆鐜':'','鍦熷￥绫诲瀷':'','閲囨敹鏃堕棿':'','鍔犲伐宸ヨ壓':'','鍔犲伐浼佷笟':'','鍔犲伐鏃ユ湡':''},
-    traceability: [],
-    qualityInfo: {'妫€娴嬫爣鍑?:'銆婁腑鍥借嵂鍏搞€?025骞寸増','妫€娴嬫満鏋?:'','鎶ュ憡缂栧彿':'','妫€娴嬫棩鏈?:'','妫€娴嬬粨璁?:'鏈搧鎸夈€婁腑鍥借嵂鍏搞€?025骞寸増妫€楠岋紝缁撴灉绗﹀悎瑙勫畾銆?},
-    enterpriseInfo: {'浼佷笟鍚嶇О':'','缁熶竴绀句細淇＄敤浠ｇ爜':'','娉曞畾浠ｈ〃浜?:'','娉ㄥ唽璧勬湰':'','鎴愮珛鏃ユ湡':'','娉ㄥ唽鍦板潃':'','鑱旂郴鐢佃瘽':'','鐢熶骇璁稿彲璇佸彿':'','GAP璁よ瘉':'','ISO璁よ瘉':'','GMP璁よ瘉':'','缁忚惀鑼冨洿':''}
+    productInfo: { '鍝佸悕': name, '瑙勬牸': '', '鎵瑰彿': '', '浜у湴': '', '鐢熶骇鏃ユ湡': '', '鏈夋晥鏈熻嚦': '', '鍑€鍚噺': '', '璐棌鏉′欢': '', '鎵ц鏍囧噯': '' },
+    productionInfo: { '绉嶆鏂瑰紡': '', '绉嶆骞撮檺': '', '绉嶆鐜': '', '鍦熷￥绫诲瀷': '', '閲囨敹鏃堕棿': '', '鍔犲伐宸ヨ壓': '', '鍔犲伐浼佷笟': '', '鍔犲伐鏃ユ湡': '' },
+    traceability: [{ stage: '閫夌鑲茶嫍', location: '', time: '', desc: '', operator: '', status: 'done' }],
+    qualityInfo: { '妫€娴嬫爣鍑?: '', '妫€娴嬫満鏋?: '', '鎶ュ憡缂栧彿': '', '妫€娴嬬粨璁?: '' },
+    enterpriseInfo: { '浼佷笟鍚嶇О': '', '缁熶竴绀句細淇＄敤浠ｇ爜': '', '娉曞畾浠ｈ〃浜?: '', '娉ㄥ唽璧勬湰': '', '鎴愮珛鏃ユ湡': '', '娉ㄥ唽鍦板潃': '', '鑱旂郴鐢佃瘽': '', '鐢熶骇璁稿彲璇佸彿': '', '缁忚惀鑼冨洿': '' },
+    salesTraceability: []
   };
-  herbs.push(newHerb);
-  currentId = newHerb.id;
-  markDirty();
-  renderSidebar();
-  renderEditor();
-  showToast('宸叉坊鍔犳柊鑽潗', 'success');
+  DATA.herbs.push(newHerb);
+  currentHerbId = id;
+  isModified = true;
+  renderHerbList();
+  selectHerb(id);
 }
 
-function deleteHerb(id){
-  if(!confirm('纭畾瑕佸垹闄よ繖鍛宠嵂鏉愬悧锛熸鎿嶄綔涓嶅彲鎾ら攢銆?)) return;
-  const idx = herbs.findIndex(h => h.id === id);
-  if(idx === -1) return;
-  herbs.splice(idx, 1);
-  if(currentId === id) currentId = herbs.length > 0 ? herbs[0].id : null;
-  markDirty();
-  renderSidebar();
-  if(currentId) renderEditor();
-  else document.getElementById('mainContent').innerHTML = '<div class="empty-state"><h3>宸插叏閮ㄥ垹闄?/h3><p>鐐瑰嚮"鏂板鑽潗"寮€濮嬫坊鍔?/p></div>';
-  showToast('宸插垹闄?, 'info');
+function deleteHerb(id) {
+  const h = DATA.herbs.find(x => x.id === id);
+  if (!confirm(`纭畾鍒犻櫎"${h.name}"鍚楋紵姝ゆ搷浣滀笉鍙挙閿€锛乣)) return;
+  DATA.herbs = DATA.herbs.filter(x => x.id !== id);
+  if (currentHerbId === id) {
+    currentHerbId = null;
+    document.getElementById('editorTitle').textContent = '璇烽€夋嫨鑽潗鎴栧姛鑳?;
+    document.getElementById('mainContent').innerHTML = '<div class="empty-state"><div class="icon">馃搵</div><h3>璇蜂粠宸︿晶閫夋嫨瑕佺紪杈戠殑鍐呭</h3></div>';
+  }
+  isModified = true;
+  renderHerbList();
 }
 
-// ===== EDITOR =====
-function renderEditor(){
-  const h = getCurrentHerb();
-  if(!h) return;
-  const m = document.getElementById('mainContent');
-  m.innerHTML = `
-    <div class="topbar">
-      <h1>${h.emoji||'馃尶'} ${h.name}</h1>
-      <div class="topbar-actions">
-        <button class="btn btn-gold" onclick="saveLocal()">鏈湴淇濆瓨</button>
-        <button class="btn btn-primary" id="btnDeploy2" onclick="deploy()">閮ㄧ讲涓婄嚎</button>
-      </div>
-    </div>
-    <div class="card" id="basicCard">
-      <div class="card-header"><span class="icon">馃搵</span> 鍩烘湰淇℃伅</div>
-      <div class="card-body">
-        <div class="form-grid">
-          ${field('name','鑽潗鍚嶇О','text',h.name)}
-          ${field('latin','鎷変竵瀛﹀悕','text',h.latin)}
-          ${field('category','鍒嗙被','text',h.category)}
-          ${field('origin','浜у湴','text',h.origin)}
-          ${field('batch','鎵瑰彿','text',h.batch)}
-          ${field('year','骞翠唤','text',h.year)}
-          <div class="form-group full">
-            <label>Emoji 鍥炬爣</label>
-            <input value="${esc(h.emoji)}" onchange="updateField('emoji',this.value)" placeholder="馃尶">
-          </div>
-        </div>
-      </div>
-    </div>
+// ===== SITE CONFIG =====
+function showSiteConfig() {
+  isSiteConfig = true;
+  currentHerbId = null;
+  currentEditTab = 0;
+  document.getElementById('editorTitle').textContent = '鈿?缃戠珯鍏ㄥ眬閰嶇疆';
+  renderHerbList();
+  renderSiteConfigEditor();
+}
 
-    <div class="card">
-      <div class="card-header"><span class="icon">馃柤锔?/span> 鍥剧墖閾炬帴</div>
-      <div class="card-body">
-        <div class="img-grid">
-          ${h.imgs.map((url,i)=>`
-            <div class="img-item">
-              <img src="${url||'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 70%22><rect fill=%22%23ddd%22 width=%22100%22 height=%2270%22/><text x=%2250%22 y=%2240%22 text-anchor=%22middle%22 fill=%22%23999%22 font-size=%2214%22>鍥?{i+1}</text></svg>'}" onerror="this.style.display='none'" alt="鍥?{i+1}">
-              <input value="${esc(url)}" onchange="updateImg(${i},this.value)" placeholder="鍥剧墖URL ${i+1}">
-            </div>
-          `).join('')}
-        </div>
-      </div>
+function renderSiteConfigEditor() {
+  const sc = DATA.siteConfig;
+  const content = document.getElementById('mainContent');
+  content.innerHTML = `
+    <div class="edit-tabs">
+      <button class="edit-tab active" onclick="switchConfigTab(0)">鍩烘湰淇℃伅</button>
+      <button class="edit-tab" onclick="switchConfigTab(1)">椤佃剼淇℃伅</button>
+      <button class="edit-tab" onclick="switchConfigTab(2)">鐗硅壊鍔熻兘</button>
+      <button class="edit-tab" onclick="switchConfigTab(3)">鍒嗙被涓庝骇鍦?/button>
     </div>
-
-    <div class="card">
-      <div class="card-header"><span class="icon">馃摝</span> 浜у搧淇℃伅</div>
-      <div class="card-body">
-        <div class="form-grid">
-          ${Object.entries(h.productInfo).map(([k,v]) => field('productInfo.'+k, k, 'text', v)).join('')}
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-header"><span class="icon">馃彮</span> 鐢熶骇淇℃伅</div>
-      <div class="card-body">
-        <div class="form-grid">
-          ${Object.entries(h.productionInfo).map(([k,v]) => field('productionInfo.'+k, k, 'text', v)).join('')}
-        </div>
-        ${h.productionInfo['鍏辩敓鑿?] !== undefined ? '' : '<button class="btn-sm" onclick="addProdField()">+ 娣诲姞瀛楁</button>'}
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-header"><span class="icon">馃攳</span> 鑽潗杩芥函 <small style="font-weight:400;color:var(--text-l)">(${h.traceability.length} 涓幆鑺?</small></div>
-      <div class="card-body">
-        <div id="traceList">
-          ${h.traceability.map((t,i)=>`
-            <div class="trace-item">
-              <input value="${esc(t.stage)}" onchange="updateTraceItem(${i},'stage',this.value)" placeholder="鐜妭">
-              <input value="${esc(t.location)}" onchange="updateTraceItem(${i},'location',this.value)" placeholder="鍦扮偣">
-              <input value="${esc(t.time)}" onchange="updateTraceItem(${i},'time',this.value)" placeholder="鏃堕棿">
-              <input class="trace-desc" value="${esc(t.desc)}" onchange="updateTraceItem(${i},'desc',this.value)" placeholder="鎻忚堪">
-              <input value="${esc(t.operator)}" onchange="updateTraceItem(${i},'operator',this.value)" placeholder="鎿嶄綔浜?>
-              <select onchange="updateTraceItem(${i},'status',this.value)">
-                <option value="done" ${t.status==='done'?'selected':''}>宸插畬鎴?/option>
-                <option value="current" ${t.status==='current'?'selected':''}>褰撳墠</option>
-              </select>
-              <div class="trace-actions">
-                <button class="btn-icon up" onclick="moveTrace(${i},-1)" title="涓婄Щ">鈻?/button>
-                <button class="btn-icon up" onclick="moveTrace(${i},1)" title="涓嬬Щ">鈻?/button>
-                <button class="btn-icon danger" onclick="removeTrace(${i})" title="鍒犻櫎">脳</button>
-              </div>
-            </div>
-          `).join('')}
-        </div>
-        <button class="btn-sm" onclick="addTrace()">+ 娣诲姞杩芥函鐜妭</button>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-header"><span class="icon">馃敩</span> 璐ㄦ淇℃伅</div>
-      <div class="card-body">
-        <div id="qualityList">
-          ${getQualityEntries(h).map(([k,v],i)=>`
-            <div class="q-item">
-              <input value="${esc(k)}" onchange="updateQualityKey(${i},this.value)" placeholder="妫€娴嬮」">
-              <input value="${esc(v)}" onchange="updateQualityValue(${i},this.value)" placeholder="妫€娴嬬粨鏋?>
-              <button class="btn-icon danger" onclick="removeQualityItem(${i})">脳</button>
-            </div>
-          `).join('')}
-        </div>
-        <button class="btn-sm" onclick="addQualityItem()">+ 娣诲姞妫€娴嬮」</button>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-header"><span class="icon">馃彚</span> 浼佷笟淇℃伅</div>
-      <div class="card-body">
-        <div class="form-grid">
-          ${Object.entries(h.enterpriseInfo).map(([k,v]) => field('enterpriseInfo.'+k, k, 'text', v)).join('')}
-        </div>
-      </div>
-    </div>
+    <div id="configTabContent"></div>
   `;
+  switchConfigTab(0);
 }
 
-function field(name, label, type, value){
-  const idKey = name.replace(/\./g,'_');
-  return `<div class="form-group">
-    <label>${label}</label>
-    <input id="f_${idKey}" value="${esc(String(value))}" onchange="updateField('${name}',this.value)" type="${type}">
-  </div>`;
-}
-
-function esc(s){return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
-
-function getQualityEntries(h){
-  const skip = ['妫€娴嬫爣鍑?,'妫€娴嬫満鏋?,'鎶ュ憡缂栧彿','妫€娴嬫棩鏈?,'妫€娴嬬粨璁?];
-  const entries = [];
-  for(const [k,v] of Object.entries(h.qualityInfo)){
-    if(!skip.includes(k)) entries.push([k,v]);
+function switchConfigTab(idx) {
+  currentEditTab = idx;
+  const sc = DATA.siteConfig;
+  let html = '';
+  if (idx === 0) {
+    html = `
+      <div class="form-section active">
+        <div class="form-group"><label>缃戠珯鏍囬</label><input value="${esc(sc.title)}" onchange="updateConfig('title',this.value)"></div>
+        <div class="form-group"><label>鍓爣棰?/label><input value="${esc(sc.subtitle)}" onchange="updateConfig('subtitle',this.value)"></div>
+        <div class="form-group"><label>椤堕儴妯箙鏂囧瓧</label><input value="${esc(sc.banner)}" onchange="updateConfig('banner',this.value)"></div>
+      </div>`;
+  } else if (idx === 1) {
+    const f = sc.footer || {};
+    html = `
+      <div class="form-section active">
+        <div class="form-group"><label>鍏充簬鎴戜滑鎻忚堪</label><textarea onchange="updateFooter('about',this.value)">${esc(f.about||'')}</textarea></div>
+        <div class="form-group"><label>鐗堟潈淇℃伅</label><input value="${esc(f.copyright||'')}" onchange="updateFooter('copyright',this.value)"></div>
+        <div class="form-group"><label>鑱旂郴閭</label><input value="${esc((f.contact||{}).email||'')}" onchange="updateFooterContact('email',this.value)"></div>
+        <div class="form-group"><label>鑱旂郴鐢佃瘽</label><input value="${esc((f.contact||{}).phone||'')}" onchange="updateFooterContact('phone',this.value)"></div>
+        <div class="form-group"><label>宸ヤ綔鏃堕棿</label><input value="${esc((f.contact||{}).hours||'')}" onchange="updateFooterContact('hours',this.value)"></div>
+        <div class="form-group">
+          <label>杩芥函鏈嶅姟鑿滃崟锛堟瘡琛屼竴涓級</label>
+          <textarea onchange="updateFooterList('services',this.value)" style="min-height:80px">${(f.services||[]).join('\n')}</textarea>
+        </div>
+        <div class="form-group">
+          <label>鍏充簬鎴戜滑鑿滃崟锛堟瘡琛屼竴涓級</label>
+          <textarea onchange="updateFooterList('company',this.value)" style="min-height:80px">${(f.company||[]).join('\n')}</textarea>
+        </div>
+      </div>`;
+  } else if (idx === 2) {
+    const features = sc.features || [];
+    html = `<div class="form-section active config-features">`;
+    features.forEach((f,i) => {
+      html += `
+        <div class="dynamic-item">
+          <div class="form-row-3">
+            <div class="form-group"><label>鍥炬爣锛圗moji锛?/label><input value="${esc(f.icon)}" onchange="updateFeature(${i},'icon',this.value)"></div>
+            <div class="form-group"><label>鏍囬</label><input value="${esc(f.title)}" onchange="updateFeature(${i},'title',this.value)"></div>
+            <div class="form-group"><label>鎻忚堪</label><input value="${esc(f.desc)}" onchange="updateFeature(${i},'desc',this.value)"></div>
+          </div>
+          <button class="btn-remove" onclick="removeFeature(${i})">鍒犻櫎姝ら」</button>
+        </div>`;
+    });
+    html += `<button class="btn-add-item" onclick="addFeature()">+ 娣诲姞鐗硅壊鍔熻兘</button></div>`;
+  } else if (idx === 3) {
+    html = `
+      <div class="form-section active">
+        <div class="form-group"><label>鑽潗鍒嗙被锛堟瘡琛屼竴涓級</label><textarea onchange="updateConfig('categories',this.value.split('\n').filter(Boolean))" style="min-height:120px">${(sc.categories||[]).join('\n')}</textarea></div>
+        <div class="form-group"><label>浜у湴鍒楄〃锛堟瘡琛屼竴涓級</label><textarea onchange="updateConfig('origins',this.value.split('\n').filter(Boolean))" style="min-height:120px">${(sc.origins||[]).join('\n')}</textarea></div>
+      </div>`;
   }
-  return entries;
+  document.getElementById('configTabContent').innerHTML = html;
 }
 
-// ===== UPDATE FUNCTIONS =====
-function updateField(path, value){
+function updateConfig(key, val) { DATA.siteConfig[key] = val; markModified(); }
+function updateFooter(key, val) { if(!DATA.siteConfig.footer) DATA.siteConfig.footer={}; DATA.siteConfig.footer[key]=val; markModified(); }
+function updateFooterContact(key, val) { if(!DATA.siteConfig.footer) DATA.siteConfig.footer={}; if(!DATA.siteConfig.footer.contact) DATA.siteConfig.footer.contact={}; DATA.siteConfig.footer.contact[key]=val; markModified(); }
+function updateFooterList(key, val) { if(!DATA.siteConfig.footer) DATA.siteConfig.footer={}; DATA.siteConfig.footer[key]=val.split('\n').filter(Boolean); markModified(); }
+function updateFeature(i, key, val) { DATA.siteConfig.features[i][key]=val; markModified(); }
+function removeFeature(i) { DATA.siteConfig.features.splice(i,1); markModified(); showSiteConfig(); }
+function addFeature() { if(!DATA.siteConfig.features) DATA.siteConfig.features=[]; DATA.siteConfig.features.push({icon:'猸?,title:'鏂板姛鑳?,desc:'鍔熻兘鎻忚堪'}); markModified(); showSiteConfig(); }
+
+// ===== RENDER HERB EDITOR =====
+function renderHerbEditor(h) {
+  const content = document.getElementById('mainContent');
+  content.innerHTML = `
+    <div class="edit-tabs">
+      <button class="edit-tab active" onclick="switchHerbTab(0)">鍩烘湰淇℃伅</button>
+      <button class="edit-tab" onclick="switchHerbTab(1)">浜у搧淇℃伅</button>
+      <button class="edit-tab" onclick="switchHerbTab(2)">鐢熶骇淇℃伅</button>
+      <button class="edit-tab" onclick="switchHerbTab(3)">鑽潗杩芥函</button>
+      <button class="edit-tab" onclick="switchHerbTab(4)">璐ㄦ淇℃伅</button>
+      <button class="edit-tab" onclick="switchHerbTab(5)">浼佷笟淇℃伅</button>
+      <button class="edit-tab" onclick="switchHerbTab(6)">閿€鍞函婧?/button>
+      <button class="edit-tab" onclick="switchHerbTab(7)">鍥剧墖 & 浜岀淮鐮?/button>
+    </div>
+    <div id="tabContent"></div>
+  `;
+  switchHerbTab(0);
+}
+
+function switchHerbTab(idx) {
+  currentEditTab = idx;
   const h = getCurrentHerb();
-  if(!h) return;
-  const parts = path.split('.');
-  if(parts.length === 1){
-    h[parts[0]] = value;
-  }else{
-    h[parts[0]][parts[1]] = value;
+  if (!h) return;
+  let html = '';
+
+  switch(idx) {
+    case 0: html = renderBasicEditor(h); break;
+    case 1: html = renderKVEditor(h, 'productInfo', '浜у搧淇℃伅'); break;
+    case 2: html = renderKVEditor(h, 'productionInfo', '鐢熶骇淇℃伅'); break;
+    case 3: html = renderTraceEditor(h); break;
+    case 4: html = renderKVEditor(h, 'qualityInfo', '璐ㄦ淇℃伅'); break;
+    case 5: html = renderKVEditor(h, 'enterpriseInfo', '浼佷笟淇℃伅'); break;
+    case 6: html = renderSalesEditor(h); break;
+    case 7: html = renderImageQREditor(h); break;
   }
-  markDirty();
+
+  document.getElementById('tabContent').innerHTML = html;
+
+  // Update tab active state
+  const tabs = document.querySelectorAll('.edit-tab');
+  tabs.forEach((t,i) => t.classList.toggle('active', i===idx));
+
+  // Generate QR if on QR tab
+  if (idx === 7) setTimeout(generateAdminQR, 200);
 }
 
-function updateImg(idx, value){
-  const h = getCurrentHerb();
-  if(!h) return;
-  h.imgs[idx] = value;
-  markDirty();
+function renderBasicEditor(h) {
+  return `
+    <div class="form-section active">
+      <div class="form-row">
+        <div class="form-group"><label>鑽潗ID锛圲RL鏍囪瘑锛?/label><input value="${esc(h.id)}" readonly style="background:#f5f5f5"></div>
+        <div class="form-group"><label>鑽潗鍚嶇О *</label><input value="${esc(h.name)}" onchange="updateHerb('name',this.value)"></div>
+      </div>
+      <div class="form-row-3">
+        <div class="form-group"><label>鎷変竵瀛﹀悕</label><input value="${esc(h.latin||'')}" onchange="updateHerb('latin',this.value)"></div>
+        <div class="form-group"><label>鍒嗙被</label><input value="${esc(h.category||'')}" onchange="updateHerb('category',this.value)" list="catList"><datalist id="catList">${(DATA.siteConfig.categories||[]).map(c=>`<option value="${c}">`).join('')}</datalist></div>
+        <div class="form-group"><label>Emoji</label><input value="${esc(h.emoji||'')}" onchange="updateHerb('emoji',this.value)"></div>
+      </div>
+      <div class="form-row-3">
+        <div class="form-group"><label>浜у湴</label><input value="${esc(h.origin||'')}" onchange="updateHerb('origin',this.value)"></div>
+        <div class="form-group"><label>鎵瑰彿</label><input value="${esc(h.batch||'')}" onchange="updateHerb('batch',this.value)"></div>
+        <div class="form-group"><label>骞翠唤</label><input value="${esc(h.year||'')}" onchange="updateHerb('year',this.value)"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>涓婚鑹?</label><input type="color" value="${h.colors?h.colors[0]:'#8D6E63'}" onchange="updateColor(0,this.value)" style="width:60px;height:36px;padding:2px"></div>
+        <div class="form-group"><label>涓婚鑹?</label><input type="color" value="${h.colors?h.colors[1]:'#6D4C41'}" onchange="updateColor(1,this.value)" style="width:60px;height:36px;padding:2px"></div>
+      </div>
+    </div>`;
 }
 
-function addTrace(){
-  const h = getCurrentHerb();
-  if(!h) return;
-  h.traceability.push({stage:'鏂扮幆鑺?,location:'',time:'',desc:'',operator:'',status:'done'});
-  markDirty();
-  renderEditor();
+function renderKVEditor(h, field, title) {
+  const obj = h[field] || {};
+  const entries = Object.entries(obj);
+  return `
+    <div class="form-section active">
+      <h4 style="margin-bottom:12px;color:var(--text)">${title}</h4>
+      <div id="kvContainer_${field}">
+        ${entries.map(([k,v],i) => `
+          <div class="kv-row">
+            <input value="${esc(k)}" placeholder="瀛楁鍚? onchange="updateKV('${field}',${i},'key',this.value)">
+            <input value="${esc(v)}" placeholder="鍊? onchange="updateKV('${field}',${i},'val',this.value)">
+            <button class="btn-kv-del" onclick="deleteKV('${field}',${i})">鉁?/button>
+          </div>
+        `).join('')}
+      </div>
+      <button class="btn-add-item" onclick="addKV('${field}')">+ 娣诲姞瀛楁</button>
+    </div>`;
 }
 
-function removeTrace(idx){
-  const h = getCurrentHerb();
-  if(!h) return;
-  h.traceability.splice(idx,1);
-  markDirty();
-  renderEditor();
+function renderTraceEditor(h) {
+  const list = h.traceability || [];
+  return `
+    <div class="form-section active">
+      <h4 style="margin-bottom:12px;color:var(--text)">杩芥函鏃堕棿绾?/h4>
+      <div id="trContainer">
+        ${list.map((t,i) => `
+          <div class="tr-item">
+            <div class="tr-header">
+              <span class="tr-order">鐜妭 ${i+1}</span>
+              <button class="btn-kv-del" onclick="deleteTrace(${i})">鍒犻櫎</button>
+            </div>
+            <div class="tr-grid">
+              <div class="form-group"><label>鐜妭鍚嶇О</label><input value="${esc(t.stage)}" onchange="updateTraceField(${i},'stage',this.value)"></div>
+              <div class="form-group"><label>鐘舵€?/label><select onchange="updateTraceField(${i},'status',this.value)"><option value="done" ${t.status==='done'?'selected':''}>宸插畬鎴?/option><option value="current" ${t.status==='current'?'selected':''}>褰撳墠</option><option value="pending" ${t.status==='pending'?'selected':''}>鏈紑濮?/option></select></div>
+              <div class="form-group"><label>鍦扮偣</label><input value="${esc(t.location)}" onchange="updateTraceField(${i},'location',this.value)"></div>
+              <div class="form-group"><label>鏃堕棿</label><input value="${esc(t.time)}" onchange="updateTraceField(${i},'time',this.value)"></div>
+              <div class="form-group"><label>鎿嶄綔浜?/label><input value="${esc(t.operator)}" onchange="updateTraceField(${i},'operator',this.value)"></div>
+            </div>
+            <div class="form-group" style="margin-top:8px"><label>鎻忚堪</label><textarea onchange="updateTraceField(${i},'desc',this.value)">${esc(t.desc)}</textarea></div>
+          </div>
+        `).join('')}
+      </div>
+      <button class="btn-add-item" onclick="addTrace()">+ 娣诲姞杩芥函鐜妭</button>
+    </div>`;
 }
 
-function moveTrace(idx, dir){
-  const h = getCurrentHerb();
-  if(!h) return;
-  const newIdx = idx + dir;
-  if(newIdx < 0 || newIdx >= h.traceability.length) return;
-  [h.traceability[idx], h.traceability[newIdx]] = [h.traceability[newIdx], h.traceability[idx]];
-  markDirty();
-  renderEditor();
+function renderSalesEditor(h) {
+  const list = h.salesTraceability || [];
+  return `
+    <div class="form-section active">
+      <h4 style="margin-bottom:12px;color:var(--text)">閿€鍞函婧愯褰?/h4>
+      <div id="salesContainer">
+        ${list.map((s,i) => `
+          <div class="sales-item">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+              <strong>璁板綍 ${i+1}</strong>
+              <button class="btn-kv-del" onclick="deleteSale(${i})">鍒犻櫎</button>
+            </div>
+            <div class="sales-grid">
+              <div class="form-group"><label>鏃ユ湡</label><input type="date" value="${s.date}" onchange="updateSaleField(${i},'date',this.value)"></div>
+              <div class="form-group"><label>閿€鍞壒娆?/label><input value="${esc(s.batch)}" onchange="updateSaleField(${i},'batch',this.value)"></div>
+              <div class="form-group"><label>鏁伴噺</label><input value="${esc(s.quantity)}" onchange="updateSaleField(${i},'quantity',this.value)"></div>
+              <div class="form-group"><label>閲囪喘鏂?/label><input value="${esc(s.buyer)}" onchange="updateSaleField(${i},'buyer',this.value)"></div>
+              <div class="form-group"><label>閿€鍞笭閬?/label><input value="${esc(s.channel)}" onchange="updateSaleField(${i},'channel',this.value)"></div>
+              <div class="form-group"><label>閿€鍞尯鍩?/label><input value="${esc(s.region)}" onchange="updateSaleField(${i},'region',this.value)"></div>
+              <div class="form-group"><label>鐘舵€?/label><select onchange="updateSaleField(${i},'status',this.value)"><option value="宸茬鏀? ${s.status==='宸茬鏀??'selected':''}>宸茬鏀?/option><option value="杩愯緭涓? ${s.status==='杩愯緭涓??'selected':''}>杩愯緭涓?/option><option value="寰呭彂璐? ${s.status==='寰呭彂璐??'selected':''}>寰呭彂璐?/option></select></div>
+              <div class="form-group"><label>澶囨敞</label><input value="${esc(s.notes||'')}" onchange="updateSaleField(${i},'notes',this.value)"></div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+      <button class="btn-add-item" onclick="addSale()">+ 娣诲姞閿€鍞褰?/button>
+    </div>`;
 }
 
-function updateTraceItem(idx, field, value){
-  const h = getCurrentHerb();
-  if(!h) return;
-  h.traceability[idx][field] = value;
-  markDirty();
+function renderImageQREditor(h) {
+  return `
+    <div class="form-section active">
+      <!-- QR Code -->
+      <div class="qr-admin">
+        <div class="qr-admin-info">
+          <h4>馃摫 鑽潗杩芥函浜岀淮鐮?/h4>
+          <p>鎵弿浜岀淮鐮佺洿杈捐鑽潗璇︽儏椤碉細${BASE_URL}?id=${h.id}</p>
+        </div>
+        <div class="qr-admin-right">
+          <div id="adminQR"></div>
+          <button class="btn btn-deploy" onclick="downloadAdminQR()">馃捑 涓嬭浇浜岀淮鐮?/button>
+        </div>
+      </div>
+
+      <!-- Images -->
+      <h4 style="margin-bottom:8px">馃柤锔?鑽潗鍥剧墖锛?寮狅級</h4>
+      ${[0,1,2,3].map(i => `
+        <div class="form-group">
+          <label>鍥剧墖 ${i+1} URL</label>
+          <input value="${esc(h.imgs[i]||'')}" onchange="updateHerbImage(${i},this.value)" placeholder="杈撳叆鍥剧墖閾炬帴鍦板潃">
+        </div>
+      `).join('')}
+      <div class="img-previews">
+        ${h.imgs.map((img,i) => `
+          <div class="img-preview-card">
+            ${img ? `<img src="${img}" alt="鍥?{i+1}" onerror="this.parentElement.innerHTML='<div style=display:flex;align-items:center;justify-content:center;height:100%;font-size:2rem'>鉂?/div>'">` : `<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:1.5rem;color:#ccc">馃柤锔?/div>`}
+            <span class="idx">鍥?{i+1}</span>
+          </div>
+        `).join('')}
+      </div>
+    </div>`;
 }
 
-function addQualityItem(){
-  const h = getCurrentHerb();
-  if(!h) return;
-  h.qualityInfo['鏂版寚鏍?] = '';
-  markDirty();
-  renderEditor();
-}
+// ===== UPDATE HELPERS =====
+function updateHerb(key, val) { const h = getCurrentHerb(); if(h) { h[key] = val; markModified(); } }
+function updateColor(idx, val) { const h = getCurrentHerb(); if(h && h.colors) { h.colors[idx] = val; markModified(); } }
+function updateHerbImage(idx, val) { const h = getCurrentHerb(); if(h) { h.imgs[idx] = val; markModified(); renderHerbEditor(h); switchHerbTab(7); } }
+function updateTraceField(i, key, val) { const h = getCurrentHerb(); if(h && h.traceability) { h.traceability[i][key] = val; markModified(); } }
+function deleteTrace(i) { const h = getCurrentHerb(); if(h && h.traceability) { h.traceability.splice(i,1); markModified(); renderHerbEditor(h); switchHerbTab(3); } }
+function addTrace() { const h = getCurrentHerb(); if(h) { if(!h.traceability) h.traceability=[]; h.traceability.push({stage:'鏂扮幆鑺?,location:'',time:'',desc:'',operator:'',status:'done'}); markModified(); renderHerbEditor(h); switchHerbTab(3); } }
+function updateSaleField(i, key, val) { const h = getCurrentHerb(); if(h && h.salesTraceability) { h.salesTraceability[i][key] = val; markModified(); } }
+function deleteSale(i) { const h = getCurrentHerb(); if(h && h.salesTraceability) { h.salesTraceability.splice(i,1); markModified(); renderHerbEditor(h); switchHerbTab(6); } }
+function addSale() { const h = getCurrentHerb(); if(h) { if(!h.salesTraceability) h.salesTraceability=[]; h.salesTraceability.push({date:new Date().toISOString().slice(0,10),batch:'',quantity:'',buyer:'',channel:'',region:'',status:'寰呭彂璐?,notes:''}); markModified(); renderHerbEditor(h); switchHerbTab(6); } }
 
-function removeQualityItem(idx){
+function updateKV(field, i, type, val) {
   const h = getCurrentHerb();
-  if(!h) return;
-  const entries = getQualityEntries(h);
-  const key = entries[idx][0];
-  delete h.qualityInfo[key];
-  markDirty();
-  renderEditor();
-}
-
-function updateQualityKey(idx, newKey){
-  const h = getCurrentHerb();
-  if(!h) return;
-  const entries = getQualityEntries(h);
-  const oldKey = entries[idx][0];
-  h.qualityInfo[newKey] = h.qualityInfo[oldKey];
-  if(newKey !== oldKey) delete h.qualityInfo[oldKey];
-  markDirty();
-}
-
-function updateQualityValue(idx, value){
-  const h = getCurrentHerb();
-  if(!h) return;
-  const entries = getQualityEntries(h);
-  h.qualityInfo[entries[idx][0]] = value;
-  markDirty();
-}
-
-function addProdField(){
-  const h = getCurrentHerb();
-  if(!h) return;
-  const fieldName = prompt('杈撳叆鏂板瓧娈靛悕锛堝锛氬叡鐢熻弻锛?');
-  if(fieldName && !h.productionInfo[fieldName]){
-    h.productionInfo[fieldName] = '';
-    markDirty();
-    renderEditor();
+  if (!h || !h[field]) return;
+  const entries = Object.entries(h[field]);
+  if (i >= entries.length) return;
+  const oldKey = entries[i][0];
+  const oldVal = entries[i][1];
+  if (type === 'key') {
+    delete h[field][oldKey];
+    h[field][val] = oldVal;
+  } else {
+    h[field][oldKey] = val;
   }
+  markModified();
 }
 
-// ===== DIRTY STATE =====
-function markDirty(){
-  isDirty = true;
+function deleteKV(field, i) {
+  const h = getCurrentHerb();
+  if (!h || !h[field]) return;
+  const entries = Object.entries(h[field]);
+  if (i >= entries.length) return;
+  delete h[field][entries[i][0]];
+  markModified();
+  renderHerbEditor(h);
+  switchHerbTab(currentEditTab);
+}
+
+function addKV(field) {
+  const h = getCurrentHerb();
+  if (!h) return;
+  if (!h[field]) h[field] = {};
+  h[field]['鏂板瓧娈?] = '';
+  markModified();
+  renderHerbEditor(h);
+  switchHerbTab(currentEditTab);
+}
+
+// ===== QR CODE IN ADMIN =====
+function generateAdminQR() {
+  const container = document.getElementById('adminQR');
+  if (!container) return;
+  container.innerHTML = '';
+  const h = getCurrentHerb();
+  if (!h) return;
+  const url = BASE_URL + '?id=' + h.id;
+  try { new QRCode(container, { text: url, width: 100, height: 100, colorDark: '#2c1810', colorLight: '#FFFFFF' }); }
+  catch(e) { container.innerHTML = '<div style="width:100px;height:100px;background:#eee;display:flex;align-items:center;justify-content:center;font-size:2rem">馃摫</div>'; }
+}
+
+function downloadAdminQR() {
+  const canvas = document.querySelector('#adminQR canvas');
+  if (!canvas) return alert('浜岀淮鐮佹湭鐢熸垚锛岃绋嶅悗閲嶈瘯');
+  const h = getCurrentHerb();
+  const link = document.createElement('a');
+  link.download = `QR-${h?h.id:'herb'}-${h?h.name:''}.png`;
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+}
+
+// ===== STATUS =====
+function markModified() {
+  isModified = true;
   const dot = document.getElementById('statusDot');
-  const txt = document.getElementById('statusText');
-  if(dot) dot.className = 'status-dot unsaved';
-  if(txt) txt.textContent = '鏈夋湭淇濆瓨鐨勪慨鏀?;
+  const text = document.getElementById('statusText');
+  if (dot) dot.className = 'status-dot modified';
+  if (text) text.textContent = '鏁版嵁宸蹭慨鏀癸紙鏈繚瀛橈級';
 }
 
-function updateStatus(text, dirty){
-  const dot = document.getElementById('statusDot');
-  const txt = document.getElementById('statusText');
-  if(dot) dot.className = dirty ? 'status-dot unsaved' : 'status-dot';
-  if(txt) txt.textContent = text;
+function updateStatus(text, modified) {
+  document.getElementById('statusText').textContent = text;
+  document.getElementById('statusDot').className = 'status-dot' + (modified ? ' modified' : '');
 }
 
 // ===== SAVE =====
-function saveLocal(){
-  const json = JSON.stringify(herbs, null, 2);
-  localStorage.setItem('herb-data-backup', json);
-
-  // Download data.json
-  const blob = new Blob([json], {type:'application/json'});
+function saveLocal() {
+  const json = JSON.stringify(DATA, null, 2);
+  const blob = new Blob([json], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
   a.download = 'data.json';
   a.click();
   URL.revokeObjectURL(url);
-  isDirty = false;
-  updateStatus('宸蹭繚瀛樺埌鏈湴', false);
-  showToast('data.json 宸蹭笅杞斤紝璇锋浛鎹㈤」鐩腑鐨勬枃浠?, 'success');
+
+  // Also backup to localStorage
+  try { localStorage.setItem('herb_data_backup', json); }
+  catch(e) { console.warn('localStorage backup failed', e); }
+
+  isModified = false;
+  updateStatus('宸蹭繚瀛樺埌鏈湴锛坉ata.json 宸蹭笅杞斤級', false);
 }
 
-// ===== DEPLOY TO GITHUB =====
-async function deploy(){
-  if(!GITHUB_TOKEN){
-    const input = prompt('璇疯緭鍏?GitHub Personal Access Token锛堜粎淇濆瓨鍦ㄦ湰鍦版祻瑙堝櫒锛?');
-    if(!input) return;
-    GITHUB_TOKEN = input;
-    localStorage.setItem('gh_token', input);
+// ===== DEPLOY =====
+async function deployToGitHub() {
+  if (!GITHUB_TOKEN) {
+    GITHUB_TOKEN = prompt('璇疯緭鍏?GitHub Personal Access Token锛堜粎淇濆瓨鍦ㄦ湰鍦版祻瑙堝櫒锛屼笉浼氫笂浼狅級锛?);
+    if (!GITHUB_TOKEN) return;
+    localStorage.setItem('gh_token', GITHUB_TOKEN);
   }
-  const btn = document.getElementById('btnDeploy');
-  const btn2 = document.getElementById('btnDeploy2');
-  if(btn) btn.disabled = true;
-  if(btn2) btn2.disabled = true;
-  updateStatus('姝ｅ湪閮ㄧ讲...', true);
 
-  try{
-    const dataJson = JSON.stringify(herbs, null, 2);
-    const dataContent = btoa(unescape(encodeURIComponent(dataJson)));
+  const json = JSON.stringify(DATA, null, 2);
+  const content = btoa(unescape(encodeURIComponent(json)));
+  const headers = { Authorization: 'Bearer ' + GITHUB_TOKEN, 'User-Agent': 'WorkBuddy-Admin' };
 
-    // Generate full index.html with embedded data
-    let htmlTemplate = await fetch('index.html').then(r => r.text());
-    // The index.html now loads from data.json, so we just need to upload both files
+  updateStatus('姝ｅ湪閮ㄧ讲 data.json...', true);
 
-    // Upload data.json
-    const dataBody = {
-      message: 'Update data.json via admin panel',
-      content: dataContent,
-      sha: null
-    };
+  try {
+    // Get current SHA
+    let sha = '';
+    try {
+      const r = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/data.json`, { headers });
+      if (r.ok) { const d = await r.json(); sha = d.sha; }
+    } catch(e) {}
 
-    // Try to get current SHA for data.json
-    try{
-      const shaRes = await githubAPI('GET', '/contents/data.json');
-      dataBody.sha = shaRes.sha;
-    }catch(e){}
+    const body = { message: 'Update data from admin panel', content, branch: 'main' };
+    if (sha) body.sha = sha;
 
-    await githubAPI('PUT', '/contents/data.json', dataBody);
+    const res = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/data.json`, {
+      method: 'PUT', headers, body: JSON.stringify(body)
+    });
 
-    updateStatus('閮ㄧ讲鎴愬姛锛?, false);
-    isDirty = false;
-    showToast('鏁版嵁宸查儴缃插埌 GitHub Pages锛岀害1-2鍒嗛挓鍚庣敓鏁?, 'success');
-  }catch(e){
-    updateStatus('閮ㄧ讲澶辫触', true);
-    showToast('閮ㄧ讲澶辫触: ' + e.message, 'error');
-  }finally{
-    if(btn) btn.disabled = false;
-    if(btn2) btn2.disabled = false;
+    if (res.ok) {
+      isModified = false;
+      updateStatus('鉁?閮ㄧ讲鎴愬姛锛?-2鍒嗛挓鍚庣嚎涓婄敓鏁?, false);
+    } else {
+      const err = await res.json();
+      if (err.message && err.message.includes('Bad credentials')) {
+        GITHUB_TOKEN = '';
+        localStorage.removeItem('gh_token');
+        updateStatus('鉂?Token 澶辨晥锛岃閲嶆柊閮ㄧ讲骞惰緭鍏ユ柊 Token', true);
+      } else {
+        updateStatus('鉂?閮ㄧ讲澶辫触: ' + (err.message||'鏈煡閿欒'), true);
+      }
+    }
+  } catch(e) {
+    updateStatus('鉂?缃戠粶閿欒锛岃妫€鏌ョ綉缁滃悗閲嶈瘯', true);
   }
 }
 
-async function githubAPI(method, path, body){
-  const res = await fetch('https://api.github.com/repos/' + GITHUB_USER + '/' + GITHUB_REPO + path, {
-    method: method,
-    headers: {
-      'Authorization': 'Bearer ' + GITHUB_TOKEN,
-      'Content-Type': 'application/json',
-      'Accept': 'application/vnd.github+json'
-    },
-    body: body ? JSON.stringify(body) : undefined
-  });
-  if(!res.ok){
-    const err = await res.json().catch(()=>({}));
-    throw new Error(err.message || res.statusText);
-  }
-  return res.json();
+// ===== PREVIEW =====
+function previewSite() {
+  window.open(BASE_URL, '_blank');
 }
 
-// ===== TOAST =====
-function showToast(msg, type){
-  const t = document.createElement('div');
-  t.className = 'toast ' + type;
-  t.textContent = msg;
-  document.body.appendChild(t);
-  setTimeout(() => { t.style.opacity = '0'; t.style.transition = 'opacity 0.3s'; setTimeout(() => t.remove(), 300); }, 2500);
-}
+// ===== UTIL =====
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
-// ===== STARTUP =====
+// ===== INIT =====
 init();
 </script>
 </body>
