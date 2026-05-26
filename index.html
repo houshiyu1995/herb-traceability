@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>涓嵂鏉愭函婧愬钩鍙?- 閬撳湴鑽潗鍏ㄧ▼杩芥函</title>
+<style>
+/* ===== Reset & Base ===== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --cream:#FFF8F0;
+  --warm-white:#FFFAF5;
+  --brown-dark:#3E2723;
+  --brown:#5D4037;
+  --brown-light:#8D6E63;
+  --gold:#C8A45C;
+  --gold-light:#F5E6CC;
+  --jade:#2E7D55;
+  --jade-light:#E8F5E9;
+  --red:#B71C1C;
+  --red-light:#FFEBEE;
+  --gray:#757575;
+  --gray-light:#F5F5F5;
+  --border:#E8DDD0;
+  --shadow:0 2px 12px rgba(62,39,35,0.08);
+  --shadow-hover:0 8px 32px rgba(62,39,35,0.14);
+  --radius:12px;
+  --radius-sm:8px;
+  --transition:0.3s cubic-bezier(0.4,0,0.2,1);
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:var(--cream);
+  color:var(--brown-dark);
+  line-height:1.7;
+  min-height:100vh;
+}
+.container{max-width:1200px;margin:0 auto;padding:0 20px}
+
+/* ===== Top Banner ===== */
+.top-banner{
+  background:linear-gradient(135deg,var(--brown-dark),var(--brown));
+  color:white;
+  text-align:center;
+  padding:8px 0;
+  font-size:0.85rem;
+  letter-spacing:2px;
+}
+.top-banner span{color:var(--gold-light)}
+
+/* ===== Header ===== */
+.header{
+  background:white;
+  border-bottom:1px solid var(--border);
+  position:sticky;top:0;z-index:100;
+  box-shadow:0 1px 4px rgba(0,0,0,0.04);
+}
+.header-inner{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 0;gap:20px;
+}
+.logo{
+  display:flex;align-items:center;gap:12px;
+  text-decoration:none;color:var(--brown-dark);
+}
+.logo-icon{
+  width:44px;height:44px;
+  background:linear-gradient(135deg,var(--gold),#A68A4E);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.5rem;color:white;
+}
+.logo-text h1{font-size:1.3rem;font-weight:700;line-height:1.2}
+.logo-text small{font-size:0.75rem;color:var(--brown-light)}
+
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{
+  text-decoration:none;color:var(--brown-light);
+  font-size:0.95rem;font-weight:500;
+  transition:var(--transition);padding:6px 0;
+  border-bottom:2px solid transparent;
+}
+.nav-links a:hover,.nav-links a.active{
+  color:var(--brown-dark);border-bottom-color:var(--gold);
+}
+.hamburger{display:none;background:none;border:none;cursor:pointer;padding:8px}
+.hamburger span{display:block;width:24px;height:2px;background:var(--brown-dark);margin:5px 0;transition:var(--transition)}
+
+/* ===== Hero ===== */
+.hero{
+  background:linear-gradient(135deg,var(--brown-dark) 0%,#4E342E 40%,#6D4C41 100%);
+  color:white;padding:80px 0 60px;position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 20% 50%,rgba(200,164,92,0.15) 0%,transparent 50%),
+             radial-gradient(circle at 80% 30%,rgba(46,125,85,0.1) 0%,transparent 50%);
+}
+.hero-inner{position:relative;z-index:1;max-width:700px}
+.hero-inner h2{font-size:2.6rem;font-weight:800;line-height:1.3;margin-bottom:16px}
+.hero-inner h2 span{color:var(--gold)}
+.hero-inner p{font-size:1.1rem;opacity:0.85;margin-bottom:32px;line-height:1.8}
+.hero-stats{display:flex;gap:40px}
+.hero-stat{text-align:center}
+.hero-stat .num{font-size:2rem;font-weight:800;color:var(--gold)}
+.hero-stat .label{font-size:0.85rem;opacity:0.7;margin-top:4px}
+
+/* ===== Search & Filter ===== */
+.search-section{padding:32px 0}
+.search-bar{
+  display:flex;gap:12px;flex-wrap:wrap;align-items:center;
+  background:white;padding:20px 24px;border-radius:var(--radius);
+  box-shadow:var(--shadow);
+}
+.search-input{
+  flex:1;min-width:220px;
+  border:2px solid var(--border);border-radius:var(--radius-sm);
+  padding:12px 16px;font-size:0.95rem;outline:none;
+  transition:var(--transition);background:var(--warm-white);
+}
+.search-input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(200,164,92,0.15)}
+.filter-select{
+  border:2px solid var(--border);border-radius:var(--radius-sm);
+  padding:12px 36px 12px 16px;font-size:0.95rem;
+  background:var(--warm-white);cursor:pointer;outline:none;
+  appearance:none;-webkit-appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%235D4037' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 12px center;
+  transition:var(--transition);
+}
+.filter-select:focus{border-color:var(--gold)}
+.btn-primary{
+  background:var(--brown-dark);color:white;border:none;
+  border-radius:var(--radius-sm);padding:12px 28px;
+  font-size:0.95rem;font-weight:600;cursor:pointer;
+  transition:var(--transition);white-space:nowrap;
+}
+.btn-primary:hover{background:var(--brown);transform:translateY(-1px);box-shadow:0 4px 12px rgba(62,39,35,0.25)}
+
+/* ===== Herb Cards Grid ===== */
+.herbs-section{padding:8px 0 60px}
+.herbs-section h3{
+  font-size:1.5rem;margin-bottom:24px;color:var(--brown-dark);
+  display:flex;align-items:center;gap:10px;
+}
+.herbs-section h3::after{
+  content:'';flex:1;height:1px;background:var(--border);
+}
+.herbs-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(270px,1fr));
+  gap:24px;
+}
+.herb-card{
+  background:white;border-radius:var(--radius);
+  overflow:hidden;box-shadow:var(--shadow);
+  cursor:pointer;transition:var(--transition);
+  position:relative;
+}
+.herb-card:hover{
+  transform:translateY(-6px);
+  box-shadow:var(--shadow-hover);
+}
+.herb-card-img{
+  height:200px;position:relative;overflow:hidden;
+}
+.herb-card-img .img-bg{
+  width:100%;height:100%;object-fit:cover;display:block;
+}
+.herb-card-badge{
+  position:absolute;top:12px;right:12px;
+  background:rgba(0,0,0,0.55);color:white;
+  padding:4px 12px;border-radius:20px;
+  font-size:0.78rem;backdrop-filter:blur(4px);
+}
+.herb-card-body{padding:18px 20px}
+.herb-card-body h4{font-size:1.2rem;margin-bottom:4px;color:var(--brown-dark)}
+.herb-card-body .latin{font-size:0.8rem;color:var(--brown-light);font-style:italic;margin-bottom:10px}
+.herb-card-meta{display:flex;gap:16px;font-size:0.8rem;color:var(--gray);margin-bottom:14px}
+.herb-card-meta span{display:flex;align-items:center;gap:4px}
+.herb-card-btn{
+  display:block;width:100%;padding:10px;border:2px solid var(--brown-dark);
+  border-radius:var(--radius-sm);text-align:center;
+  color:var(--brown-dark);font-weight:600;font-size:0.9rem;
+  cursor:pointer;transition:var(--transition);
+  background:transparent;text-decoration:none;
+}
+.herb-card-btn:hover{background:var(--brown-dark);color:white}
+
+/* ===== Detail Page ===== */
+.detail-overlay{
+  display:none;position:fixed;inset:0;z-index:200;
+  background:var(--cream);overflow-y:auto;
+}
+.detail-overlay.active{display:block;animation:fadeIn 0.3s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+.detail-header-bar{
+  background:white;border-bottom:1px solid var(--border);
+  position:sticky;top:0;z-index:10;padding:12px 0;
+}
+.detail-header-inner{display:flex;align-items:center;gap:16px}
+.btn-back{
+  background:none;border:2px solid var(--border);border-radius:50%;
+  width:40px;height:40px;display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:1.2rem;color:var(--brown-dark);transition:var(--transition);
+}
+.btn-back:hover{background:var(--gray-light);border-color:var(--brown-light)}
+.detail-title{font-size:1.2rem;font-weight:700;color:var(--brown-dark)}
+
+.detail-hero{
+  position:relative;height:340px;overflow:hidden;
+  margin-bottom:24px;border-radius:var(--radius);
+}
+.detail-hero .hero-img{width:100%;height:100%;object-fit:cover}
+.detail-hero-overlay{
+  position:absolute;bottom:0;left:0;right:0;
+  background:linear-gradient(transparent,rgba(0,0,0,0.7));
+  padding:40px 32px 28px;color:white;
+}
+.detail-hero-overlay h2{font-size:2rem;font-weight:800;margin-bottom:4px}
+.detail-hero-overlay .sub{font-size:1rem;opacity:0.85}
+
+/* ===== Tabs ===== */
+.tabs-container{padding:0 0 60px}
+.tabs-nav{
+  display:flex;gap:0;background:white;border-radius:var(--radius);
+  box-shadow:var(--shadow);overflow:hidden;margin-bottom:24px;
+  flex-wrap:wrap;
+}
+.tab-btn{
+  flex:1;min-width:100px;padding:16px 12px;border:none;background:transparent;
+  font-size:0.9rem;font-weight:600;color:var(--brown-light);
+  cursor:pointer;transition:var(--transition);position:relative;
+  white-space:nowrap;
+}
+.tab-btn:hover{color:var(--brown-dark);background:var(--warm-white)}
+.tab-btn.active{color:var(--brown-dark);background:var(--gold-light)}
+.tab-btn.active::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:3px;
+  background:var(--gold);border-radius:3px 3px 0 0;
+}
+
+.tab-panel{display:none;animation:fadeIn 0.35s ease}
+.tab-panel.active{display:block}
+
+/* ===== Info Card ===== */
+.info-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:20px;
+}
+.info-item{
+  background:white;border-radius:var(--radius);padding:20px;
+  box-shadow:var(--shadow);border-left:4px solid var(--gold);
+}
+.info-item .label{font-size:0.8rem;color:var(--brown-light);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.info-item .value{font-size:1.05rem;color:var(--brown-dark);font-weight:600}
+
+/* ===== Traceability Timeline ===== */
+.timeline{
+  position:relative;padding-left:40px;margin-top:8px;
+}
+.timeline::before{
+  content:'';position:absolute;left:16px;top:0;bottom:0;
+  width:2px;background:linear-gradient(to bottom,var(--gold),var(--jade));
+}
+.timeline-item{
+  position:relative;margin-bottom:32px;padding:20px 24px;
+  background:white;border-radius:var(--radius);box-shadow:var(--shadow);
+}
+.timeline-item::before{
+  content:'';position:absolute;left:-32px;top:24px;
+  width:14px;height:14px;border-radius:50%;
+  background:var(--gold);border:3px solid white;
+  box-shadow:0 0 0 3px var(--gold-light);
+}
+.timeline-item.current::before{background:var(--jade);box-shadow:0 0 0 3px var(--jade-light)}
+.timeline-item.done::before{background:var(--gold)}
+.timeline-item .stage{
+  display:inline-block;background:var(--gold-light);color:var(--brown-dark);
+  padding:3px 14px;border-radius:20px;font-size:0.82rem;font-weight:700;
+  margin-bottom:10px;
+}
+.timeline-item.current .stage{background:var(--jade-light);color:var(--jade)}
+.timeline-item .time{font-size:0.85rem;color:var(--gray);margin-bottom:6px}
+.timeline-item .desc{font-size:0.95rem;color:var(--brown-dark);margin-bottom:8px}
+.timeline-item .meta-row{display:flex;gap:20px;flex-wrap:wrap;font-size:0.82rem;color:var(--brown-light)}
+.timeline-item .meta-row span{display:flex;align-items:center;gap:4px}
+
+/* ===== Quality Report ===== */
+.quality-card{
+  background:white;border-radius:var(--radius);padding:28px;
+  box-shadow:var(--shadow);margin-bottom:20px;
+}
+.quality-card h4{font-size:1.1rem;margin-bottom:20px;color:var(--brown-dark);border-bottom:2px solid var(--gold-light);padding-bottom:10px}
+.quality-table{width:100%;border-collapse:collapse}
+.quality-table td{
+  padding:12px 16px;border-bottom:1px solid var(--border);
+  font-size:0.92rem;
+}
+.quality-table td:first-child{color:var(--brown-light);width:35%;font-weight:500}
+.quality-table td:last-child{color:var(--brown-dark);font-weight:600}
+.quality-pass{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--jade-light);color:var(--jade);
+  padding:6px 16px;border-radius:20px;font-weight:700;font-size:0.9rem;
+}
+.qr-section{
+  display:flex;align-items:center;gap:20px;margin-top:24px;
+  padding:20px;background:var(--warm-white);border-radius:var(--radius);
+  border:1px dashed var(--border);
+}
+.qr-code{
+  width:100px;height:100px;background:white;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:4rem;border:1px solid var(--border);
+}
+
+/* ===== Enterprise ===== */
+.enterprise-card{
+  background:white;border-radius:var(--radius);padding:28px;
+  box-shadow:var(--shadow);
+}
+.enterprise-card h4{font-size:1.15rem;color:var(--brown-dark);margin-bottom:16px}
+.enterprise-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:16px;
+}
+.enterprise-item{padding:14px 0;border-bottom:1px solid var(--border)}
+.enterprise-item .lbl{font-size:0.8rem;color:var(--brown-light);margin-bottom:2px}
+.enterprise-item .val{font-size:0.95rem;color:var(--brown-dark);font-weight:500}
+
+/* ===== Image Gallery ===== */
+.gallery{padding:24px 0}
+.gallery h4{font-size:1.1rem;margin-bottom:16px;color:var(--brown-dark)}
+.gallery-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+  gap:16px;
+}
+.gallery-item{
+  border-radius:var(--radius);overflow:hidden;
+  box-shadow:var(--shadow);cursor:pointer;transition:var(--transition);
+  aspect-ratio:4/3;
+}
+.gallery-item:hover{transform:scale(1.03);box-shadow:var(--shadow-hover)}
+.gallery-item .g-img{width:100%;height:100%;object-fit:cover}
+
+/* ===== Lightbox ===== */
+.lightbox{
+  display:none;position:fixed;inset:0;z-index:300;
+  background:rgba(0,0,0,0.9);align-items:center;justify-content:center;
+}
+.lightbox.active{display:flex}
+.lightbox img{max-width:90vw;max-height:85vh;border-radius:8px}
+.lightbox-close{
+  position:absolute;top:20px;right:20px;
+  background:white;border:none;width:44px;height:44px;
+  border-radius:50%;font-size:1.4rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+}
+
+/* ===== Footer ===== */
+.footer{
+  background:var(--brown-dark);color:white;padding:48px 0 24px;margin-top:60px;
+}
+.footer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:32px;margin-bottom:32px}
+.footer h5{font-size:1rem;margin-bottom:14px;color:var(--gold)}
+.footer p,.footer a{font-size:0.88rem;color:rgba(255,255,255,0.7);line-height:2;text-decoration:none}
+.footer a:hover{color:var(--gold)}
+.footer-bottom{text-align:center;padding-top:24px;border-top:1px solid rgba(255,255,255,0.1);font-size:0.8rem;color:rgba(255,255,255,0.45)}
+
+/* ===== Responsive ===== */
+@media(max-width:768px){
+  .nav-links{display:none;position:absolute;top:100%;left:0;right:0;
+    background:white;flex-direction:column;padding:16px 20px;
+    box-shadow:0 8px 24px rgba(0,0,0,0.1);gap:0
+  }
+  .nav-links.open{display:flex}
+  .nav-links a{padding:12px 0;border-bottom:1px solid var(--border)}
+  .hamburger{display:block}
+  .hero-inner h2{font-size:1.8rem}
+  .hero-stats{gap:20px;flex-wrap:wrap}
+  .herbs-grid{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
+  .detail-hero{height:240px}
+  .detail-hero-overlay h2{font-size:1.4rem}
+  .tabs-nav{flex-direction:column}
+  .tab-btn{text-align:left;padding:14px 20px}
+  .tab-btn.active::after{display:none}
+  .tab-btn.active{border-left:3px solid var(--gold)}
+  .timeline{padding-left:32px}
+  .timeline-item::before{left:-24px;width:12px;height:12px}
+}
+@media(max-width:480px){
+  .herbs-grid{grid-template-columns:1fr}
+  .search-bar{flex-direction:column}
+  .info-grid{grid-template-columns:1fr}
+  .enterprise-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- Top Banner -->
+<div class="top-banner">
+  馃攳 <span>閬撳湴鑽潗 路 涓€鐗╀竴鐮?路 鍏ㄧ▼杩芥函</span> 路 涓嵂鏉愯川閲忔函婧愬钩鍙?</div>
+
+<!-- Header -->
+<header class="header">
+  <div class="container header-inner">
+    <a href="#" class="logo" onclick="goHome()">
+      <div class="logo-icon">馃尶</div>
+      <div class="logo-text">
+        <h1>鏈崏婧簮</h1>
+        <small>Herbal Traceability System</small>
+      </div>
+    </a>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="鑿滃崟">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#" class="active" onclick="goHome()">棣栭〉</a></li>
+      <li><a href="#" onclick="scrollToSection('herbs-section')">鑽潗搴?/a></li>
+      <li><a href="#" onclick="scrollToSection('footer')">鍏充簬鎴戜滑</a></li>
+      <li><a href="#" style="background:var(--brown-dark);color:white!important;padding:6px 16px!important;border-radius:20px;">鎵爜婧簮</a></li>
+    </ul>
+  </div>
+</header>
+
+<!-- Main Content -->
+<main id="mainPage">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <h2>閬撳湴鑽潗 <span>婧簮鏌ヨ</span><br>浠庣敯闂村埌鑽埧 鍏ㄧ▼鍙拷婧?/h2>
+      <p>渚濇墭鍖哄潡閾炬函婧愭妧鏈紝瀹炵幇涓嵂鏉愪粠绉嶆銆侀噰鏀躲€佸姞宸ュ埌閿€鍞殑鍏ㄧ▼璐ㄩ噺杩芥函銆傛瘡鍛宠嵂鏉愭嫢鏈夊敮涓€鐨勬暟瀛楄韩浠斤紝鎵爜鍗冲彲鏌ョ湅瀹屾暣鐢熼暱妗ｆ涓庢娴嬫姤鍛娿€?/p>
+      <div class="hero-stats">
+        <div class="hero-stat"><div class="num">8</div><div class="label">閬撳湴鑽潗鍝佺</div></div>
+        <div class="hero-stat"><div class="num">100%</div><div class="label">璐ㄦ瑕嗙洊鐜?/div></div>
+        <div class="hero-stat"><div class="num">7</div><div class="label">杩芥函鐜妭</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Search & Filter -->
+  <section class="search-section" id="herbs-section">
+    <div class="container">
+      <div class="search-bar">
+        <input type="text" class="search-input" placeholder="馃攳 鎼滅储鑽潗鍚嶇О銆佷骇鍦版垨鎵瑰彿..." id="searchInput" oninput="filterHerbs()">
+        <select class="filter-select" id="categoryFilter" onchange="filterHerbs()">
+          <option value="all">馃搨 鍏ㄩ儴鍒嗙被</option>
+          <option value="琛ユ皵鑽?>琛ユ皵鑽?/option>
+          <option value="琛ヨ鑽?>琛ヨ鑽?/option>
+          <option value="娲昏鍖栫榾鑽?>娲昏鍖栫榾鑽?/option>
+          <option value="瀹夌鑽?>瀹夌鑽?/option>
+          <option value="骞宠倽鎭鑽?>骞宠倽鎭鑽?/option>
+        </select>
+        <select class="filter-select" id="originFilter" onchange="filterHerbs()">
+          <option value="all">馃搷 鍏ㄩ儴浜у湴</option>
+          <option value="鍚夋灄">鍚夋灄</option>
+          <option value="鐢樿們">鐢樿們</option>
+          <option value="瀹佸">瀹佸</option>
+          <option value="浜戝崡">浜戝崡</option>
+          <option value="瀹夊窘">瀹夊窘</option>
+          <option value="鍥涘窛">鍥涘窛</option>
+          <option value="灞变笢">灞变笢</option>
+        </select>
+        <button class="btn-primary" onclick="resetFilters()">閲嶇疆绛涢€?/button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Herb Cards -->
+  <section class="herbs-section">
+    <div class="container">
+      <h3>閬撳湴鑽潗搴?<span style="font-size:0.85rem;color:var(--gray);font-weight:400" id="resultCount"></span></h3>
+      <div class="herbs-grid" id="herbsGrid"></div>
+    </div>
+  </section>
+</main>
+
+<!-- Detail Overlay -->
+<div class="detail-overlay" id="detailOverlay">
+  <div class="detail-header-bar">
+    <div class="container detail-header-inner">
+      <button class="btn-back" onclick="closeDetail()" aria-label="杩斿洖">鈫?/button>
+      <div class="detail-title" id="detailPageTitle">鑽潗璇︽儏</div>
+    </div>
+  </div>
+  <div id="detailContent"></div>
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">鉁?/button>
+  <img src="" alt="" id="lightboxImg">
+</div>
+
+<!-- Footer -->
+<footer class="footer" id="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h5>馃尶 鏈崏婧簮骞冲彴</h5>
+        <p>鑷村姏浜庨亾鍦颁腑鑽潗鐨勮川閲忚拷婧綋绯诲缓璁撅紝杩愮敤鏁板瓧鍖栨墜娈典繚闅滀腑鑽潗浠庣妞嶆簮澶村埌娑堣垂缁堢鐨勫叏绋嬭川閲忓彲鎺с€佹潵婧愬彲鏌ャ€佸幓鍚戝彲杩姐€?/p>
+      </div>
+      <div>
+        <h5>杩芥函鏈嶅姟</h5>
+        <p><a href="#">鑽潗婧簮鏌ヨ</a></p>
+        <p><a href="#">璐ㄦ鎶ュ憡楠岃瘉</a></p>
+        <p><a href="#">浼佷笟璧勮川鏌ラ獙</a></p>
+        <p><a href="#">闃蹭吉鐮侀獙璇?/a></p>
+      </div>
+      <div>
+        <h5>鍏充簬鎴戜滑</h5>
+        <p><a href="#">骞冲彴浠嬬粛</a></p>
+        <p><a href="#">鎶€鏈柟妗?/a></p>
+        <p><a href="#">鍚堜綔浼佷笟</a></p>
+        <p><a href="#">鑱旂郴鏂瑰紡</a></p>
+      </div>
+      <div>
+        <h5>鑱旂郴鏂瑰紡</h5>
+        <p>馃摟 traceability@herb.cn</p>
+        <p>馃摓 400-XXX-XXXX</p>
+        <p>馃晲 宸ヤ綔鏃?9:00-18:00</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      漏 2026 鏈崏婧簮骞冲彴 | 涓嵂鏉愯川閲忚拷婧郴缁?| 鏁版嵁鏉ユ簮锛氫腑鍥介鍝佽嵂鍝佹瀹氱爺绌堕櫌 路 鍚勭渷鑽鎵€
+    </div>
+  </div>
+</footer>
+
+<script>
+// ===== DATA =====
+const herbs = [
+  {
+    id:1,name:'浜哄弬',latin:'Panax Ginseng',category:'琛ユ皵鑽?,
+    origin:'鍚夋灄鐪侀暱鐧藉北鎶氭澗鍘?,batch:'RS202605001',year:'2026',
+    colors:['#8B7355','#6B5340'],
+    emoji:'馃尡',
+    imgs:['https://images.unsplash.com/photo-1540835296355-22b498f3e6e6?w=600&q=80',
+          'https://images.unsplash.com/photo-1597733336794-12d05021d50e?w=600&q=80',
+          'https://images.unsplash.com/photo-1580397581145-cdb6a2b4b2a6?w=600&q=80',
+          'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=600&q=80'],
+    productInfo:{'鍝佸悕':'闀跨櫧灞遍噹灞卞弬','瑙勬牸':'鐗圭骇 15-20骞村弬榫?,'鎵瑰彿':'RS202605001','浜у湴':'鍚夋灄鐪佺櫧灞卞競鎶氭澗鍘夸竾鑹晣','鐢熶骇鏃ユ湡':'2026-03-15','鏈夋晥鏈熻嚦':'2028-03-14','鍑€鍚噺':'100g/鐩?,'璐棌鏉′欢':'闃村噳骞茬嚗澶勶紝瀵嗛棴闃茶泙','鎵ц鏍囧噯':'銆婁腑鍥借嵂鍏搞€?025骞寸増'},
+    productionInfo:{'绉嶆鏂瑰紡':'鏋椾笅灞卞湴浠块噹鐢熺妞?,'绉嶆骞撮檺':'18骞?,'绉嶆鐜':'娴锋嫈800-1200绫充笢鍖楀潯閽堥様娣蜂氦鏋?,'鍦熷￥绫诲瀷':'鏆楁澹わ紝pH5.5-6.5','閲囨敹鏃堕棿':'2025骞?鏈堬紙绉嬪鍦颁笂閮ㄥ垎鏋悗鍚庨噰鎸栵級','鍔犲伐宸ヨ壓':'浼犵粺鏅炬檼鈫掍綆娓╁共鐕?40鈩?鈫掔簿閫夊垎绾р啋鐪熺┖鍖呰','鍔犲伐浼佷笟':'鍚夋灄鎶氭澗鍙備笟鏈夐檺鍏徃','鍔犲伐鏃ユ湡':'2025骞?0鏈?},
+    traceability:[
+      {stage:'閫夌鑲茶嫍',location:'闀跨櫧灞辨姎鏉惧幙涓囪壇闀?,time:'2008骞存槬',desc:'閫夌敤闀跨櫧灞辨湰鍦板搧绉?鎶氭澗澶ч┈鐗?浜哄弬绉嶅瓙锛岀粡灞傜Н澶勭悊鍚庢挱绉嶄簬鏋楀湴鑻楀簥',operator:'寮犲痉绂?,status:'done'},
+      {stage:'鐢熼暱绠＄悊',location:'闀跨櫧灞辨姎鏉惧幙涓囪壇闀?,time:'2008-2025',desc:'浠块噹鐢熺幆澧冪鐞嗭紝涓嶄娇鐢ㄥ寲瀛﹁偉鏂欏拰鍐滆嵂锛屼緷闈犺惤鍙惰厫娈栬川鎻愪緵鍏诲垎锛屽畾鏈熶汉宸ラ櫎鑽?,operator:'寮犲痉绂?,status:'done'},
+      {stage:'閲囨敹',location:'闀跨櫧灞辨姎鏉惧幙涓囪壇闀?,time:'2025骞?鏈?5鏃?,desc:'绉嬪鍦颁笂閮ㄥ垎鏋悗鍚庝汉宸ラ噰鎸栵紝浣跨敤绔瑰埗宸ュ叿淇濇姢鏍归』瀹屾暣锛岀幇鍦哄垵绛涘垎绾?,operator:'閲囨敹鐝粍A缁?(鐜嬪缓鍥界瓑6浜?',status:'done'},
+      {stage:'鍒濆姞宸?,location:'鎶氭澗鍘夸汉鍙傚姞宸ュ熀鍦?,time:'2025骞?鏈?6鏃?10鏈?鏃?,desc:'娓呮按杞绘煍鍒锋礂鍘婚櫎娉ュ湡鈫掕嚜鐒舵櫨鏅?澶┾啋鎭掓俯骞茬嚗绠?0鈩冧綆娓╃儤骞?2灏忔椂鈫掍汉宸ョ簿閫夊垎绾р啋鐪熺┖鍖呰',operator:'鍔犲伐鐝粍B缁?(鏉庣鑻辩瓑4浜?',status:'done'},
+      {stage:'璐ㄦ',location:'鍚夋灄鐪佽嵂鍝佹楠屾墍',time:'2025骞?0鏈?11鏈?,desc:'渚濇嵁銆婁腑鍥借嵂鍏搞€?025骞寸増浜哄弬椤逛笅鏍囧噯杩涜鍏ㄩ」妫€娴嬶紝鍖呮嫭锛氫汉鍙傜殏鑻峰惈閲忔祴瀹氥€佹按鍒嗐€佺伆鍒嗐€侀噸閲戝睘銆佸啘娈嬨€佸井鐢熺墿闄愬害绛?,operator:'妫€娴嬩腑蹇?,status:'done'},
+      {stage:'鍖呰璧嬬爜',location:'鎶氭澗鍘垮寘瑁呰溅闂?,time:'2026骞?鏈?0鏃?,desc:'鐪熺┖瀵嗗皝鍖呰锛屾瘡鐩掔矘璐村敮涓€杩芥函浜岀淮鐮侊紝鍏宠仈鎵规淇℃伅涓庢娴嬫姤鍛?,operator:'鍖呰鐝粍C缁?,status:'done'},
+      {stage:'鍑哄巶閿€鍞?,location:'鎶氭澗鍘夸粨鍌ㄧ墿娴佷腑蹇?,time:'2026骞?鏈?5鏃?,desc:'妫€楠屽悎鏍硷紝鍑嗕簣鍑哄巶銆傝拷婧暟鎹笂閾惧瓨璇侊紝娑堣垂鑰呮壂鐮佸嵆鍙煡鐪嬪畬鏁存函婧愪俊鎭?,operator:'璐ㄩ噺閮?璧垫案寮?,status:'current'}
+    ],
+    qualityInfo:{'妫€娴嬫爣鍑?:'銆婁腑鍥借嵂鍏搞€?025骞寸増 涓€閮?,'妫€娴嬫満鏋?:'鍚夋灄鐪佽嵂鍝佹楠屾墍','鎶ュ憡缂栧彿':'JL2025-RS-08921','妫€娴嬫棩鏈?:'2025骞?1鏈?,'浜哄弬鐨傝嫹Rg1+Re':'鈮?.30% (瀹炴祴: 0.42% 鉁?','浜哄弬鐨傝嫹Rb1':'鈮?.20% (瀹炴祴: 0.35% 鉁?','姘村垎':'鈮?2.0% (瀹炴祴: 9.8% 鉁?','鎬荤伆鍒?:'鈮?.0% (瀹炴祴: 3.2% 鉁?','閰镐笉婧舵€х伆鍒?:'鈮?.0% (瀹炴祴: 0.4% 鉁?','閲嶉噾灞炲強鏈夊鍏冪礌':'閾呪墹5mg/kg 闀夆墹1mg/kg 鐮封墹2mg/kg 姹炩墹0.2mg/kg 閾溾墹20mg/kg 鈫?鍏ㄩ儴绗﹀悎','鍐滆嵂娈嬬暀':'33绉嶇鐢ㄥ啘鑽?鈫?鏈鍑?鉁?,'寰敓鐗╅檺搴?:'闇€姘ц弻鎬绘暟鈮?0鲁cfu/g 闇夎弻鍜岄叺姣嶈弻鎬绘暟鈮?0虏cfu/g 澶ц偁鍩冨笇鑿屼笉寰楁鍑?鈫?鍏ㄩ儴鍚堟牸 鉁?,'妫€娴嬬粨璁?:'鏈搧鎸夈€婁腑鍥借嵂鍏搞€?025骞寸増妫€楠岋紝缁撴灉绗﹀悎瑙勫畾銆?},
+    enterpriseInfo:{'浼佷笟鍚嶇О':'鍚夋灄鎶氭澗鍙備笟鏈夐檺鍏徃','缁熶竴绀句細淇＄敤浠ｇ爜':'91220621MA0Y5XXXXX','娉曞畾浠ｈ〃浜?:'鏉庢槑杩?,'娉ㄥ唽璧勬湰':'5000涓囧厓','鎴愮珛鏃ユ湡':'2016骞?鏈?,'娉ㄥ唽鍦板潃':'鍚夋灄鐪佺櫧灞卞競鎶氭澗鍘夸竾鑹晣浜哄弬浜т笟鍥?8鍙?,'鑱旂郴鐢佃瘽':'0439-6XXXXXX','鐢熶骇璁稿彲璇佸彿':'鍚?016XXXX','GAP璁よ瘉':'宸查€氳繃涓嵂鏉愮敓浜ц川閲忕鐞嗚鑼?GAP)璁よ瘉','ISO璁よ瘉':'ISO 9001:2015 璐ㄩ噺绠＄悊浣撶郴璁よ瘉','GMP璁よ瘉':'宸查€氳繃鑽搧鐢熶骇璐ㄩ噺绠＄悊瑙勮寖(GMP)璁よ瘉','缁忚惀鑼冨洿':'浜哄弬绉嶆銆佸姞宸ャ€侀攢鍞紱涓嵂鏉愮妞嶆妧鏈爺鍙戜笌鎺ㄥ箍'}
+  },
+  {
+    id:2,name:'褰撳綊',latin:'Angelica sinensis',category:'琛ヨ鑽?,
+    origin:'鐢樿們鐪佸卜鍘?,batch:'DG202604002',year:'2026',
+    colors:['#C49A6C','#A0784C'],
+    emoji:'馃尭',
+    imgs:['https://images.unsplash.com/photo-1599812536403-23b558bdd9d8?w=600&q=80',
+          'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=600&q=80',
+          'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=600&q=80',
+          'https://images.unsplash.com/photo-1615485290502-413a6cf11bc0?w=600&q=80'],
+    productInfo:{'鍝佸悕':'宀峰幙褰撳綊','瑙勬牸':'鐗圭骇鍏ㄥ綊','鎵瑰彿':'DG202604002','浜у湴':'鐢樿們鐪佸畾瑗垮競宀峰幙鍗侀噷闀?,'鐢熶骇鏃ユ湡':'2026-04-10','鏈夋晥鏈熻嚦':'2028-04-09','鍑€鍚噺':'500g/琚?,'璐棌鏉′欢':'闃村噳骞茬嚗澶勶紝闃叉疆闃茶泙','鎵ц鏍囧噯':'銆婁腑鍥借嵂鍏搞€?025骞寸増'},
+    productionInfo:{'绉嶆鏂瑰紡':'姊敯瑙勮寖鍖栫妞?,'绉嶆骞撮檺':'3骞?,'绉嶆鐜':'娴锋嫈2200-2800绫抽珮瀵掗槾婀垮北鍖?,'鍦熷￥绫诲瀷':'榛戦挋鍦燂紝pH6.5-7.5','閲囨敹鏃堕棿':'2025骞?0鏈堬紙闇滈檷鍓嶅悗閲囨寲锛?,'鍔犲伐宸ヨ壓':'閲囨寲鈫掓櫨鏅掆啋鎹嗘妸鈫掔啅纭紙闄愰噺锛夆啋鍒囩墖鈫掔儤骞测啋绛涢€?,'鍔犲伐浼佷笟':'宀峰幙涓嵂鏉愬姞宸ユ湁闄愬叕鍙?,'鍔犲伐鏃ユ湡':'2025骞?1鏈?},
+    traceability:[
+      {stage:'閫夌鑲茶嫍',location:'宀峰幙鍗侀噷闀囪偛鑻楀熀鍦?,time:'2022骞存槬',desc:'閫夌敤宀峰幙閬撳湴褰撳綊绉嶅瓙锛屾俯瀹よ偛鑻楄嚦鑻楅珮8-10cm鍚庣Щ鏍?,operator:'椹崰濂?,status:'done'},
+      {stage:'鐢伴棿绠＄悊',location:'宀峰幙鍗侀噷闀囩妞嶅熀鍦?,time:'2022-2025',desc:'鏂界敤鍐滃鑲ヤ负涓伙紝鍚堢悊杞綔闃茬梾瀹筹紝浜哄伐闄よ崏锛屼笉浣跨敤楂樻瘨鍐滆嵂',operator:'椹崰濂?,status:'done'},
+      {stage:'閲囨敹',location:'宀峰幙鍗侀噷闀囩妞嶅熀鍦?,time:'2025骞?0鏈?0鏃?,desc:'闇滈檷鍓嶅悗閲囨寲锛屼繚鎸佹牴鏉″畬鏁达紝鍘婚櫎娉ュ湡鍜岃寧鍙讹紝鍒嗙骇鍫嗘斁',operator:'閲囨敹鐝粍D缁?,status:'done'},
+      {stage:'鍒濆姞宸?,location:'宀峰幙涓嵂鏉愬姞宸ュ熀鍦?,time:'2025骞?0鏈?11鏈?,desc:'鑷劧鏅炬檼鑷冲崐骞测啋鎹嗘垚灏忔妸鈫掑井閲忕～纾虹啅钂搁槻铏啋鍒囩墖鈫掍綆娓╃儤骞测啋绛涢€夊垎绾?,operator:'鍔犲伐鐝粍E缁?,status:'done'},
+      {stage:'璐ㄦ',location:'鐢樿們鐪佽嵂鍝佹楠岀爺绌堕櫌',time:'2025骞?2鏈?,desc:'妫€娴嬮樋榄忛吀鍚噺銆佹尌鍙戞补銆佹按鍒嗐€佹€荤伆鍒嗐€侀吀涓嶆憾鎬х伆鍒嗐€侀噸閲戝睘鍙婂啘娈?,operator:'妫€娴嬩腑蹇?,status:'done'},
+      {stage:'鍖呰璧嬬爜',location:'宀峰幙鍖呰杞﹂棿',time:'2026骞?鏈?鏃?,desc:'椋熷搧绾у鏂欒瀵嗗皝鍖呰锛岀矘璐磋拷婧簩缁寸爜',operator:'鍖呰鐝粍F缁?,status:'done'},
+      {stage:'鍑哄巶閿€鍞?,location:'宀峰幙浠撳偍涓績',time:'2026骞?鏈?0鏃?,desc:'妫€楠屽悎鏍煎嚭鍘傦紝杩芥函淇℃伅宸蹭笂閾?,operator:'璐ㄩ噺閮?,status:'current'}
+    ],
+    qualityInfo:{'妫€娴嬫爣鍑?:'銆婁腑鍥借嵂鍏搞€?025骞寸増 涓€閮?,'妫€娴嬫満鏋?:'鐢樿們鐪佽嵂鍝佹楠岀爺绌堕櫌','鎶ュ憡缂栧彿':'GS2025-DG-07632','妫€娴嬫棩鏈?:'2025骞?2鏈?,'闃块瓘閰?:'鈮?.050% (瀹炴祴: 0.072% 鉁?','鎸ュ彂娌?:'鈮?.4% (瀹炴祴: 0.55% 鉁?','姘村垎':'鈮?5.0% (瀹炴祴: 11.2% 鉁?','鎬荤伆鍒?:'鈮?.0% (瀹炴祴: 4.8% 鉁?','閰镐笉婧舵€х伆鍒?:'鈮?.0% (瀹炴祴: 1.1% 鉁?','閲嶉噾灞炲強鏈夊鍏冪礌':'鍏ㄩ儴绗﹀悎瑙勫畾 鉁?,'鍐滆嵂娈嬬暀':'33绉嶇鐢ㄥ啘鑽?鈫?鏈鍑?鉁?,'妫€娴嬬粨璁?:'鏈搧鎸夈€婁腑鍥借嵂鍏搞€?025骞寸増妫€楠岋紝缁撴灉绗﹀悎瑙勫畾銆?},
+    enterpriseInfo:{'浼佷笟鍚嶇О':'宀峰幙涓嵂鏉愬姞宸ユ湁闄愬叕鍙?,'缁熶竴绀句細淇＄敤浠ｇ爜':'91621126MA7XXXXXXX','娉曞畾浠ｈ〃浜?:'椹枃鍗?,'娉ㄥ唽璧勬湰':'3000涓囧厓','鎴愮珛鏃ユ湡':'2018骞?鏈?,'娉ㄥ唽鍦板潃':'鐢樿們鐪佸畾瑗垮競宀峰幙鍗侀噷闀囦腑鑽潗浜т笟鍥尯','鑱旂郴鐢佃瘽':'0932-7XXXXXX','鐢熶骇璁稿彲璇佸彿':'鐢?018XXXX','GAP璁よ瘉':'宸查€氳繃GAP璁よ瘉','ISO璁よ瘉':'ISO 9001:2015','GMP璁よ瘉':'宸查€氳繃GMP璁よ瘉','缁忚惀鑼冨洿':'涓嵂鏉愮妞嶃€佸姞宸ャ€佽喘閿€'}
+  },
+  {
+    id:3,name:'榛勮姫',latin:'Astragalus membranaceus',category:'琛ユ皵鑽?,
+    origin:'鐢樿們鐪侀檱瑗垮幙',batch:'HQ202603003',year:'2026',
+    colors:['#D4A76A','#B8914A'],
+    emoji:'馃尵',
+    imgs:['https://images.unsplash.com/photo-1540420773420-3366772f4999?w=600&q=80',
+          'https://images.unsplash.com/photo-1599812536403-23b558bdd9d8?w=600&q=80',
+          'https://images.unsplash.com/photo-1540835296355-22b498f3e6e6?w=600&q=80',
+          'https://images.unsplash.com/photo-1580397581145-cdb6a2b4b2a6?w=600&q=80'],
+    productInfo:{'鍝佸悕':'闄囪タ榛勮姫','瑙勬牸':'涓€绛夊搧 鏂滃垏鐗?,'鎵瑰彿':'HQ202603003','浜у湴':'鐢樿們鐪佸畾瑗垮競闄囪タ鍘块闃抽晣','鐢熶骇鏃ユ湡':'2026-03-20','鏈夋晥鏈熻嚦':'2028-03-19','鍑€鍚噺':'1kg/琚?,'璐棌鏉′欢':'閫氶骞茬嚗澶勶紝闃叉疆闃茶泙','鎵ц鏍囧噯':'銆婁腑鍥借嵂鍏搞€?025骞寸増'},
+    productionInfo:{'绉嶆鏂瑰紡':'鏃变綔瑙勮寖鍖栫妞?,'绉嶆骞撮檺':'2-3骞?,'绉嶆鐜':'娴锋嫈1600-2000绫抽粍鍦熼珮鍘熷崐骞叉棻鍖?,'鍦熷￥绫诲瀷':'榛勭坏鍦燂紝pH7.0-8.0','閲囨敹鏃堕棿':'2025骞?鏈堬紙鏄ュ钀岃娊鍓嶏級鎴?1鏈堬紙绉嬪鍦颁笂閮ㄥ垎鏋悗鍚庯級','鍔犲伐宸ヨ壓':'閲囨寲鈫掓竻娲椻啋淇暣鈫掑垏鐗団啋鏅掑共鎴栫儤骞测啋绛涢€夆啋鍖呰','鍔犲伐浼佷笟':'闄囪タ鍘夸腑鑽潗楗墖鍔犲伐鏈夐檺鍏徃','鍔犲伐鏃ユ湡':'2025骞?2鏈?},
+    traceability:[
+      {stage:'閫夌鑲茶嫍',location:'闄囪タ鍘块闃抽晣鑲茶嫍鍩哄湴',time:'2022骞存槬',desc:'閫夌敤钂欏彜榛勮姫浼樿壇鍝佺锛岃嫍搴婅偛鑻椾竴骞村悗绉绘牻',operator:'闄堝缓鍥?,status:'done'},
+      {stage:'鐢伴棿绠＄悊',location:'闄囪タ鍘块闃抽晣绉嶆鍩哄湴',time:'2022-2024',desc:'鏃卞湴鍨勪綔鏍藉煿锛屾柦鍐滃鑲ワ紝鍚堢悊鐏屾簤锛屼汉宸ラ櫎鑽夛紝鐥呰櫕瀹崇患鍚堥槻娌?,operator:'闄堝缓鍥?,status:'done'},
+      {stage:'閲囨敹',location:'闄囪タ鍘块闃抽晣绉嶆鍩哄湴',time:'2024骞?1鏈?,desc:'绉嬪閲囨寲锛屼繚鎸佹牴绯诲畬鏁达紝鍘婚櫎娉ュ湡锛屽垎绾у爢鏀?,operator:'閲囨敹鐝粍G缁?,status:'done'},
+      {stage:'鍒濆姞宸?,location:'闄囪タ鍘块ギ鐗囧姞宸ュ熀鍦?,time:'2024骞?1鏈?12鏈?,desc:'娓呮礂鈫掍慨鍓牴澶村拰渚ф牴鈫掓枩鍒囨垚3-5mm鍘氱墖鈫?0鈩冪儹椋庣儤骞测啋绛涢€夆啋閲戝睘鎺㈡祴',operator:'鍔犲伐鐝粍H缁?,status:'done'},
+      {stage:'璐ㄦ',location:'鐢樿們鐪佽嵂鍝佹楠岀爺绌堕櫌',time:'2025骞?鏈?,desc:'妫€娴嬮粍鑺敳鑻枫€佹瘺钑婂紓榛勯叜钁¤悇绯栬嫹鍚噺锛屽強姘村垎銆佺伆鍒嗐€侀噸閲戝睘銆佸啘娈嬨€佸井鐢熺墿',operator:'妫€娴嬩腑蹇?,status:'done'},
+      {stage:'鍖呰璧嬬爜',location:'闄囪タ鍘垮寘瑁呰溅闂?,time:'2026骞?鏈?5鏃?,desc:'澶嶅悎鑶滆鍖呰锛岀矘璐磋拷婧簩缁寸爜锛屽叧鑱旂敓浜ф壒娆′笌妫€娴嬫姤鍛?,operator:'鍖呰鐝粍I缁?,status:'done'},
+      {stage:'鍑哄巶閿€鍞?,location:'闄囪タ鍘夸粨鍌ㄤ腑蹇?,time:'2026骞?鏈?0鏃?,desc:'妫€楠屽悎鏍煎嚭鍘傦紝杩芥函鏁版嵁涓婇摼',operator:'璐ㄩ噺閮?,status:'current'}
+    ],
+    qualityInfo:{'妫€娴嬫爣鍑?:'銆婁腑鍥借嵂鍏搞€?025骞寸増 涓€閮?,'妫€娴嬫満鏋?:'鐢樿們鐪佽嵂鍝佹楠岀爺绌堕櫌','鎶ュ憡缂栧彿':'GS2025-HQ-05421','妫€娴嬫棩鏈?:'2025骞?2鏈?,'榛勮姫鐢茶嫹':'鈮?.040% (瀹炴祴: 0.058% 鉁?','姣涜晩寮傞粍閰憽钀勭硸鑻?:'鈮?.020% (瀹炴祴: 0.031% 鉁?','姘村垎':'鈮?0.0% (瀹炴祴: 7.5% 鉁?','鎬荤伆鍒?:'鈮?.0% (瀹炴祴: 3.1% 鉁?','閲嶉噾灞炲強鏈夊鍏冪礌':'鍏ㄩ儴绗﹀悎瑙勫畾 鉁?,'鍐滆嵂娈嬬暀':'33绉嶇鐢ㄥ啘鑽?鈫?鏈鍑?鉁?,'妫€娴嬬粨璁?:'鏈搧鎸夈€婁腑鍥借嵂鍏搞€?025骞寸増妫€楠岋紝缁撴灉绗﹀悎瑙勫畾銆?},
+    enterpriseInfo:{'浼佷笟鍚嶇О':'闄囪タ鍘夸腑鑽潗楗墖鍔犲伐鏈夐檺鍏徃','缁熶竴绀句細淇＄敤浠ｇ爜':'91621122MA6XXXXXXX','娉曞畾浠ｈ〃浜?:'闄堝織杩?,'娉ㄥ唽璧勬湰':'4000涓囧厓','鎴愮珛鏃ユ湡':'2017骞?鏈?,'娉ㄥ唽鍦板潃':'鐢樿們鐪佸畾瑗垮競闄囪タ鍘块闃抽晣涓嵂鏉愪骇涓氬洯','鑱旂郴鐢佃瘽':'0932-8XXXXXX','鐢熶骇璁稿彲璇佸彿':'鐢?017XXXX','GAP璁よ瘉':'宸查€氳繃','ISO璁よ瘉':'ISO 9001:2015','GMP璁よ瘉':'宸查€氳繃','缁忚惀鑼冨洿':'涓嵂楗墖鍔犲伐銆佷腑鑽潗绉嶆銆佽喘閿€'}
+  },
+  {
+    id:4,name:'鏋告潪',latin:'Lycium barbarum',category:'琛ヨ鑽?,
+    origin:'瀹佸鍥炴棌鑷不鍖轰腑瀹佸幙',batch:'GQ202605004',year:'2026',
+    colors:['#C0392B','#A93226'],
+    emoji:'馃敶',
+    imgs:['https://images.unsplash.com/photo-1587132137056-bf0810167377?w=600&q=80',
+          'https://images.unsplash.com/photo-1597733336794-12d05021d50e?w=600&q=80',
+          'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=600&q=80',
+          'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=600&q=80'],
+    productInfo:{'鍝佸悕':'涓畞鏋告潪','瑙勬牸':'鐗逛紭绾?280绮?50g','鎵瑰彿':'GQ202605004','浜у湴':'瀹佸鍥炴棌鑷不鍖轰腑鍗競涓畞鍘胯垷濉斾埂','鐢熶骇鏃ユ湡':'2026-05-01','鏈夋晥鏈熻嚦':'2027-05-01','鍑€鍚噺':'250g/琚?,'璐棌鏉′欢':'瀵嗗皝缃槾鍑夊共鐕ュ锛岄槻娼槻楂樻俯','鎵ц鏍囧噯':'銆婁腑鍥借嵂鍏搞€?025骞寸増'},
+    productionInfo:{'绉嶆鏂瑰紡':'鏍囧噯鍖栨灨鏉炲洯绉嶆','绉嶆骞撮檺':'6骞达紙鐩涙灉鏈燂級','绉嶆鐜':'娴锋嫈1100-1300绫抽粍娌冲啿绉钩鍘?,'鍦熷￥绫诲瀷':'鐏屾筏鍦燂紝pH7.5-8.5','閲囨敹鏃堕棿':'2025骞?鏈?9鏈堬紙澶忔灉鍜岀鏋滃垎鎵归噰鏀讹級','鍔犲伐宸ヨ壓':'椴滄灉鈫掓竻娲椻啋椋熺敤纰辨按鑴辫湣鈫掓竻姘存紓娲椻啋鏃ユ檼/鐑鐑樺共鈫掑幓鏉傗啋鍒嗙骇鈫掔簿閫夆啋鍖呰','鍔犲伐浼佷笟':'瀹佸涓畞鏋告潪浜т笟闆嗗洟鏈夐檺鍏徃','鍔犲伐鏃ユ湡':'2025骞?鏈?10鏈?},
+    traceability:[
+      {stage:'鑲茶嫍瀹氭',location:'涓畞鍘胯垷濉斾埂鏋告潪绉嶆鍩哄湴',time:'2019骞存槬',desc:'閫夌敤瀹佹潪7鍙蜂紭鑹搧绉嶏紝鎵︽彃鑲茶嫍鍚庡畾妞嶏紝鏍璺?.5m脳2m',operator:'鍛ㄦ枃鍗?,status:'done'},
+      {stage:'鐢伴棿绠＄悊',location:'涓畞鍘胯垷濉斾埂鏋告潪绉嶆鍩哄湴',time:'2019-2025',desc:'婊寸亴鑺傛按鐏屾簤锛屾柦鏈夋満鑲ヤ负涓伙紝鏁村舰淇壀锛岀梾铏缁胯壊闃叉帶锛堢敓鐗╁啘鑽?鐗╃悊闃叉不锛?,operator:'鍛ㄦ枃鍗?,status:'done'},
+      {stage:'閲囨敹',location:'涓畞鍘胯垷濉斾埂鏋告潪绉嶆鍩哄湴',time:'2025骞?鏈?9鏈?,desc:'澶忔灉6鏈?7鏈堥噰鏀?鑼紝绉嬫灉8鏈?9鏈堥噰鏀?鑼紝浜哄伐閲囨憳锛岃交鎷胯交鏀鹃槻鐮存崯',operator:'閲囨敹鐝粍J缁?(20浜?',status:'done'},
+      {stage:'鍒濆姞宸?,location:'涓畞鍘挎灨鏉炲姞宸ヤ骇涓氬洯',time:'2025骞?鏈?10鏈?,desc:'椴滄灉娓呮礂鈫掗鐢ㄧ⒈姘磋劚铚♀啋娓呮按婕傛礂鈫掓棩鍏夋櫨鏅?55鈩冪儹椋庣儤骞测啋椋庨€夊幓鏉傗啋鑹查€夊垎绾р啋浜哄伐绮鹃€?,operator:'鍔犲伐鐝粍K缁?(12浜?',status:'done'},
+      {stage:'璐ㄦ',location:'瀹佸鍥炴棌鑷不鍖鸿嵂鍝佹楠岀爺绌堕櫌',time:'2025骞?0鏈?,desc:'妫€娴嬫灨鏉炲绯栥€佺敎鑿滅⒈鍚噺锛屽強姘村垎銆佹€荤伆鍒嗐€侀噸閲戝睘銆佸啘娈嬨€佷簩姘у寲纭畫鐣?,operator:'妫€娴嬩腑蹇?,status:'done'},
+      {stage:'鍖呰璧嬬爜',location:'涓畞鍘垮寘瑁呰溅闂?,time:'2026骞?鏈?8鏃?,desc:'椋熷搧绾ц嚜绔嬭鍏呮爱鍖呰锛岀矘璐磋拷婧簩缁寸爜',operator:'鍖呰鐝粍L缁?,status:'done'},
+      {stage:'鍑哄巶閿€鍞?,location:'涓畞鍘夸粨鍌ㄧ墿娴佷腑蹇?,time:'2026骞?鏈?鏃?,desc:'妫€楠屽悎鏍煎嚭鍘傦紝杩芥函淇℃伅宸蹭笂閾?,operator:'璐ㄩ噺閮?,status:'current'}
+    ],
+    qualityInfo:{'妫€娴嬫爣鍑?:'銆婁腑鍥借嵂鍏搞€?025骞寸増 涓€閮?,'妫€娴嬫満鏋?:'瀹佸鍥炴棌鑷不鍖鸿嵂鍝佹楠岀爺绌堕櫌','鎶ュ憡缂栧彿':'NX2025-GQ-03281','妫€娴嬫棩鏈?:'2025骞?0鏈?,'鏋告潪澶氱硸':'鈮?.8% (瀹炴祴: 2.4% 鉁?','鐢滆彍纰?:'鈮?.30% (瀹炴祴: 0.45% 鉁?','姘村垎':'鈮?3.0% (瀹炴祴: 9.5% 鉁?','鎬荤伆鍒?:'鈮?.0% (瀹炴祴: 3.6% 鉁?','浜屾哀鍖栫～娈嬬暀閲?:'鈮?50mg/kg (瀹炴祴: 鏈鍑?鉁?','閲嶉噾灞炲強鏈夊鍏冪礌':'鍏ㄩ儴绗﹀悎瑙勫畾 鉁?,'鍐滆嵂娈嬬暀':'33绉嶇鐢ㄥ啘鑽?鈫?鏈鍑?鉁?,'妫€娴嬬粨璁?:'鏈搧鎸夈€婁腑鍥借嵂鍏搞€?025骞寸増妫€楠岋紝缁撴灉绗﹀悎瑙勫畾銆?},
+    enterpriseInfo:{'浼佷笟鍚嶇О':'瀹佸涓畞鏋告潪浜т笟闆嗗洟鏈夐檺鍏徃','缁熶竴绀句細淇＄敤浠ｇ爜':'91640521MA75XXXXXX','娉曞畾浠ｈ〃浜?:'鍛ㄥ缓鍗?,'娉ㄥ唽璧勬湰':'8000涓囧厓','鎴愮珛鏃ユ湡':'2015骞?0鏈?,'娉ㄥ唽鍦板潃':'瀹佸涓崼甯備腑瀹佸幙鏋告潪浜т笟鍥尯1鍙?,'鑱旂郴鐢佃瘽':'0955-5XXXXXX','鐢熶骇璁稿彲璇佸彿':'瀹?015XXXX','GAP璁よ瘉':'宸查€氳繃','ISO璁よ瘉':'ISO 9001:2015, ISO 22000:2018','GMP璁よ瘉':'宸查€氳繃','缁忚惀鑼冨洿':'鏋告潪绉嶆銆佸姞宸ャ€侀攢鍞紱鏋告潪娣卞姞宸ヤ骇鍝佺爺鍙?}
+  },
+  {
+    id:5,name:'涓変竷',latin:'Panax notoginseng',category:'娲昏鍖栫榾鑽?,
+    origin:'浜戝崡鐪佹枃灞卞窞',batch:'SQ202601005',year:'2026',
+    colors:['#6B4226','#4A2F1A'],
+    emoji:'馃拵',
+    imgs:['https://images.unsplash.com/photo-1615485290502-413a6cf11bc0?w=600&q=80',
+          'https://images.unsplash.com/photo-1540835296355-22b498f3e6e6?w=600&q=80',
+          'https://images.unsplash.com/photo-1597733336794-12d05021d50e?w=600&q=80',
+          'https://images.unsplash.com/photo-1580397581145-cdb6a2b4b2a6?w=600&q=80'],
+    productInfo:{'鍝佸悕':'鏂囧北涓変竷','瑙勬牸':'60澶?500g','鎵瑰彿':'SQ202601005','浜у湴':'浜戝崡鐪佹枃灞卞．鏃忚嫍鏃忚嚜娌诲窞鏂囧北甯?,'鐢熶骇鏃ユ湡':'2026-01-10','鏈夋晥鏈熻嚦':'2028-01-09','鍑€鍚噺':'500g/鐩?,'璐棌鏉′欢':'闃村噳骞茬嚗澶勶紝闃茶泙','鎵ц鏍囧噯':'銆婁腑鍥借嵂鍏搞€?025骞寸増'},
+    productionInfo:{'绉嶆鏂瑰紡':'鑽瑙勮寖鍖栫妞?,'绉嶆骞撮檺':'3骞?,'绉嶆鐜':'娴锋嫈1200-1800绫充綆绾珮鍘?,'鍦熷￥绫诲瀷':'绾㈠￥锛宲H5.5-6.5','閲囨敹鏃堕棿':'2025骞?0鏈堬紙绉嶆婊?骞村悗閲囨寲锛?,'鍔犲伐宸ヨ壓':'閲囨寲鈫掓竻娲椻啋淇壀鈫掓檼骞?鐑樺共鈫掑垎绾р啋鍖呰','鍔犲伐浼佷笟':'鏂囧北涓変竷浜т笟鏈夐檺鍏徃','鍔犲伐鏃ユ湡':'2025骞?1鏈?},
+    traceability:[
+      {stage:'閫夌鑲茶嫍',location:'鏂囧北甯備笁涓冭偛鑻楀熀鍦?,time:'2022骞存槬',desc:'閫夌敤鏂囧北閬撳湴涓変竷绉嶅瓙锛屾矙钘忓偓鑺藉悗鎾锛岃嫍搴婂煿鑲蹭竴骞?,operator:'鍒樻槑鍗?,status:'done'},
+      {stage:'鐢伴棿绠＄悊',location:'鏂囧北甯備笁涓冪妞嶅熀鍦?,time:'2022-2025',desc:'鑽閬厜70%锛屾淮鐏屾祰姘达紝鏂芥湁鏈鸿偉锛岃疆浣滈槻鐥咃紝涓嶄娇鐢ㄩ珮姣掑啘鑽?,operator:'鍒樻槑鍗?,status:'done'},
+      {stage:'閲囨敹',location:'鏂囧北甯備笁涓冪妞嶅熀鍦?,time:'2025骞?0鏈?,desc:'绉嶆婊?骞村悗閲囨寲锛屼繚鎸佹牴鑼庡畬鏁达紝鍘婚櫎娉ュ湡锛屽垎绾?,operator:'閲囨敹鐝粍M缁?,status:'done'},
+      {stage:'鍒濆姞宸?,location:'鏂囧北甯備笁涓冨姞宸ュ熀鍦?,time:'2025骞?0鏈?11鏈?,desc:'娓呮礂鈫掍慨鍓牴椤烩啋鏃ユ檼鈫?0鈩冧綆娓╃儤骞测啋绛涢€夊垎绾р啋鎶涘厜',operator:'鍔犲伐鐝粍N缁?,status:'done'},
+      {stage:'璐ㄦ',location:'浜戝崡鐪侀鍝佽嵂鍝佹楠岀爺绌堕櫌',time:'2025骞?2鏈?,desc:'妫€娴嬩笁涓冪殏鑻稲1銆佷汉鍙傜殏鑻稲g1銆佷汉鍙傜殏鑻稲b1鍚噺锛屽強姘村垎銆佺伆鍒嗐€侀噸閲戝睘銆佸啘娈?,operator:'妫€娴嬩腑蹇?,status:'done'},
+      {stage:'鍖呰璧嬬爜',location:'鏂囧北甯傚寘瑁呰溅闂?,time:'2026骞?鏈?鏃?,desc:'鐪熺┖鍖呰锛岀矘璐磋拷婧簩缁寸爜',operator:'鍖呰鐝粍O缁?,status:'done'},
+      {stage:'鍑哄巶閿€鍞?,location:'鏂囧北甯備粨鍌ㄤ腑蹇?,time:'2026骞?鏈?0鏃?,desc:'妫€楠屽悎鏍煎嚭鍘傦紝杩芥函淇℃伅宸蹭笂閾?,operator:'璐ㄩ噺閮?,status:'current'}
+    ],
+    qualityInfo:{'妫€娴嬫爣鍑?:'銆婁腑鍥借嵂鍏搞€?025骞寸増 涓€閮?,'妫€娴嬫満鏋?:'浜戝崡鐪侀鍝佽嵂鍝佹楠岀爺绌堕櫌','鎶ュ憡缂栧彿':'YN2025-SQ-04317','妫€娴嬫棩鏈?:'2025骞?2鏈?,'涓変竷鐨傝嫹R1+浜哄弬鐨傝嫹Rg1+浜哄弬鐨傝嫹Rb1':'鈮?.0% (瀹炴祴: 6.8% 鉁?','姘村垎':'鈮?4.0% (瀹炴祴: 10.5% 鉁?','鎬荤伆鍒?:'鈮?.0% (瀹炴祴: 4.1% 鉁?','閰镐笉婧舵€х伆鍒?:'鈮?.0% (瀹炴祴: 1.8% 鉁?','閲嶉噾灞炲強鏈夊鍏冪礌':'鍏ㄩ儴绗﹀悎瑙勫畾 鉁?,'鍐滆嵂娈嬬暀':'33绉嶇鐢ㄥ啘鑽?鈫?鏈鍑?鉁?,'妫€娴嬬粨璁?:'鏈搧鎸夈€婁腑鍥借嵂鍏搞€?025骞寸増妫€楠岋紝缁撴灉绗﹀悎瑙勫畾銆?},
+    enterpriseInfo:{'浼佷笟鍚嶇О':'鏂囧北涓変竷浜т笟鏈夐檺鍏徃','缁熶竴绀句細淇＄敤浠ｇ爜':'91532621MA6XXXXXXX','娉曞畾浠ｈ〃浜?:'鍒樺缓姘?,'娉ㄥ唽璧勬湰':'6000涓囧厓','鎴愮珛鏃ユ湡':'2016骞?鏈?,'娉ㄥ唽鍦板潃':'浜戝崡鐪佹枃灞卞窞鏂囧北甯備笁涓冧骇涓氬洯鍖?,'鑱旂郴鐢佃瘽':'0876-2XXXXXX','鐢熶骇璁稿彲璇佸彿':'浜?016XXXX','GAP璁よ瘉':'宸查€氳繃','ISO璁よ瘉':'ISO 9001:2015','GMP璁よ瘉':'宸查€氳繃','缁忚惀鑼冨洿':'涓変竷绉嶆銆佸姞宸ャ€侀攢鍞強鎶€鏈爺鍙?}
+  },
+  {
+    id:6,name:'鐏佃姖',latin:'Ganoderma lucidum',category:'瀹夌鑽?,
+    origin:'瀹夊窘鐪侀噾瀵ㄥ幙',batch:'LZ202602006',year:'2026',
+    colors:['#8B4513','#6B3410'],
+    emoji:'馃崉',
+    imgs:['https://images.unsplash.com/photo-1597733336794-12d05021d50e?w=600&q=80',
+          'https://images.unsplash.com/photo-1540835296355-22b498f3e6e6?w=600&q=80',
+          'https://images.unsplash.com/photo-1580397581145-cdb6a2b4b2a6?w=600&q=80',
+          'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=600&q=80'],
+    productInfo:{'鍝佸悕':'閲戝鐏佃姖','瑙勬牸':'鐗圭骇 鏁存湹','鎵瑰彿':'LZ202602006','浜у湴':'瀹夊窘鐪佸叚瀹夊競閲戝鍘垮ぉ鍫傚闀?,'鐢熶骇鏃ユ湡':'2026-02-20','鏈夋晥鏈熻嚦':'2028-02-19','鍑€鍚噺':'200g/鐩?,'璐棌鏉′欢':'瀵嗗皝锛岀疆闃村噳骞茬嚗澶?,'鎵ц鏍囧噯':'銆婁腑鍥借嵂鍏搞€?025骞寸増'},
+    productionInfo:{'绉嶆鏂瑰紡':'妞存湪浠块噹鐢熸牻鍩?,'绉嶆鍛ㄦ湡':'6-8涓湀','绉嶆鐜':'娴锋嫈500-800绫冲ぇ鍒北鍖?,'鍩瑰吇鍩鸿川':'澹虫枟绉戞ご鏈?,'閲囨敹鏃堕棿':'2025骞?鏈堬紙瀛愬疄浣撴垚鐔熷脊灏勫瀛愮矇鍓嶏級','鍔犲伐宸ヨ壓':'閲囨敹鈫掓竻娲椻啋鐑樺共(55鈩?鈫掑垏鐗?鏁存湹鈫掔簿閫夆啋鍖呰','鍔犲伐浼佷笟':'閲戝鍘跨伒鑺濅骇涓氬紑鍙戞湁闄愬叕鍙?,'鍔犲伐鏃ユ湡':'2025骞?0鏈?},
+    traceability:[
+      {stage:'鑿岀鍩硅偛',location:'閲戝鍘胯弻绉嶇箒鑲蹭腑蹇?,time:'2025骞?鏈?,desc:'閫夌敤璧よ姖浼樿壇鑿屾牚锛孭DA鍩瑰吇鍩烘墿绻侊紝鐢熶骇鏍藉煿绉?,operator:'榛勬案鍙?,status:'done'},
+      {stage:'鎺ョ鍙戣弻',location:'閲戝鍘垮ぉ鍫傚闀囩妞嶅熀鍦?,time:'2025骞?鏈?,desc:'妞存湪鎴鈫掔伃鑿屸啋鎺ョ鈫掔爜鍫嗗彂鑿屸啋鑿屼笣闀挎弧鍏ㄦ',operator:'榛勬案鍙?,status:'done'},
+      {stage:'鍑鸿姖绠＄悊',location:'閲戝鍘垮ぉ鍫傚闀囩妞嶅熀鍦?,time:'2025骞?鏈?8鏈?,desc:'瑕嗗湡鏍藉煿鈫掓帶娓╂帶婀库啋閫氶鍏夌収鈫掔枏钑锯啋鐥呰櫕瀹崇豢鑹查槻鎺?,operator:'榛勬案鍙?,status:'done'},
+      {stage:'閲囨敹',location:'閲戝鍘垮ぉ鍫傚闀囩妞嶅熀鍦?,time:'2025骞?鏈?,desc:'瀛愬疄浣撹竟缂樻贰榛勮壊鐢熼暱鍦堟秷澶辨椂閲囨敹锛屼繚鐣欏畬鏁磋弻鐩栧拰鑿屾焺',operator:'閲囨敹鐝粍P缁?,status:'done'},
+      {stage:'鍒濆姞宸?,location:'閲戝鍘跨伒鑺濆姞宸ュ熀鍦?,time:'2025骞?鏈?10鏈?,desc:'娓呮礂鈫?5鈩冪儹椋庣儤骞茶嚦鍚按閲忊墹10%鈫掓寜鏈靛舰澶у皬鍒嗙骇鈫掔簿閫?,operator:'鍔犲伐鐝粍Q缁?,status:'done'},
+      {stage:'璐ㄦ',location:'瀹夊窘鐪侀鍝佽嵂鍝佹楠岀爺绌堕櫌',time:'2025骞?1鏈?,desc:'妫€娴嬬伒鑺濆绯栥€佷笁钀滃強鐢鹃唶鍚噺锛屾按鍒嗐€佺伆鍒嗐€侀噸閲戝睘銆佸啘娈?,operator:'妫€娴嬩腑蹇?,status:'done'},
+      {stage:'鍖呰璧嬬爜',location:'閲戝鍘垮寘瑁呰溅闂?,time:'2026骞?鏈?5鏃?,desc:'椋熷搧绾у寘瑁咃紝绮樿创杩芥函浜岀淮鐮?,operator:'鍖呰鐝粍R缁?,status:'done'},
+      {stage:'鍑哄巶閿€鍞?,location:'閲戝鍘夸粨鍌ㄤ腑蹇?,time:'2026骞?鏈?0鏃?,desc:'妫€楠屽悎鏍煎嚭鍘傦紝杩芥函淇℃伅宸蹭笂閾?,operator:'璐ㄩ噺閮?,status:'current'}
+    ],
+    qualityInfo:{'妫€娴嬫爣鍑?:'銆婁腑鍥借嵂鍏搞€?025骞寸増 涓€閮?,'妫€娴嬫満鏋?:'瀹夊窘鐪侀鍝佽嵂鍝佹楠岀爺绌堕櫌','鎶ュ憡缂栧彿':'AH2025-LZ-02843','妫€娴嬫棩鏈?:'2025骞?1鏈?,'鐏佃姖澶氱硸':'鈮?.90% (瀹炴祴: 1.35% 鉁?','涓夎悳鍙婄斁閱?:'鈮?.50% (瀹炴祴: 0.78% 鉁?','姘村垎':'鈮?2.0% (瀹炴祴: 8.8% 鉁?','鎬荤伆鍒?:'鈮?.0% (瀹炴祴: 1.9% 鉁?','閲嶉噾灞炲強鏈夊鍏冪礌':'鍏ㄩ儴绗﹀悎瑙勫畾 鉁?,'鍐滆嵂娈嬬暀':'33绉嶇鐢ㄥ啘鑽?鈫?鏈鍑?鉁?,'妫€娴嬬粨璁?:'鏈搧鎸夈€婁腑鍥借嵂鍏搞€?025骞寸増妫€楠岋紝缁撴灉绗﹀悎瑙勫畾銆?},
+    enterpriseInfo:{'浼佷笟鍚嶇О':'閲戝鍘跨伒鑺濅骇涓氬紑鍙戞湁闄愬叕鍙?,'缁熶竴绀句細淇＄敤浠ｇ爜':'91341524MA2XXXXXXX','娉曞畾浠ｈ〃浜?:'榛勫痉鏄?,'娉ㄥ唽璧勬湰':'3500涓囧厓','鎴愮珛鏃ユ湡':'2017骞?1鏈?,'娉ㄥ唽鍦板潃':'瀹夊窘鐪佸叚瀹夊競閲戝鍘跨幇浠ｄ骇涓氬洯鍖?,'鑱旂郴鐢佃瘽':'0564-7XXXXXX','鐢熶骇璁稿彲璇佸彿':'鐨?017XXXX','GAP璁よ瘉':'宸查€氳繃','ISO璁よ瘉':'ISO 9001:2015','GMP璁よ瘉':'宸查€氳繃','缁忚惀鑼冨洿':'鐏佃姖绛夐鑽敤鑿岀妞嶃€佸姞宸ャ€侀攢鍞強鎶€鏈紑鍙?}
+  },
+  {
+    id:7,name:'澶╅夯',latin:'Gastrodia elata',category:'骞宠倽鎭鑽?,
+    origin:'鍥涘窛鐪佸钩姝﹀幙',batch:'TM202603007',year:'2026',
+    colors:['#D4A574','#B8855A'],
+    emoji:'馃尶',
+    imgs:['https://images.unsplash.com/photo-1580397581145-cdb6a2b4b2a6?w=600&q=80',
+          'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=600&q=80',
+          'https://images.unsplash.com/photo-1597733336794-12d05021d50e?w=600&q=80',
+          'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=600&q=80'],
+    productInfo:{'鍝佸悕':'骞虫澶╅夯','瑙勬牸':'涓€绛夊搧','鎵瑰彿':'TM202603007','浜у湴':'鍥涘窛鐪佺坏闃冲競骞虫鍘?,'鐢熶骇鏃ユ湡':'2026-03-05','鏈夋晥鏈熻嚦':'2028-03-04','鍑€鍚噺':'300g/鐩?,'璐棌鏉′欢':'瀵嗗皝锛岀疆閫氶骞茬嚗澶?,'鎵ц鏍囧噯':'銆婁腑鍥借嵂鍏搞€?025骞寸増'},
+    productionInfo:{'绉嶆鏂瑰紡':'鏋椾笅浠块噹鐢熸湁鎬х箒娈?,'绉嶆骞撮檺':'1-2骞?,'绉嶆鐜':'娴锋嫈1000-2000绫冲北鍖烘灄鍦?,'鍏辩敓鑿?:'铚滅幆鑿?,'閲囨敹鏃堕棿':'2025骞?1鏈堬紙鍐浼戠湢鏈熼噰鎸栵級','鍔犲伐宸ヨ壓':'閲囨寲鈫掓竻娲椻啋钂稿埗鈫掔儤骞测啋鍒嗙骇鈫掑寘瑁?,'鍔犲伐浼佷笟':'骞虫鍘垮ぉ楹诲紑鍙戞湁闄愬叕鍙?,'鍔犲伐鏃ユ湡':'2025骞?2鏈?},
+    traceability:[
+      {stage:'鑲茬',location:'骞虫鍘垮ぉ楹昏偛绉嶅熀鍦?,time:'2024骞存槬',desc:'閲囬泦閲庣敓澶╅夯钂存灉锛屾棤鑿屾挱绉嶁啋鍘熺悆鑼庘啋绉嶉夯鍩硅偛',operator:'瀛欏織寮?,status:'done'},
+      {stage:'鑿屾潗鍑嗗',location:'骞虫鍘跨妞嶅熀鍦?,time:'2024骞寸',desc:'鐮嶄紣澹虫枟绉戞爲鏈ㄢ啋鎴鈫掓帴绉嶈湝鐜弻鈫掑煿鍏昏弻鏉?,operator:'瀛欏織寮?,status:'done'},
+      {stage:'鎾鏍藉煿',location:'骞虫鍘跨妞嶅熀鍦?,time:'2024骞村啲',desc:'鏋椾笅鎸栫┐鈫掓斁缃弻鏉愨啋鎾楹荤鈫掕鍦熲啋瑕嗙洊钀藉彾',operator:'瀛欏織寮?,status:'done'},
+      {stage:'鐢伴棿绠＄悊',location:'骞虫鍘跨妞嶅熀鍦?,time:'2024骞村啲-2025骞村啲',desc:'淇濇寔鍦熷￥婀垮害锛岃皟鎺ф俯搴︼紝闃茬梾闃茶櫕锛屼笉浣跨敤鍐滆嵂',operator:'瀛欏織寮?,status:'done'},
+      {stage:'閲囨敹',location:'骞虫鍘跨妞嶅熀鍦?,time:'2025骞?1鏈?,desc:'鍐鍦颁笂閮ㄥ垎鏋悗鍚庨噰鎸栵紝淇濇寔鍧楄寧瀹屾暣锛屾寜澶у皬鍒嗙骇',operator:'閲囨敹鐝粍S缁?,status:'done'},
+      {stage:'鍒濆姞宸?,location:'骞虫鍘垮ぉ楹诲姞宸ュ熀鍦?,time:'2025骞?1鏈?12鏈?,desc:'娓呮礂鈫掕捀鍒?100鈩?30min)鈫?5鈩冪儤骞测啋鎸夌瓑绾у垎閫?,operator:'鍔犲伐鐝粍T缁?,status:'done'},
+      {stage:'璐ㄦ',location:'鍥涘窛鐪佽嵂鍝佹楠岀爺绌堕櫌',time:'2026骞?鏈?,desc:'妫€娴嬪ぉ楹荤礌鍙婂缇熷熀鑻敳閱囨€婚噺锛屾按鍒嗐€佺伆鍒嗐€佷簩姘у寲纭畫鐣?,operator:'妫€娴嬩腑蹇?,status:'done'},
+      {stage:'鍖呰璧嬬爜',location:'骞虫鍘垮寘瑁呰溅闂?,time:'2026骞?鏈?鏃?,desc:'鐪熺┖鍖呰锛岀矘璐磋拷婧簩缁寸爜',operator:'鍖呰鐝粍U缁?,status:'done'},
+      {stage:'鍑哄巶閿€鍞?,location:'骞虫鍘夸粨鍌ㄤ腑蹇?,time:'2026骞?鏈?鏃?,desc:'妫€楠屽悎鏍煎嚭鍘傦紝杩芥函淇℃伅宸蹭笂閾?,operator:'璐ㄩ噺閮?,status:'current'}
+    ],
+    qualityInfo:{'妫€娴嬫爣鍑?:'銆婁腑鍥借嵂鍏搞€?025骞寸増 涓€閮?,'妫€娴嬫満鏋?:'鍥涘窛鐪佽嵂鍝佹楠岀爺绌堕櫌','鎶ュ憡缂栧彿':'SC2026-TM-01562','妫€娴嬫棩鏈?:'2026骞?鏈?,'澶╅夯绱?瀵圭緹鍩鸿嫰鐢查唶':'鈮?.25% (瀹炴祴: 0.38% 鉁?','姘村垎':'鈮?2.0% (瀹炴祴: 9.1% 鉁?','鎬荤伆鍒?:'鈮?.0% (瀹炴祴: 2.5% 鉁?','浜屾哀鍖栫～娈嬬暀閲?:'鈮?00mg/kg (瀹炴祴: 鏈鍑?鉁?','閲嶉噾灞炲強鏈夊鍏冪礌':'鍏ㄩ儴绗﹀悎瑙勫畾 鉁?,'鍐滆嵂娈嬬暀':'鏈鍑?鉁?,'妫€娴嬬粨璁?:'鏈搧鎸夈€婁腑鍥借嵂鍏搞€?025骞寸増妫€楠岋紝缁撴灉绗﹀悎瑙勫畾銆?},
+    enterpriseInfo:{'浼佷笟鍚嶇О':'骞虫鍘垮ぉ楹诲紑鍙戞湁闄愬叕鍙?,'缁熶竴绀句細淇＄敤浠ｇ爜':'91510727MA6XXXXXXX','娉曞畾浠ｈ〃浜?:'瀛欏缓鍥?,'娉ㄥ唽璧勬湰':'2500涓囧厓','鎴愮珛鏃ユ湡':'2018骞?鏈?,'娉ㄥ唽鍦板潃':'鍥涘窛鐪佺坏闃冲競骞虫鍘块緳瀹夐晣','鑱旂郴鐢佃瘽':'0816-8XXXXXX','鐢熶骇璁稿彲璇佸彿':'宸?018XXXX','GAP璁よ瘉':'宸查€氳繃','ISO璁よ瘉':'ISO 9001:2015','GMP璁よ瘉':'宸查€氳繃','缁忚惀鑼冨洿':'澶╅夯绉嶆銆佸姞宸ャ€侀攢鍞強鎶€鏈湇鍔?}
+  },
+  {
+    id:8,name:'涓瑰弬',latin:'Salvia miltiorrhiza',category:'娲昏鍖栫榾鑽?,
+    origin:'灞变笢鐪佽帓鍘?,batch:'DS202604008',year:'2026',
+    colors:['#A0522D','#803D20'],
+    emoji:'馃拹',
+    imgs:['https://images.unsplash.com/photo-1540420773420-3366772f4999?w=600&q=80',
+          'https://images.unsplash.com/photo-1599812536403-23b558bdd9d8?w=600&q=80',
+          'https://images.unsplash.com/photo-1540835296355-22b498f3e6e6?w=600&q=80',
+          'https://images.unsplash.com/photo-1580397581145-cdb6a2b4b2a6?w=600&q=80'],
+    productInfo:{'鍝佸悕':'鑾掑幙涓瑰弬','瑙勬牸':'涓€绛夊搧 鍒囩墖','鎵瑰彿':'DS202604008','浜у湴':'灞变笢鐪佹棩鐓у競鑾掑幙搴撳北涔?,'鐢熶骇鏃ユ湡':'2026-04-15','鏈夋晥鏈熻嚦':'2028-04-14','鍑€鍚噺':'500g/琚?,'璐棌鏉′欢':'缃共鐕ュ','鎵ц鏍囧噯':'銆婁腑鍥借嵂鍏搞€?025骞寸増'},
+    productionInfo:{'绉嶆鏂瑰紡':'瑙勮寖鍖栧瀯浣滅妞?,'绉嶆骞撮檺':'1-2骞?,'绉嶆鐜':'娴锋嫈100-300绫充笜闄靛湴甯?,'鍦熷￥绫诲瀷':'鐮傚￥鍦燂紝pH6.5-7.5','閲囨敹鏃堕棿':'2025骞?1鏈堬紙绉嬪閲囨寲锛?,'鍔犲伐宸ヨ壓':'閲囨寲鈫掑幓闄ゆ偿娌欌啋鏅炬檼鈫掑垏鐗団啋鐑樺共鈫掔瓫閫?,'鍔犲伐浼佷笟':'鑾掑幙涓瑰弬浜т笟寮€鍙戞湁闄愬叕鍙?,'鍔犲伐鏃ユ湡':'2025骞?2鏈?},
+    traceability:[
+      {stage:'閫夌鑲茶嫍',location:'鑾掑幙搴撳北涔¤偛鑻楀熀鍦?,time:'2024骞存槬',desc:'閫夌敤灞变笢閬撳湴涓瑰弬鍝佺锛岀瀛愯偛鑻楋紝鑻楅珮10-15cm绉绘牻',operator:'楂樺ぇ浼?,status:'done'},
+      {stage:'鐢伴棿绠＄悊',location:'鑾掑幙搴撳北涔＄妞嶅熀鍦?,time:'2024-2025',desc:'璧峰瀯鏍藉煿锛屾柦鏈夋満鑲ワ紝鍚堢悊鐏屾簤锛屼汉宸ラ櫎鑽夛紝鐥呰櫕瀹崇豢鑹查槻鎺?,operator:'楂樺ぇ浼?,status:'done'},
+      {stage:'閲囨敹',location:'鑾掑幙搴撳北涔＄妞嶅熀鍦?,time:'2025骞?1鏈?,desc:'绉嬪閲囨寲锛屼繚鎸佹牴绯诲畬鏁达紝鎶栬惤娉ュ湡锛屽幓闄よ寧鍙讹紝鍒嗙骇',operator:'閲囨敹鐝粍V缁?,status:'done'},
+      {stage:'鍒濆姞宸?,location:'鑾掑幙涓瑰弬鍔犲伐鍩哄湴',time:'2025骞?1鏈?12鏈?,desc:'娓呮礂鈫掓櫨鏅掕嚦鍗婂共鈫掑垏鐗?鍘?-4mm)鈫?0鈩冪儤骞测啋绛涢€夆啋閲戝睘鎺㈡祴',operator:'鍔犲伐鐝粍W缁?,status:'done'},
+      {stage:'璐ㄦ',location:'灞变笢鐪侀鍝佽嵂鍝佹楠岀爺绌堕櫌',time:'2026骞?鏈?,desc:'妫€娴嬩腹鍙傞叜IIA銆佷腹閰氶吀B鍚噺锛屾按鍒嗐€佺伆鍒嗐€侀噸閲戝睘銆佸啘娈?,operator:'妫€娴嬩腑蹇?,status:'done'},
+      {stage:'鍖呰璧嬬爜',location:'鑾掑幙鍖呰杞﹂棿',time:'2026骞?鏈?0鏃?,desc:'澶嶅悎鑶滆瀵嗗皝鍖呰锛岀矘璐磋拷婧簩缁寸爜',operator:'鍖呰鐝粍X缁?,status:'done'},
+      {stage:'鍑哄巶閿€鍞?,location:'鑾掑幙浠撳偍涓績',time:'2026骞?鏈?5鏃?,desc:'妫€楠屽悎鏍煎嚭鍘傦紝杩芥函淇℃伅宸蹭笂閾?,operator:'璐ㄩ噺閮?,status:'current'}
+    ],
+    qualityInfo:{'妫€娴嬫爣鍑?:'銆婁腑鍥借嵂鍏搞€?025骞寸増 涓€閮?,'妫€娴嬫満鏋?:'灞变笢鐪侀鍝佽嵂鍝佹楠岀爺绌堕櫌','鎶ュ憡缂栧彿':'SD2026-DS-03892','妫€娴嬫棩鏈?:'2026骞?鏈?,'涓瑰弬閰甀IA':'鈮?.20% (瀹炴祴: 0.31% 鉁?','涓归厷閰窧':'鈮?.0% (瀹炴祴: 3.8% 鉁?','姘村垎':'鈮?3.0% (瀹炴祴: 9.5% 鉁?','鎬荤伆鍒?:'鈮?.0% (瀹炴祴: 3.9% 鉁?','閰镐笉婧舵€х伆鍒?:'鈮?.0% (瀹炴祴: 1.2% 鉁?','閲嶉噾灞炲強鏈夊鍏冪礌':'鍏ㄩ儴绗﹀悎瑙勫畾 鉁?,'鍐滆嵂娈嬬暀':'33绉嶇鐢ㄥ啘鑽?鈫?鏈鍑?鉁?,'妫€娴嬬粨璁?:'鏈搧鎸夈€婁腑鍥借嵂鍏搞€?025骞寸増妫€楠岋紝缁撴灉绗﹀悎瑙勫畾銆?},
+    enterpriseInfo:{'浼佷笟鍚嶇О':'鑾掑幙涓瑰弬浜т笟寮€鍙戞湁闄愬叕鍙?,'缁熶竴绀句細淇＄敤浠ｇ爜':'91371122MA3XXXXXXX','娉曞畾浠ｈ〃浜?:'楂樻案寮?,'娉ㄥ唽璧勬湰':'2800涓囧厓','鎴愮珛鏃ユ湡':'2019骞?鏈?,'娉ㄥ唽鍦板潃':'灞变笢鐪佹棩鐓у競鑾掑幙搴撳北涔′腹鍙備骇涓氬洯','鑱旂郴鐢佃瘽':'0633-6XXXXXX','鐢熶骇璁稿彲璇佸彿':'椴?019XXXX','GAP璁よ瘉':'宸查€氳繃','ISO璁よ瘉':'ISO 9001:2015','GMP璁よ瘉':'宸查€氳繃','缁忚惀鑼冨洿':'涓瑰弬绉嶆銆佸姞宸ャ€侀攢鍞強涓嵂楗墖鐢熶骇'}
+  }
+];
+
+let currentFilter = {search:'',category:'all',origin:'all'};
+let currentHerb = null;
+
+// ===== RENDER HERB CARDS =====
+function renderHerbs(){
+  const grid = document.getElementById('herbsGrid');
+  const countEl = document.getElementById('resultCount');
+  const filtered = herbs.filter(h => {
+    const matchSearch = !currentFilter.search ||
+      h.name.includes(currentFilter.search) ||
+      h.origin.includes(currentFilter.search) ||
+      h.batch.includes(currentFilter.search) ||
+      h.latin.toLowerCase().includes(currentFilter.search.toLowerCase());
+    const matchCat = currentFilter.category === 'all' || h.category === currentFilter.category;
+    const matchOrigin = currentFilter.origin === 'all' || h.origin.includes(currentFilter.origin);
+    return matchSearch && matchCat && matchOrigin;
+  });
+
+  countEl.textContent = `锛堝叡 ${filtered.length} 绉嶈嵂鏉愶級`;
+
+  grid.innerHTML = filtered.map(h => `
+    <div class="herb-card" onclick="openDetail(${h.id})">
+      <div class="herb-card-img">
+        <img class="img-bg" src="${h.imgs[0]}" alt="${h.name}" loading="lazy"
+             onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,${h.colors[0]},${h.colors[1]})';this.parentElement.innerHTML+='<div style=position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:4rem>${h.emoji}</div>'">
+        <div class="herb-card-badge">${h.category}</div>
+      </div>
+      <div class="herb-card-body">
+        <h4>${h.name}</h4>
+        <div class="latin">${h.latin}</div>
+        <div class="herb-card-meta">
+          <span>馃搷 ${h.origin}</span>
+          <span>馃摝 ${h.batch}</span>
+        </div>
+        <div class="herb-card-btn">鏌ョ湅瀹屾暣婧簮 鈫?/div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterHerbs(){
+  currentFilter.search = document.getElementById('searchInput').value.trim();
+  currentFilter.category = document.getElementById('categoryFilter').value;
+  currentFilter.origin = document.getElementById('originFilter').value;
+  renderHerbs();
+}
+
+function resetFilters(){
+  document.getElementById('searchInput').value = '';
+  document.getElementById('categoryFilter').value = 'all';
+  document.getElementById('originFilter').value = 'all';
+  currentFilter = {search:'',category:'all',origin:'all'};
+  renderHerbs();
+}
+
+// ===== OPEN DETAIL =====
+function openDetail(id){
+  currentHerb = herbs.find(h => h.id === id);
+  if(!currentHerb) return;
+
+  document.getElementById('mainPage').style.display = 'none';
+  document.getElementById('detailOverlay').classList.add('active');
+  document.getElementById('detailPageTitle').textContent = currentHerb.name + ' - 婧簮璇︽儏';
+  document.body.style.overflow = 'hidden';
+
+  switchTab(0);
+  window.scrollTo(0,0);
+}
+
+function closeDetail(){
+  document.getElementById('mainPage').style.display = 'block';
+  document.getElementById('detailOverlay').classList.remove('active');
+  document.body.style.overflow = '';
+  currentHerb = null;
+  window.scrollTo(0,0);
+}
+
+// ===== TAB SWITCHING =====
+function switchTab(idx){
+  if(!currentHerb) return;
+  const h = currentHerb;
+
+  const tabs = ['馃搵 浜у搧淇℃伅','馃尡 鐢熶骇淇℃伅','馃敆 鑽潗杩芥函','馃敩 璐ㄦ淇℃伅','馃彚 浼佷笟淇℃伅'];
+  const panels = [renderProductInfo(h), renderProductionInfo(h), renderTraceability(h), renderQualityInfo(h), renderEnterpriseInfo(h)];
+
+  const tabsNavHtml = tabs.map((t,i) => `
+    <button class="tab-btn ${i===idx?'active':''}" onclick="switchTab(${i})">${t}</button>
+  `).join('');
+
+  const detailContent = document.getElementById('detailContent');
+  detailContent.innerHTML = `
+    <div class="detail-hero">
+      <img class="hero-img" src="${h.imgs[0]}" alt="${h.name}" loading="lazy"
+           onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,${h.colors[0]},${h.colors[1]})';this.parentElement.innerHTML+='<div style=position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:6rem>${h.emoji}</div>'">
+      <div class="detail-hero-overlay">
+        <h2>${h.emoji} ${h.name}</h2>
+        <div class="sub">${h.latin} 路 ${h.origin} 路 鎵瑰彿: ${h.batch}</div>
+      </div>
+    </div>
+
+    <div class="container tabs-container">
+      <div class="tabs-nav">${tabsNavHtml}</div>
+      <div style="margin-bottom:20px">
+        ${renderGallery(h)}
+      </div>
+      ${panels[idx]}
+    </div>
+  `;
+}
+
+// ===== GALLERY =====
+function renderGallery(h){
+  return `
+    <div class="gallery">
+      <h4>馃摳 鑽潗鍥剧墖</h4>
+      <div class="gallery-grid">
+        ${h.imgs.map((img,i) => `
+          <div class="gallery-item" onclick="event.stopPropagation();openLightbox('${img}')">
+            <img class="g-img" src="${img}" alt="${h.name} 鍥剧墖${i+1}" loading="lazy"
+                 onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,${h.colors[0]},${h.colors[1]})';this.parentElement.innerHTML+='<div style=display:flex;align-items:center;justify-content:center;height:100%;font-size:2.5rem>${h.emoji}</div>'">
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+
+// ===== PRODUCT INFO =====
+function renderProductInfo(h){
+  return `
+    <div class="tab-panel active">
+      <div class="info-grid">
+        ${Object.entries(h.productInfo).map(([k,v]) => `
+          <div class="info-item">
+            <div class="label">${k}</div>
+            <div class="value">${v}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+
+// ===== PRODUCTION INFO =====
+function renderProductionInfo(h){
+  return `
+    <div class="tab-panel active">
+      <div class="info-grid">
+        ${Object.entries(h.productionInfo).map(([k,v]) => `
+          <div class="info-item">
+            <div class="label">${k}</div>
+            <div class="value">${v}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+
+// ===== TRACEABILITY TIMELINE =====
+function renderTraceability(h){
+  return `
+    <div class="tab-panel active">
+      <div class="timeline">
+        ${h.traceability.map((t,i) => {
+          const isCurrent = t.status === 'current';
+          const isDone = t.status === 'done';
+          return `
+            <div class="timeline-item ${isCurrent?'current':''} ${isDone?'done':''}">
+              <div class="stage">${isCurrent?'馃搷 ':''}${t.stage}</div>
+              <div class="time">馃晲 ${t.time}</div>
+              <div class="desc">${t.desc}</div>
+              <div class="meta-row">
+                <span>馃搷 ${t.location}</span>
+                <span>馃懁 ${t.operator}</span>
+                <span>${isCurrent?'馃數 褰撳墠闃舵':isDone?'鉁?宸插畬鎴?:'鈴?寰呰繘琛?}</span>
+              </div>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    </div>
+  `;
+}
+
+// ===== QUALITY INFO =====
+function renderQualityInfo(h){
+  return `
+    <div class="tab-panel active">
+      <div class="quality-card">
+        <h4>馃搵 璐ㄦ鎶ュ憡</h4>
+        <table class="quality-table">
+          ${Object.entries(h.qualityInfo).map(([k,v]) => `
+            <tr>
+              <td>${k}</td>
+              <td>${v}</td>
+            </tr>
+          `).join('')}
+        </table>
+      </div>
+      <div class="qr-section">
+        <div class="qr-code">馃摫</div>
+        <div>
+          <div style="font-weight:700;color:var(--brown-dark);margin-bottom:4px">鎵爜楠岃瘉</div>
+          <div style="font-size:0.85rem;color:var(--gray)">鎵弿杩芥函浜岀淮鐮佸彲鏌ョ湅瀹屾暣妫€娴嬫姤鍛?br>鎶ュ憡缂栧彿锛?{h.qualityInfo['鎶ュ憡缂栧彿']}</div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// ===== ENTERPRISE INFO =====
+function renderEnterpriseInfo(h){
+  return `
+    <div class="tab-panel active">
+      <div class="enterprise-card">
+        <h4>馃彚 ${h.enterpriseInfo['浼佷笟鍚嶇О']}</h4>
+        <div class="enterprise-grid">
+          ${Object.entries(h.enterpriseInfo).map(([k,v]) => `
+            <div class="enterprise-item">
+              <div class="lbl">${k}</div>
+              <div class="val">${v}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// ===== LIGHTBOX =====
+function openLightbox(src){
+  document.getElementById('lightboxImg').src = src;
+  document.getElementById('lightbox').classList.add('active');
+}
+
+function closeLightbox(){
+  document.getElementById('lightbox').classList.remove('active');
+}
+
+// ===== NAVIGATION =====
+function goHome(){
+  closeDetail();
+  document.getElementById('mainPage').style.display = 'block';
+  window.scrollTo(0,0);
+}
+
+function scrollToSection(id){
+  const el = document.getElementById(id);
+  if(el) el.scrollIntoView({behavior:'smooth'});
+}
+
+function toggleMenu(){
+  document.getElementById('navLinks').classList.toggle('open');
+}
+
+// ===== KEYBOARD =====
+document.addEventListener('keydown', e => {
+  if(e.key === 'Escape') {
+    if(document.getElementById('lightbox').classList.contains('active')){
+      closeLightbox();
+    }else if(document.getElementById('detailOverlay').classList.contains('active')){
+      closeDetail();
+    }
+  }
+});
+
+// ===== INIT =====
+renderHerbs();
+</script>
+</body>
+</html>
