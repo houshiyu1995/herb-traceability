@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>涓嵂鏉愭函婧?- 鏁版嵁绠＄悊鍚庡彴</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --sidebar-w:260px;
+  --brown:#3E2723;--brown-l:#5D4037;--brown-ll:#8D6E63;
+  --gold:#C8A45C;--gold-l:#F5E6CC;
+  --jade:#2E7D55;--jade-l:#E8F5E9;
+  --red:#C62828;--red-l:#FFEBEE;
+  --bg:#F5F0EB;--card-bg:#FFFBF7;
+  --border:#E8DDD0;--text:#3E2723;--text-l:#8D6E63;
+  --radius:10px;--radius-s:6px;
+  --shadow:0 2px 12px rgba(62,39,35,0.06);
+  --font:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+}
+html{font-size:14px}
+body{font-family:var(--font);background:var(--bg);color:var(--text);display:flex;min-height:100vh}
+a{color:var(--jade);text-decoration:none}
+
+/* Sidebar */
+.sidebar{
+  width:var(--sidebar-w);min-width:var(--sidebar-w);
+  background:linear-gradient(180deg,#2C1810 0%,#3E2723 100%);
+  color:#EDE0D4;display:flex;flex-direction:column;
+  position:fixed;top:0;left:0;bottom:0;z-index:10;
+}
+.sidebar-header{
+  padding:20px 18px 16px;
+  border-bottom:1px solid rgba(255,255,255,0.08);
+}
+.sidebar-header h2{font-size:1.1rem;font-weight:700;color:var(--gold-l);display:flex;align-items:center;gap:8px}
+.sidebar-header h2 span{font-size:1.3rem}
+.sidebar-header p{font-size:0.75rem;color:rgba(255,255,255,0.45);margin-top:4px}
+.herb-list{flex:1;overflow-y:auto;padding:8px 0}
+.herb-item{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 18px;cursor:pointer;
+  transition:all 0.2s;border-left:3px solid transparent;
+  font-size:0.9rem;color:rgba(255,255,255,0.7);
+}
+.herb-item:hover{background:rgba(255,255,255,0.06);color:#fff}
+.herb-item.active{background:rgba(200,164,92,0.15);border-left-color:var(--gold);color:#fff}
+.herb-item-id{font-size:0.7rem;color:rgba(255,255,255,0.3);min-width:20px}
+.herb-item-emoji{font-size:1.2rem}
+.herb-item-name{flex:1}
+.herb-item-origin{font-size:0.7rem;color:rgba(255,255,255,0.35)}
+.sidebar-footer{padding:14px 18px;border-top:1px solid rgba(255,255,255,0.08)}
+.btn-add{
+  width:100%;padding:10px;background:var(--gold);color:#3E2723;
+  border:none;border-radius:var(--radius-s);cursor:pointer;
+  font-size:0.9rem;font-weight:600;font-family:var(--font);
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  transition:all 0.2s;
+}
+.btn-add:hover{background:#D4B46C}
+.btn-del-herb{
+  background:none;border:none;color:rgba(255,255,255,0.2);cursor:pointer;
+  font-size:0.9rem;padding:2px 4px;border-radius:3px;transition:all 0.2s;
+}
+.btn-del-herb:hover{color:#FF6B6B;background:rgba(255,0,0,0.1)}
+
+/* Main */
+.main{flex:1;margin-left:var(--sidebar-w);padding:24px 32px 80px}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
+.topbar h1{font-size:1.4rem;font-weight:700;color:var(--brown)}
+.topbar-actions{display:flex;gap:10px}
+.btn{
+  padding:8px 18px;border:none;border-radius:var(--radius-s);
+  font-size:0.85rem;font-weight:600;cursor:pointer;font-family:var(--font);
+  transition:all 0.2s;display:flex;align-items:center;gap:6px;
+}
+.btn-primary{background:var(--jade);color:#fff}
+.btn-primary:hover{background:#256B47}
+.btn-gold{background:var(--gold);color:var(--brown)}
+.btn-gold:hover{background:#D4B46C}
+.btn-outline{background:transparent;border:1px solid var(--border);color:var(--text)}
+.btn-outline:hover{background:var(--bg)}
+.btn-danger{background:var(--red);color:#fff}
+.btn-danger:hover{background:#B71C1C}
+.btn:disabled{opacity:0.5;cursor:not-allowed}
+
+/* Empty state */
+.empty-state{
+  text-align:center;padding:80px 20px;color:var(--text-l);
+}
+.empty-state h3{font-size:1.3rem;margin-bottom:8px;color:var(--brown-l)}
+.empty-state p{font-size:0.9rem}
+
+/* Card */
+.card{
+  background:var(--card-bg);border-radius:var(--radius);
+  border:1px solid var(--border);box-shadow:var(--shadow);
+  margin-bottom:20px;overflow:hidden;
+}
+.card-header{
+  padding:14px 20px;border-bottom:1px solid var(--border);
+  font-weight:700;font-size:0.95rem;color:var(--brown-l);
+  display:flex;align-items:center;gap:8px;
+}
+.card-body{padding:20px}
+.card-header .icon{font-size:1.1rem}
+
+/* Tabs */
+.tabs{display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:0}
+.tab{
+  padding:12px 20px;background:none;border:none;cursor:pointer;
+  font-size:0.85rem;font-weight:600;color:var(--text-l);
+  font-family:var(--font);border-bottom:2px solid transparent;
+  margin-bottom:-2px;transition:all 0.2s;
+}
+.tab:hover{color:var(--brown)}
+.tab.active{color:var(--jade);border-bottom-color:var(--jade)}
+
+/* Form */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-group{display:flex;flex-direction:column;gap:4px}
+.form-group.full{grid-column:1/-1}
+.form-group label{
+  font-size:0.78rem;font-weight:600;color:var(--text-l);
+  text-transform:uppercase;letter-spacing:0.5px;
+}
+.form-group input,.form-group textarea,.form-group select{
+  padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius-s);
+  font-size:0.9rem;font-family:var(--font);color:var(--text);
+  background:#fff;transition:border-color 0.2s;
+}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{
+  outline:none;border-color:var(--jade);box-shadow:0 0 0 3px rgba(46,125,85,0.08);
+}
+.form-group textarea{resize:vertical;min-height:60px}
+
+/* Traceability items */
+.trace-item{
+  display:grid;grid-template-columns:1fr 1fr 1fr 2fr 1fr auto;
+  gap:8px;padding:12px;margin-bottom:8px;
+  background:var(--bg);border-radius:var(--radius-s);border:1px solid var(--border);
+  align-items:center;font-size:0.85rem;
+}
+.trace-item input,.trace-item select{
+  padding:6px 8px;border:1px solid var(--border);border-radius:4px;
+  font-size:0.82rem;font-family:var(--font);background:#fff;
+}
+.trace-item .trace-desc{grid-column:4}
+.trace-item .trace-actions{display:flex;gap:4px}
+.btn-icon{
+  width:28px;height:28px;border:none;border-radius:4px;
+  cursor:pointer;font-size:0.85rem;display:flex;align-items:center;justify-content:center;
+  transition:all 0.15s;
+}
+.btn-icon.danger{background:var(--red-l);color:var(--red)}
+.btn-icon.danger:hover{background:var(--red);color:#fff}
+.btn-icon.up{background:var(--bg);color:var(--text-l)}
+.btn-icon.up:hover{background:var(--border);color:var(--text)}
+.btn-sm{
+  padding:6px 14px;border:none;border-radius:4px;
+  font-size:0.8rem;font-weight:600;cursor:pointer;font-family:var(--font);
+  background:var(--jade-l);color:var(--jade);margin-top:8px;
+  transition:all 0.2s;
+}
+.btn-sm:hover{background:var(--jade);color:#fff}
+
+/* Quality info KV */
+.q-item{
+  display:grid;grid-template-columns:1fr 2fr auto;gap:8px;
+  padding:8px;margin-bottom:6px;
+  background:var(--bg);border-radius:var(--radius-s);border:1px solid var(--border);
+  align-items:center;font-size:0.85rem;
+}
+.q-item input{padding:6px 8px;border:1px solid var(--border);border-radius:4px;font-size:0.82rem;font-family:var(--font);background:#fff}
+
+/* Images */
+.img-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.img-item{
+  border:2px dashed var(--border);border-radius:var(--radius-s);
+  padding:8px;display:flex;flex-direction:column;gap:6px;
+  background:var(--bg);
+}
+.img-item img{width:100%;height:80px;object-fit:cover;border-radius:4px;background:#e0e0e0}
+.img-item input{width:100%;padding:6px 8px;border:1px solid var(--border);border-radius:4px;font-size:0.75rem;font-family:var(--font)}
+
+/* Toast */
+.toast{
+  position:fixed;top:20px;right:20px;z-index:999;
+  padding:12px 20px;border-radius:var(--radius-s);color:#fff;
+  font-size:0.85rem;font-weight:600;font-family:var(--font);
+  animation:slideIn 0.3s ease;box-shadow:0 4px 16px rgba(0,0,0,0.2);
+}
+.toast.success{background:var(--jade)}
+.toast.error{background:var(--red)}
+.toast.info{background:#1565C0}
+@keyframes slideIn{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
+
+/* Status bar */
+.status-bar{
+  position:fixed;bottom:0;left:var(--sidebar-w);right:0;
+  background:#2C1810;color:rgba(255,255,255,0.7);
+  padding:10px 24px;font-size:0.78rem;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.status-bar span{display:flex;align-items:center;gap:6px}
+.status-dot{width:8px;height:8px;border-radius:50%;background:#4CAF50}
+.status-dot.unsaved{background:#FF9800}
+
+/* Responsive */
+@media(max-width:768px){
+  .sidebar{width:200px;min-width:200px}
+  .main{margin-left:200px;padding:16px}
+  .form-grid{grid-template-columns:1fr}
+  .trace-item{grid-template-columns:1fr;gap:4px}
+  .trace-item .trace-desc{grid-column:1}
+}
+</style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<aside class="sidebar">
+  <div class="sidebar-header">
+    <h2><span>&#127807;</span> 鑽潗鏁版嵁绠＄悊</h2>
+    <p id="herbCount">鍏?0 绉嶈嵂鏉?/p>
+  </div>
+  <div class="herb-list" id="herbList"></div>
+  <div class="sidebar-footer">
+    <button class="btn-add" onclick="addHerb()">+ 鏂板鑽潗</button>
+  </div>
+</aside>
+
+<!-- Main -->
+<main class="main" id="mainContent">
+  <div class="empty-state"><h3>閫夋嫨宸︿晶鑽潗寮€濮嬬紪杈?/h3><p>鎴栫偣鍑?鏂板鑽潗"娣诲姞鏂板搧绉?/p></div>
+</main>
+
+<!-- Status bar -->
+<div class="status-bar">
+  <span><span class="status-dot" id="statusDot"></span> <span id="statusText">灏辩华</span></span>
+  <span style="display:flex;gap:10px">
+    <button class="btn btn-outline btn-sm" style="font-size:0.75rem" onclick="saveLocal()">淇濆瓨鏈湴</button>
+    <button class="btn btn-primary btn-sm" style="font-size:0.75rem" id="btnDeploy" onclick="deploy()">閮ㄧ讲鍒?GitHub</button>
+  </span>
+</div>
+
+<script>
+// ===== GLOBAL STATE =====
+let herbs = [];
+let currentId = null;
+let isDirty = false;
+const GITHUB_USER = 'houshiyu1995';
+const GITHUB_REPO = 'herb-traceability';
+let GITHUB_TOKEN = localStorage.getItem('gh_token') || '';
+
+// ===== INIT =====
+async function init(){
+  try{
+    const res = await fetch('data.json');
+    herbs = await res.json();
+    renderSidebar();
+    updateStatus('灏辩华', false);
+  }catch(e){
+    // Try localStorage backup
+    const saved = localStorage.getItem('herb-data-backup');
+    if(saved){
+      herbs = JSON.parse(saved);
+      renderSidebar();
+      updateStatus('浠庢湰鍦扮紦瀛樺姞杞?, true);
+      showToast('宸蹭粠鏈湴缂撳瓨鎭㈠鏁版嵁', 'info');
+    }else{
+      herbs = [];
+      renderSidebar();
+      updateStatus('鏃犳暟鎹?, false);
+    }
+  }
+}
+
+// ===== SIDEBAR =====
+function renderSidebar(){
+  const list = document.getElementById('herbList');
+  document.getElementById('herbCount').textContent = '鍏?' + herbs.length + ' 绉嶈嵂鏉?;
+  list.innerHTML = herbs.map((h,i) => `
+    <div class="herb-item ${currentId === h.id ? 'active' : ''}" onclick="selectHerb(${h.id})">
+      <span class="herb-item-id">#${i+1}</span>
+      <span class="herb-item-emoji">${h.emoji||'馃尶'}</span>
+      <span class="herb-item-name">${h.name}</span>
+      <span class="herb-item-origin">${h.origin.split('鐪?)[0]||h.origin.slice(0,6)}</span>
+      <button class="btn-del-herb" onclick="event.stopPropagation();deleteHerb(${h.id})" title="鍒犻櫎">脳</button>
+    </div>
+  `).join('');
+}
+
+function selectHerb(id){
+  currentId = id;
+  renderSidebar();
+  renderEditor();
+}
+
+function getCurrentHerb(){
+  return herbs.find(h => h.id === currentId);
+}
+
+function addHerb(){
+  const maxId = herbs.length > 0 ? Math.max(...herbs.map(h=>h.id)) : 0;
+  const newHerb = {
+    id: maxId + 1,
+    name: '鏂拌嵂鏉?,
+    latin: '',
+    category: '琛ユ皵鑽?,
+    origin: '',
+    batch: '',
+    year: new Date().getFullYear().toString(),
+    colors: ['#8B7355', '#6B5340'],
+    emoji: '馃尶',
+    imgs: ['','','',''],
+    productInfo: {'鍝佸悕':'','瑙勬牸':'','鎵瑰彿':'','浜у湴':'','鐢熶骇鏃ユ湡':'','鏈夋晥鏈熻嚦':'','鍑€鍚噺':'','璐棌鏉′欢':'','鎵ц鏍囧噯':'銆婁腑鍥借嵂鍏搞€?025骞寸増'},
+    productionInfo: {'绉嶆鏂瑰紡':'','绉嶆骞撮檺':'','绉嶆鐜':'','鍦熷￥绫诲瀷':'','閲囨敹鏃堕棿':'','鍔犲伐宸ヨ壓':'','鍔犲伐浼佷笟':'','鍔犲伐鏃ユ湡':''},
+    traceability: [],
+    qualityInfo: {'妫€娴嬫爣鍑?:'銆婁腑鍥借嵂鍏搞€?025骞寸増','妫€娴嬫満鏋?:'','鎶ュ憡缂栧彿':'','妫€娴嬫棩鏈?:'','妫€娴嬬粨璁?:'鏈搧鎸夈€婁腑鍥借嵂鍏搞€?025骞寸増妫€楠岋紝缁撴灉绗﹀悎瑙勫畾銆?},
+    enterpriseInfo: {'浼佷笟鍚嶇О':'','缁熶竴绀句細淇＄敤浠ｇ爜':'','娉曞畾浠ｈ〃浜?:'','娉ㄥ唽璧勬湰':'','鎴愮珛鏃ユ湡':'','娉ㄥ唽鍦板潃':'','鑱旂郴鐢佃瘽':'','鐢熶骇璁稿彲璇佸彿':'','GAP璁よ瘉':'','ISO璁よ瘉':'','GMP璁よ瘉':'','缁忚惀鑼冨洿':''}
+  };
+  herbs.push(newHerb);
+  currentId = newHerb.id;
+  markDirty();
+  renderSidebar();
+  renderEditor();
+  showToast('宸叉坊鍔犳柊鑽潗', 'success');
+}
+
+function deleteHerb(id){
+  if(!confirm('纭畾瑕佸垹闄よ繖鍛宠嵂鏉愬悧锛熸鎿嶄綔涓嶅彲鎾ら攢銆?)) return;
+  const idx = herbs.findIndex(h => h.id === id);
+  if(idx === -1) return;
+  herbs.splice(idx, 1);
+  if(currentId === id) currentId = herbs.length > 0 ? herbs[0].id : null;
+  markDirty();
+  renderSidebar();
+  if(currentId) renderEditor();
+  else document.getElementById('mainContent').innerHTML = '<div class="empty-state"><h3>宸插叏閮ㄥ垹闄?/h3><p>鐐瑰嚮"鏂板鑽潗"寮€濮嬫坊鍔?/p></div>';
+  showToast('宸插垹闄?, 'info');
+}
+
+// ===== EDITOR =====
+function renderEditor(){
+  const h = getCurrentHerb();
+  if(!h) return;
+  const m = document.getElementById('mainContent');
+  m.innerHTML = `
+    <div class="topbar">
+      <h1>${h.emoji||'馃尶'} ${h.name}</h1>
+      <div class="topbar-actions">
+        <button class="btn btn-gold" onclick="saveLocal()">鏈湴淇濆瓨</button>
+        <button class="btn btn-primary" id="btnDeploy2" onclick="deploy()">閮ㄧ讲涓婄嚎</button>
+      </div>
+    </div>
+    <div class="card" id="basicCard">
+      <div class="card-header"><span class="icon">馃搵</span> 鍩烘湰淇℃伅</div>
+      <div class="card-body">
+        <div class="form-grid">
+          ${field('name','鑽潗鍚嶇О','text',h.name)}
+          ${field('latin','鎷変竵瀛﹀悕','text',h.latin)}
+          ${field('category','鍒嗙被','text',h.category)}
+          ${field('origin','浜у湴','text',h.origin)}
+          ${field('batch','鎵瑰彿','text',h.batch)}
+          ${field('year','骞翠唤','text',h.year)}
+          <div class="form-group full">
+            <label>Emoji 鍥炬爣</label>
+            <input value="${esc(h.emoji)}" onchange="updateField('emoji',this.value)" placeholder="馃尶">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="icon">馃柤锔?/span> 鍥剧墖閾炬帴</div>
+      <div class="card-body">
+        <div class="img-grid">
+          ${h.imgs.map((url,i)=>`
+            <div class="img-item">
+              <img src="${url||'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 70%22><rect fill=%22%23ddd%22 width=%22100%22 height=%2270%22/><text x=%2250%22 y=%2240%22 text-anchor=%22middle%22 fill=%22%23999%22 font-size=%2214%22>鍥?{i+1}</text></svg>'}" onerror="this.style.display='none'" alt="鍥?{i+1}">
+              <input value="${esc(url)}" onchange="updateImg(${i},this.value)" placeholder="鍥剧墖URL ${i+1}">
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="icon">馃摝</span> 浜у搧淇℃伅</div>
+      <div class="card-body">
+        <div class="form-grid">
+          ${Object.entries(h.productInfo).map(([k,v]) => field('productInfo.'+k, k, 'text', v)).join('')}
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="icon">馃彮</span> 鐢熶骇淇℃伅</div>
+      <div class="card-body">
+        <div class="form-grid">
+          ${Object.entries(h.productionInfo).map(([k,v]) => field('productionInfo.'+k, k, 'text', v)).join('')}
+        </div>
+        ${h.productionInfo['鍏辩敓鑿?] !== undefined ? '' : '<button class="btn-sm" onclick="addProdField()">+ 娣诲姞瀛楁</button>'}
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="icon">馃攳</span> 鑽潗杩芥函 <small style="font-weight:400;color:var(--text-l)">(${h.traceability.length} 涓幆鑺?</small></div>
+      <div class="card-body">
+        <div id="traceList">
+          ${h.traceability.map((t,i)=>`
+            <div class="trace-item">
+              <input value="${esc(t.stage)}" onchange="updateTraceItem(${i},'stage',this.value)" placeholder="鐜妭">
+              <input value="${esc(t.location)}" onchange="updateTraceItem(${i},'location',this.value)" placeholder="鍦扮偣">
+              <input value="${esc(t.time)}" onchange="updateTraceItem(${i},'time',this.value)" placeholder="鏃堕棿">
+              <input class="trace-desc" value="${esc(t.desc)}" onchange="updateTraceItem(${i},'desc',this.value)" placeholder="鎻忚堪">
+              <input value="${esc(t.operator)}" onchange="updateTraceItem(${i},'operator',this.value)" placeholder="鎿嶄綔浜?>
+              <select onchange="updateTraceItem(${i},'status',this.value)">
+                <option value="done" ${t.status==='done'?'selected':''}>宸插畬鎴?/option>
+                <option value="current" ${t.status==='current'?'selected':''}>褰撳墠</option>
+              </select>
+              <div class="trace-actions">
+                <button class="btn-icon up" onclick="moveTrace(${i},-1)" title="涓婄Щ">鈻?/button>
+                <button class="btn-icon up" onclick="moveTrace(${i},1)" title="涓嬬Щ">鈻?/button>
+                <button class="btn-icon danger" onclick="removeTrace(${i})" title="鍒犻櫎">脳</button>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+        <button class="btn-sm" onclick="addTrace()">+ 娣诲姞杩芥函鐜妭</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="icon">馃敩</span> 璐ㄦ淇℃伅</div>
+      <div class="card-body">
+        <div id="qualityList">
+          ${getQualityEntries(h).map(([k,v],i)=>`
+            <div class="q-item">
+              <input value="${esc(k)}" onchange="updateQualityKey(${i},this.value)" placeholder="妫€娴嬮」">
+              <input value="${esc(v)}" onchange="updateQualityValue(${i},this.value)" placeholder="妫€娴嬬粨鏋?>
+              <button class="btn-icon danger" onclick="removeQualityItem(${i})">脳</button>
+            </div>
+          `).join('')}
+        </div>
+        <button class="btn-sm" onclick="addQualityItem()">+ 娣诲姞妫€娴嬮」</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="icon">馃彚</span> 浼佷笟淇℃伅</div>
+      <div class="card-body">
+        <div class="form-grid">
+          ${Object.entries(h.enterpriseInfo).map(([k,v]) => field('enterpriseInfo.'+k, k, 'text', v)).join('')}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function field(name, label, type, value){
+  const idKey = name.replace(/\./g,'_');
+  return `<div class="form-group">
+    <label>${label}</label>
+    <input id="f_${idKey}" value="${esc(String(value))}" onchange="updateField('${name}',this.value)" type="${type}">
+  </div>`;
+}
+
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+function getQualityEntries(h){
+  const skip = ['妫€娴嬫爣鍑?,'妫€娴嬫満鏋?,'鎶ュ憡缂栧彿','妫€娴嬫棩鏈?,'妫€娴嬬粨璁?];
+  const entries = [];
+  for(const [k,v] of Object.entries(h.qualityInfo)){
+    if(!skip.includes(k)) entries.push([k,v]);
+  }
+  return entries;
+}
+
+// ===== UPDATE FUNCTIONS =====
+function updateField(path, value){
+  const h = getCurrentHerb();
+  if(!h) return;
+  const parts = path.split('.');
+  if(parts.length === 1){
+    h[parts[0]] = value;
+  }else{
+    h[parts[0]][parts[1]] = value;
+  }
+  markDirty();
+}
+
+function updateImg(idx, value){
+  const h = getCurrentHerb();
+  if(!h) return;
+  h.imgs[idx] = value;
+  markDirty();
+}
+
+function addTrace(){
+  const h = getCurrentHerb();
+  if(!h) return;
+  h.traceability.push({stage:'鏂扮幆鑺?,location:'',time:'',desc:'',operator:'',status:'done'});
+  markDirty();
+  renderEditor();
+}
+
+function removeTrace(idx){
+  const h = getCurrentHerb();
+  if(!h) return;
+  h.traceability.splice(idx,1);
+  markDirty();
+  renderEditor();
+}
+
+function moveTrace(idx, dir){
+  const h = getCurrentHerb();
+  if(!h) return;
+  const newIdx = idx + dir;
+  if(newIdx < 0 || newIdx >= h.traceability.length) return;
+  [h.traceability[idx], h.traceability[newIdx]] = [h.traceability[newIdx], h.traceability[idx]];
+  markDirty();
+  renderEditor();
+}
+
+function updateTraceItem(idx, field, value){
+  const h = getCurrentHerb();
+  if(!h) return;
+  h.traceability[idx][field] = value;
+  markDirty();
+}
+
+function addQualityItem(){
+  const h = getCurrentHerb();
+  if(!h) return;
+  h.qualityInfo['鏂版寚鏍?] = '';
+  markDirty();
+  renderEditor();
+}
+
+function removeQualityItem(idx){
+  const h = getCurrentHerb();
+  if(!h) return;
+  const entries = getQualityEntries(h);
+  const key = entries[idx][0];
+  delete h.qualityInfo[key];
+  markDirty();
+  renderEditor();
+}
+
+function updateQualityKey(idx, newKey){
+  const h = getCurrentHerb();
+  if(!h) return;
+  const entries = getQualityEntries(h);
+  const oldKey = entries[idx][0];
+  h.qualityInfo[newKey] = h.qualityInfo[oldKey];
+  if(newKey !== oldKey) delete h.qualityInfo[oldKey];
+  markDirty();
+}
+
+function updateQualityValue(idx, value){
+  const h = getCurrentHerb();
+  if(!h) return;
+  const entries = getQualityEntries(h);
+  h.qualityInfo[entries[idx][0]] = value;
+  markDirty();
+}
+
+function addProdField(){
+  const h = getCurrentHerb();
+  if(!h) return;
+  const fieldName = prompt('杈撳叆鏂板瓧娈靛悕锛堝锛氬叡鐢熻弻锛?');
+  if(fieldName && !h.productionInfo[fieldName]){
+    h.productionInfo[fieldName] = '';
+    markDirty();
+    renderEditor();
+  }
+}
+
+// ===== DIRTY STATE =====
+function markDirty(){
+  isDirty = true;
+  const dot = document.getElementById('statusDot');
+  const txt = document.getElementById('statusText');
+  if(dot) dot.className = 'status-dot unsaved';
+  if(txt) txt.textContent = '鏈夋湭淇濆瓨鐨勪慨鏀?;
+}
+
+function updateStatus(text, dirty){
+  const dot = document.getElementById('statusDot');
+  const txt = document.getElementById('statusText');
+  if(dot) dot.className = dirty ? 'status-dot unsaved' : 'status-dot';
+  if(txt) txt.textContent = text;
+}
+
+// ===== SAVE =====
+function saveLocal(){
+  const json = JSON.stringify(herbs, null, 2);
+  localStorage.setItem('herb-data-backup', json);
+
+  // Download data.json
+  const blob = new Blob([json], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'data.json';
+  a.click();
+  URL.revokeObjectURL(url);
+  isDirty = false;
+  updateStatus('宸蹭繚瀛樺埌鏈湴', false);
+  showToast('data.json 宸蹭笅杞斤紝璇锋浛鎹㈤」鐩腑鐨勬枃浠?, 'success');
+}
+
+// ===== DEPLOY TO GITHUB =====
+async function deploy(){
+  if(!GITHUB_TOKEN){
+    const input = prompt('璇疯緭鍏?GitHub Personal Access Token锛堜粎淇濆瓨鍦ㄦ湰鍦版祻瑙堝櫒锛?');
+    if(!input) return;
+    GITHUB_TOKEN = input;
+    localStorage.setItem('gh_token', input);
+  }
+  const btn = document.getElementById('btnDeploy');
+  const btn2 = document.getElementById('btnDeploy2');
+  if(btn) btn.disabled = true;
+  if(btn2) btn2.disabled = true;
+  updateStatus('姝ｅ湪閮ㄧ讲...', true);
+
+  try{
+    const dataJson = JSON.stringify(herbs, null, 2);
+    const dataContent = btoa(unescape(encodeURIComponent(dataJson)));
+
+    // Generate full index.html with embedded data
+    let htmlTemplate = await fetch('index.html').then(r => r.text());
+    // The index.html now loads from data.json, so we just need to upload both files
+
+    // Upload data.json
+    const dataBody = {
+      message: 'Update data.json via admin panel',
+      content: dataContent,
+      sha: null
+    };
+
+    // Try to get current SHA for data.json
+    try{
+      const shaRes = await githubAPI('GET', '/contents/data.json');
+      dataBody.sha = shaRes.sha;
+    }catch(e){}
+
+    await githubAPI('PUT', '/contents/data.json', dataBody);
+
+    updateStatus('閮ㄧ讲鎴愬姛锛?, false);
+    isDirty = false;
+    showToast('鏁版嵁宸查儴缃插埌 GitHub Pages锛岀害1-2鍒嗛挓鍚庣敓鏁?, 'success');
+  }catch(e){
+    updateStatus('閮ㄧ讲澶辫触', true);
+    showToast('閮ㄧ讲澶辫触: ' + e.message, 'error');
+  }finally{
+    if(btn) btn.disabled = false;
+    if(btn2) btn2.disabled = false;
+  }
+}
+
+async function githubAPI(method, path, body){
+  const res = await fetch('https://api.github.com/repos/' + GITHUB_USER + '/' + GITHUB_REPO + path, {
+    method: method,
+    headers: {
+      'Authorization': 'Bearer ' + GITHUB_TOKEN,
+      'Content-Type': 'application/json',
+      'Accept': 'application/vnd.github+json'
+    },
+    body: body ? JSON.stringify(body) : undefined
+  });
+  if(!res.ok){
+    const err = await res.json().catch(()=>({}));
+    throw new Error(err.message || res.statusText);
+  }
+  return res.json();
+}
+
+// ===== TOAST =====
+function showToast(msg, type){
+  const t = document.createElement('div');
+  t.className = 'toast ' + type;
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(() => { t.style.opacity = '0'; t.style.transition = 'opacity 0.3s'; setTimeout(() => t.remove(), 300); }, 2500);
+}
+
+// ===== STARTUP =====
+init();
+</script>
+</body>
+</html>
