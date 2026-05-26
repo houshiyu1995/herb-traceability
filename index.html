@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>本草溯源 - 中药材全程追溯平台</title>
+<title>鏈崏婧簮 - 涓嵂鏉愬叏绋嬭拷婧钩鍙?/title>
 <script src="https://cdn.jsdelivr.net/npm/qrcodejs2@0.0.2/qrcode.min.js"></script>
 <style>
 /* ===== Reset & Base ===== */
@@ -291,26 +291,26 @@ body{
 
 <!-- Top Banner -->
 <div class="top-banner">
-  <span>🌿 道地药材 · 全程追溯 · 品质保障</span>
+  <span>馃尶 閬撳湴鑽潗 路 鍏ㄧ▼杩芥函 路 鍝佽川淇濋殰</span>
 </div>
 
 <!-- Header -->
 <header class="header" id="header">
   <div class="container header-inner">
     <div class="logo" onclick="goHome()">
-      <div class="logo-icon">🌿</div>
+      <div class="logo-icon">馃尶</div>
       <div class="logo-text">
-        <h1>本草溯源</h1>
-        <small>中药材全程追溯平台</small>
+        <h1>鏈崏婧簮</h1>
+        <small>涓嵂鏉愬叏绋嬭拷婧钩鍙?/small>
       </div>
     </div>
-    <button class="hamburger" onclick="toggleMenu()" aria-label="菜单">☰</button>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="鑿滃崟">鈽?/button>
     <nav>
       <ul class="nav-links" id="navLinks">
-        <li><a onclick="goHome()">首页</a></li>
-        <li><a onclick="scrollToSection('herbsSection')">药材库</a></li>
-        <li><a onclick="scrollToSection('featuresSection')">追溯服务</a></li>
-        <li><a onclick="scrollToSection('footer')">关于我们</a></li>
+        <li><a onclick="goHome()">棣栭〉</a></li>
+        <li><a onclick="scrollToSection('herbsSection')">鑽潗搴?/a></li>
+        <li><a onclick="scrollToSection('featuresSection')">杩芥函鏈嶅姟</a></li>
+        <li><a onclick="scrollToSection('footer')">鍏充簬鎴戜滑</a></li>
       </ul>
     </nav>
   </div>
@@ -322,8 +322,8 @@ body{
   <!-- Hero -->
   <section class="hero">
     <div class="container">
-      <h2>道地药材 · <span>全程溯源</span></h2>
-      <p>每一味药材，从田间到药房，全生命周期数据上链存证，扫码即可查看完整溯源信息</p>
+      <h2>閬撳湴鑽潗 路 <span>鍏ㄧ▼婧簮</span></h2>
+      <p>姣忎竴鍛宠嵂鏉愶紝浠庣敯闂村埌鑽埧锛屽叏鐢熷懡鍛ㄦ湡鏁版嵁涓婇摼瀛樿瘉锛屾壂鐮佸嵆鍙煡鐪嬪畬鏁存函婧愪俊鎭?/p>
     </div>
   </section>
 
@@ -338,14 +338,14 @@ body{
   <section class="search-section" id="searchSection">
     <div class="container">
       <div class="search-bar">
-        <input type="text" class="search-input" id="searchInput" placeholder="🔍 搜索药材名称、产地、批号..." oninput="filterHerbs()">
+        <input type="text" class="search-input" id="searchInput" placeholder="馃攳 鎼滅储鑽潗鍚嶇О銆佷骇鍦般€佹壒鍙?.." oninput="filterHerbs()">
         <select class="filter-select" id="categoryFilter" onchange="filterHerbs()">
-          <option value="all">全部分类</option>
+          <option value="all">鍏ㄩ儴鍒嗙被</option>
         </select>
         <select class="filter-select" id="originFilter" onchange="filterHerbs()">
-          <option value="all">全部产地</option>
+          <option value="all">鍏ㄩ儴浜у湴</option>
         </select>
-        <button class="btn btn-outline" onclick="resetFilters()">🔄 重置</button>
+        <button class="btn btn-outline" onclick="resetFilters()">馃攧 閲嶇疆</button>
       </div>
     </div>
   </section>
@@ -354,11 +354,11 @@ body{
   <section class="herbs-section" id="herbsSection">
     <div class="container">
       <div class="section-header">
-        <h3>📋 药材溯源库</h3>
-        <span id="resultCount">（共 0 种药材）</span>
+        <h3>馃搵 鑽潗婧簮搴?/h3>
+        <span id="resultCount">锛堝叡 0 绉嶈嵂鏉愶級</span>
       </div>
       <div class="herbs-grid" id="herbsGrid">
-        <div class="loading"><div class="spinner"></div><p>正在加载药材数据...</p></div>
+        <div class="loading"><div class="spinner"></div><p>姝ｅ湪鍔犺浇鑽潗鏁版嵁...</p></div>
       </div>
     </div>
   </section>
@@ -373,8 +373,8 @@ body{
 <div class="detail-page" id="detailPage">
   <div class="detail-topbar">
     <div class="container detail-topbar-inner">
-      <h3 id="detailTitle">药材溯源详情</h3>
-      <button class="btn btn-back" onclick="goHome()">← 返回药材库</button>
+      <h3 id="detailTitle">鑽潗婧簮璇︽儏</h3>
+      <button class="btn btn-back" onclick="goHome()">鈫?杩斿洖鑽潗搴?/button>
     </div>
   </div>
 
@@ -403,7 +403,7 @@ let BASE_URL = window.location.origin + window.location.pathname.replace(/\/[^/]
 // ===== INIT =====
 async function init() {
   try {
-    const res = await fetch('data.json');
+    const res = await fetch('data.json', { cache: 'no-cache' });
     DATA = await res.json();
   } catch(e) {
     console.error('Failed to load data.json', e);
@@ -445,8 +445,8 @@ function renderMainPage() {
 
   // Hero
   document.querySelector('.top-banner span').textContent = sc.banner;
-  document.querySelector('.hero h2').innerHTML = `道地药材 · <span>全程溯源</span>`;
-  document.querySelector('.hero p').textContent = '每一味药材，从田间到药房，全生命周期数据上链存证，扫码即可查看完整溯源信息';
+  document.querySelector('.hero h2').innerHTML = `閬撳湴鑽潗 路 <span>鍏ㄧ▼婧簮</span>`;
+  document.querySelector('.hero p').textContent = '姣忎竴鍛宠嵂鏉愶紝浠庣敯闂村埌鑽埧锛屽叏鐢熷懡鍛ㄦ湡鏁版嵁涓婇摼瀛樿瘉锛屾壂鐮佸嵆鍙煡鐪嬪畬鏁存函婧愪俊鎭?;
 
   // Features
   document.getElementById('featuresGrid').innerHTML = (sc.features||[]).map(f => `
@@ -459,11 +459,11 @@ function renderMainPage() {
 
   // Categories
   const catSelect = document.getElementById('categoryFilter');
-  catSelect.innerHTML = '<option value="all">全部分类</option>' + (sc.categories||[]).map(c => `<option value="${c}">${c}</option>`).join('');
+  catSelect.innerHTML = '<option value="all">鍏ㄩ儴鍒嗙被</option>' + (sc.categories||[]).map(c => `<option value="${c}">${c}</option>`).join('');
 
   // Origins
   const orgSelect = document.getElementById('originFilter');
-  orgSelect.innerHTML = '<option value="all">全部产地</option>' + (sc.origins||[]).map(o => `<option value="${o}">${o}</option>`).join('');
+  orgSelect.innerHTML = '<option value="all">鍏ㄩ儴浜у湴</option>' + (sc.origins||[]).map(o => `<option value="${o}">${o}</option>`).join('');
 
   // Herbs
   renderHerbs();
@@ -485,28 +485,28 @@ function renderHerbs() {
     return matchSearch && matchCat && matchOrigin;
   });
 
-  document.getElementById('resultCount').textContent = `（共 ${filtered.length} 种药材）`;
+  document.getElementById('resultCount').textContent = `锛堝叡 ${filtered.length} 绉嶈嵂鏉愶級`;
 
   const grid = document.getElementById('herbsGrid');
   if (filtered.length === 0) {
-    grid.innerHTML = '<div class="empty-state"><div class="icon">🔍</div><h4>未找到匹配的药材</h4><p>请尝试调整搜索条件或筛选选项</p></div>';
+    grid.innerHTML = '<div class="empty-state"><div class="icon">馃攳</div><h4>鏈壘鍒板尮閰嶇殑鑽潗</h4><p>璇峰皾璇曡皟鏁存悳绱㈡潯浠舵垨绛涢€夐€夐」</p></div>';
     return;
   }
 
   grid.innerHTML = filtered.map(h => `
     <div class="herb-card" onclick="openHerbDetail('${h.id}')">
       <div class="herb-card-img">
-        <img src="${h.imgs[0]}" alt="${h.name}" loading="lazy" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,${(h.colors||['#8D6E63','#6D4C41'])[0]},${(h.colors||['#8D6E63','#6D4C41'])[1]})';this.parentElement.innerHTML+='<div style=position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:4rem>${h.emoji||'🌿'}</div>'">
+        <img src="${h.imgs[0]}" alt="${h.name}" loading="lazy" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,${(h.colors||['#8D6E63','#6D4C41'])[0]},${(h.colors||['#8D6E63','#6D4C41'])[1]})';this.parentElement.innerHTML+='<div style=position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:4rem>${h.emoji||'馃尶'}</div>'">
         <div class="herb-card-badge">${h.category}</div>
       </div>
       <div class="herb-card-body">
         <h4>${h.name}</h4>
         <div class="latin">${h.latin||''}</div>
         <div class="herb-card-meta">
-          <span>📍 ${h.origin}</span>
-          <span>📦 ${h.batch}</span>
+          <span>馃搷 ${h.origin}</span>
+          <span>馃摝 ${h.batch}</span>
         </div>
-        <div class="herb-card-btn">查看完整溯源 →</div>
+        <div class="herb-card-btn">鏌ョ湅瀹屾暣婧簮 鈫?/div>
       </div>
     </div>
   `).join('');
@@ -547,7 +547,7 @@ function showDetailPage() {
   const url = BASE_URL + '?id=' + currentHerb.id;
   history.replaceState({}, '', url);
 
-  document.getElementById('detailTitle').textContent = currentHerb.name + ' - 溯源详情';
+  document.getElementById('detailTitle').textContent = currentHerb.name + ' - 婧簮璇︽儏';
   renderDetailContent();
 }
 
@@ -560,10 +560,10 @@ function renderDetailContent() {
   const h = currentHerb;
   const hero = document.getElementById('detailHero');
   hero.innerHTML = `
-    <img src="${h.imgs[0]}" alt="${h.name}" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,${(h.colors||['#8D6E63','#6D4C41'])[0]},${(h.colors||['#8D6E63','#6D4C41'])[1]})';this.parentElement.innerHTML+='<div style=position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:6rem>${h.emoji||'🌿'}</div>'">
+    <img src="${h.imgs[0]}" alt="${h.name}" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,${(h.colors||['#8D6E63','#6D4C41'])[0]},${(h.colors||['#8D6E63','#6D4C41'])[1]})';this.parentElement.innerHTML+='<div style=position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:6rem>${h.emoji||'馃尶'}</div>'">
     <div class="detail-hero-overlay">
       <h2>${h.emoji||''} ${h.name}</h2>
-      <div class="sub">${h.latin||''} · ${h.origin} · 批号: ${h.batch}</div>
+      <div class="sub">${h.latin||''} 路 ${h.origin} 路 鎵瑰彿: ${h.batch}</div>
     </div>
   `;
 
@@ -572,23 +572,23 @@ function renderDetailContent() {
     <!-- QR Code Section -->
     <div class="qr-section">
       <div class="qr-left">
-        <h4>📱 扫码追溯</h4>
-        <p>使用手机扫描二维码，查看本批次药材的完整溯源信息</p>
+        <h4>馃摫 鎵爜杩芥函</h4>
+        <p>浣跨敤鎵嬫満鎵弿浜岀淮鐮侊紝鏌ョ湅鏈壒娆¤嵂鏉愮殑瀹屾暣婧簮淇℃伅</p>
         <span class="qr-url" id="qrUrlDisplay">${window.location.href}</span>
       </div>
       <div class="qr-right">
         <div id="qrcode"></div>
-        <button class="btn-qr" onclick="downloadQR()" title="下载二维码图片">💾 下载<br>二维码</button>
+        <button class="btn-qr" onclick="downloadQR()" title="涓嬭浇浜岀淮鐮佸浘鐗?>馃捑 涓嬭浇<br>浜岀淮鐮?/button>
       </div>
     </div>
 
     <!-- Gallery -->
     <div class="gallery">
-      <h4>📸 药材图片</h4>
+      <h4>馃摳 鑽潗鍥剧墖</h4>
       <div class="gallery-grid">
         ${h.imgs.map((img,i) => `
           <div class="gallery-item" onclick="event.stopPropagation();openLightbox('${img}')">
-            <img src="${img}" alt="${h.name} ${i+1}" loading="lazy" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,${(h.colors||['#8D6E63','#6D4C41'])[0]},${(h.colors||['#8D6E63','#6D4C41'])[1]})';this.parentElement.innerHTML+='<div style=display:flex;align-items:center;justify-content:center;height:100%;font-size:2.5rem>${h.emoji||'🌿'}</div>'">
+            <img src="${img}" alt="${h.name} ${i+1}" loading="lazy" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,${(h.colors||['#8D6E63','#6D4C41'])[0]},${(h.colors||['#8D6E63','#6D4C41'])[1]})';this.parentElement.innerHTML+='<div style=display:flex;align-items:center;justify-content:center;height:100%;font-size:2.5rem>${h.emoji||'馃尶'}</div>'">
           </div>
         `).join('')}
       </div>
@@ -610,12 +610,12 @@ function renderDetailContent() {
 
 function renderTabs() {
   const tabs = [
-    { name: '产品信息', icon: '📋' },
-    { name: '生产信息', icon: '🌱' },
-    { name: '药材追溯', icon: '🔗' },
-    { name: '质检信息', icon: '🔬' },
-    { name: '企业信息', icon: '🏢' },
-    { name: '销售溯源', icon: '🚚', badge: 'NEW' }
+    { name: '浜у搧淇℃伅', icon: '馃搵' },
+    { name: '鐢熶骇淇℃伅', icon: '馃尡' },
+    { name: '鑽潗杩芥函', icon: '馃敆' },
+    { name: '璐ㄦ淇℃伅', icon: '馃敩' },
+    { name: '浼佷笟淇℃伅', icon: '馃彚' },
+    { name: '閿€鍞函婧?, icon: '馃殮', badge: 'NEW' }
   ];
 
   document.getElementById('tabsNav').innerHTML = tabs.map((t,i) => `
@@ -669,11 +669,11 @@ function renderTraceability(h) {
           <div class="tl-content">
             <div class="tl-stage">${t.stage}</div>
             <div class="tl-meta">
-              <span>📍 ${t.location}</span>
-              <span>🕐 ${t.time}</span>
+              <span>馃搷 ${t.location}</span>
+              <span>馃晲 ${t.time}</span>
             </div>
             <div class="tl-desc">${t.desc}</div>
-            <div class="tl-operator">👤 操作人：${t.operator}</div>
+            <div class="tl-operator">馃懁 鎿嶄綔浜猴細${t.operator}</div>
           </div>
         </div>
       `).join('')}
@@ -686,7 +686,7 @@ function renderQualityInfo(h) {
   const entries = Object.entries(qi);
   return `
     <table class="quality-table">
-      <thead><tr><th>检测项目</th><th>检测结果</th></tr></thead>
+      <thead><tr><th>妫€娴嬮」鐩?/th><th>妫€娴嬬粨鏋?/th></tr></thead>
       <tbody>
         ${entries.map(([k,v]) => `<tr><td style="font-weight:600">${k}</td><td>${v}</td></tr>`).join('')}
       </tbody>
@@ -703,15 +703,15 @@ function renderEnterpriseInfo(h) {
 function renderSalesTraceability(h) {
   const sales = h.salesTraceability || [];
   if (sales.length === 0) {
-    return '<div class="empty-state"><div class="icon">🚚</div><h4>暂无销售记录</h4><p>该批次药材尚未有销售记录</p></div>';
+    return '<div class="empty-state"><div class="icon">馃殮</div><h4>鏆傛棤閿€鍞褰?/h4><p>璇ユ壒娆¤嵂鏉愬皻鏈湁閿€鍞褰?/p></div>';
   }
-  const statusLabel = { '已签收': 'delivered', '运输中': 'transit', '待发货': 'pending' };
+  const statusLabel = { '宸茬鏀?: 'delivered', '杩愯緭涓?: 'transit', '寰呭彂璐?: 'pending' };
   return `
     <table class="sales-table">
       <thead>
         <tr>
-          <th>日期</th><th>销售批次</th><th>数量</th><th>采购方</th>
-          <th>渠道</th><th>销售区域</th><th>状态</th><th>备注</th>
+          <th>鏃ユ湡</th><th>閿€鍞壒娆?/th><th>鏁伴噺</th><th>閲囪喘鏂?/th>
+          <th>娓犻亾</th><th>閿€鍞尯鍩?/th><th>鐘舵€?/th><th>澶囨敞</th>
         </tr>
       </thead>
       <tbody>
@@ -738,14 +738,14 @@ function generateQR() {
   try {
     new QRCode(container, { text: url, width: 110, height: 110, colorDark: '#3E2723', colorLight: '#FFFFFF' });
   } catch(e) {
-    container.innerHTML = '<div style="width:110px;height:110px;background:var(--gray-light);display:flex;align-items:center;justify-content:center;font-size:3rem;border-radius:8px">📱</div>';
+    container.innerHTML = '<div style="width:110px;height:110px;background:var(--gray-light);display:flex;align-items:center;justify-content:center;font-size:3rem;border-radius:8px">馃摫</div>';
   }
 }
 
 function downloadQR() {
   const container = document.getElementById('qrcode');
   const canvas = container.querySelector('canvas');
-  if (!canvas) return alert('二维码未加载完成，请稍后再试');
+  if (!canvas) return alert('浜岀淮鐮佹湭鍔犺浇瀹屾垚锛岃绋嶅悗鍐嶈瘯');
   const link = document.createElement('a');
   link.download = `QR-${currentHerb.id}-${currentHerb.name}.png`;
   link.href = canvas.toDataURL('image/png');
@@ -772,17 +772,17 @@ function renderFooter(elId) {
   const f = sc.footer || {};
   document.getElementById(elId).innerHTML = `
     <div class="footer-grid">
-      <div><h5>🌿 ${sc.title}平台</h5><p>${f.about||''}</p></div>
-      <div><h5>追溯服务</h5>${(f.services||[]).map(s => `<p><a href="#">${s}</a></p>`).join('')}</div>
-      <div><h5>关于我们</h5>${(f.company||[]).map(c => `<p><a href="#">${c}</a></p>`).join('')}</div>
+      <div><h5>馃尶 ${sc.title}骞冲彴</h5><p>${f.about||''}</p></div>
+      <div><h5>杩芥函鏈嶅姟</h5>${(f.services||[]).map(s => `<p><a href="#">${s}</a></p>`).join('')}</div>
+      <div><h5>鍏充簬鎴戜滑</h5>${(f.company||[]).map(c => `<p><a href="#">${c}</a></p>`).join('')}</div>
       <div>
-        <h5>联系方式</h5>
-        <p>📧 ${(f.contact||{}).email||''}</p>
-        <p>📞 ${(f.contact||{}).phone||''}</p>
-        <p>🕐 ${(f.contact||{}).hours||''}</p>
+        <h5>鑱旂郴鏂瑰紡</h5>
+        <p>馃摟 ${(f.contact||{}).email||''}</p>
+        <p>馃摓 ${(f.contact||{}).phone||''}</p>
+        <p>馃晲 ${(f.contact||{}).hours||''}</p>
       </div>
     </div>
-    <div class="footer-bottom">${f.copyright||''} | 数据来源：中国食品药品检定研究院 · 各省药检所</div>
+    <div class="footer-bottom">${f.copyright||''} | 鏁版嵁鏉ユ簮锛氫腑鍥介鍝佽嵂鍝佹瀹氱爺绌堕櫌 路 鍚勭渷鑽鎵€</div>
   `;
 }
 
